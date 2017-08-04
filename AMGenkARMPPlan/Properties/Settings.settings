@@ -1,0 +1,18 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="AMGenkARMPPlan.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="ARMPResourcesDirectory" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\</Value>
+    </Setting>
+    <Setting Name="ARMPResourcesFile" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="ARMPTasksDirectory" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\</Value>
+    </Setting>
+    <Setting Name="ARMPTasksFile" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+  </Settings>
+</SettingsFile>
