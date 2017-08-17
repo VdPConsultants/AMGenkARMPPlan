@@ -44,8 +44,7 @@
             this.btnBrowseR = new System.Windows.Forms.Button();
             this.txtARMPResourcesFile = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.mcARMPvan = new System.Windows.Forms.MonthCalendar();
-            this.mcARMPtot = new System.Windows.Forms.MonthCalendar();
+            this.mcARMPweek = new System.Windows.Forms.MonthCalendar();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -181,30 +180,23 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(275, 29);
             this.label2.TabIndex = 108;
-            this.label2.Text = "1. Select the Period  from/To";
+            this.label2.Text = "1. Selecteer week:";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // mcARMPvan
+            // mcARMPweek
             // 
-            this.mcARMPvan.Location = new System.Drawing.Point(301, 46);
-            this.mcARMPvan.Name = "mcARMPvan";
-            this.mcARMPvan.ShowWeekNumbers = true;
-            this.mcARMPvan.TabIndex = 109;
-            // 
-            // mcARMPtot
-            // 
-            this.mcARMPtot.Location = new System.Drawing.Point(490, 46);
-            this.mcARMPtot.Name = "mcARMPtot";
-            this.mcARMPtot.ShowWeekNumbers = true;
-            this.mcARMPtot.TabIndex = 110;
+            this.mcARMPweek.Location = new System.Drawing.Point(301, 46);
+            this.mcARMPweek.Name = "mcARMPweek";
+            this.mcARMPweek.ShowWeekNumbers = true;
+            this.mcARMPweek.TabIndex = 109;
+            this.mcARMPweek.DateChanged += new System.Windows.Forms.DateRangeEventHandler(this.mcARMPweek_DateChanged);
             // 
             // Dialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(927, 490);
-            this.Controls.Add(this.mcARMPtot);
-            this.Controls.Add(this.mcARMPvan);
+            this.Controls.Add(this.mcARMPweek);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.btnBrowseR);
             this.Controls.Add(this.txtARMPResourcesFile);
@@ -243,7 +235,6 @@
         private System.Windows.Forms.Button btnBrowseR;
         private System.Windows.Forms.TextBox txtARMPResourcesFile;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.MonthCalendar mcARMPvan;
-        private System.Windows.Forms.MonthCalendar mcARMPtot;
+        private System.Windows.Forms.MonthCalendar mcARMPweek;
     }
  }

@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Excel = Microsoft.Office.Interop.Excel;
+using System.Globalization;
 
 namespace AMGenkARMPPlan
 {
@@ -18,15 +19,18 @@ namespace AMGenkARMPPlan
         private System.Object xx = System.Type.Missing;
         private string xlDirectory;
         private string xlFile;
-        private string xlFilePath;
+        //private string xlFilePath;
 
         private Excel.Application xlApp;
         private Excel.Workbook xlWorkbook;
         private Excel.Worksheet xlWorksheet;
 
-        private ArrayList taskRows = new ArrayList();
-        private ArrayList excelColumns = new ArrayList();
-        private Hashtable columnLetters = new Hashtable();
+        //private ArrayList taskRows = new ArrayList();
+        //private ArrayList excelColumns = new ArrayList();
+        //private Hashtable columnLetters = new Hashtable();
+
+        private DateTime ARMPStrtDate;
+        private DateTime ARMPFnshDate;
 
         public Dialog()
         {
@@ -35,13 +39,10 @@ namespace AMGenkARMPPlan
             xlFile = Properties.Settings.Default.ARMPTasksFile;
             txtARMPTasksFile.Text = xlDirectory + xlFile;
 
-            btnImport.Enabled = false;
-            if (xlFile != string.Empty)
-            {
-                GetWorksheet(xlDirectory + xlFile);
-            }
-            btnImport.Enabled = false;
+            ARMPStrtDate = DateTime.Now;
+            SetARMPStrtFnshDate();
 
+            btnImport.Enabled = false;
             // Show add-in and deployment versions.
             lblAppVersion.Text = lblAppVersion.Text + this.ProductVersion;
 
@@ -118,7 +119,6 @@ namespace AMGenkARMPPlan
 
                     string xlFilePath = xlDirectory + xlFile;
                     txtARMPTasksFile.Text = xlFilePath;
-                    GetWorksheet(xlFilePath);
                 }
                 catch (System.Security.SecurityException ex)
                 {
@@ -136,44 +136,13 @@ namespace AMGenkARMPPlan
         // Import the specified Excel task data and show it in a DataGridView.
         private void btnImport_Click(object sender, EventArgs e)
         {
+            int lastRowIgnoreFormulas;
             btnCancel.Enabled = true;
             xlApp = new Excel.Application();
             // Don't interrupt with alert dialogs.
             xlApp.DisplayAlerts = false;
 
-            xlWorkbook = xlApp.Workbooks.Open(txtARMPResourcesFile.Text,
-                xx, xx, xx, xx, xx, xx, xx,
-                xx, xx, xx, xx, xx, xx, xx);
-
-            //TODO: Hardcoded
-            xlWorksheet = (Excel.Worksheet)xlWorkbook.Worksheets["Codes"];
-
-            Excel.Range exceptioncodesRange = xlWorksheet.get_Range("B4", "E140");
-
-            Object[,] exceptioncodes = (Object[,])exceptioncodesRange.Cells.Value2;
-
-            Globals.ThisAddIn.CreateARMPExceptionCodes(exceptioncodes);
-
-            xlWorksheet = (Excel.Worksheet)xlWorkbook.Worksheets["Basisdata"];
-
-            Excel.Range resourcesRange = xlWorksheet.get_Range("B3", "C11");
-
-            Object[,] resources = (Object[,])resourcesRange.Cells.Value2;
-
-            Globals.ThisAddIn.CreateARMPResources(resources);
-
-            string[] months = { "Augustus"};
-            foreach (string month in months)
-            {
-                xlWorksheet = (Excel.Worksheet)xlWorkbook.Worksheets[month];
-
-                Excel.Range exceptionsRange = xlWorksheet.get_Range("J3", "N11");
-
-                Object[,] exceptions = (Object[,])exceptionsRange.Cells.Value2;
-
-                Globals.ThisAddIn.CreateARMPExceptions(exceptions);
-            }
-            xlWorkbook.Close();
+            Globals.ThisAddIn.SetARMPStrtFnshDate(ARMPStrtDate, ARMPFnshDate);
 
             xlWorkbook = xlApp.Workbooks.Open(txtARMPTasksFile.Text,
                                               xx, xx, xx, xx, xx, xx, xx,
@@ -182,31 +151,76 @@ namespace AMGenkARMPPlan
             //TODO: Hardcoded
             xlWorksheet = (Excel.Worksheet)xlWorkbook.Worksheets[1];
 
-            Excel.Range tasksRange = xlWorksheet.get_Range("A1", "W21");
-
+            Excel.Range tasksRange = xlWorksheet.UsedRange;
             Object[,] tasks = (Object[,])tasksRange.Cells.Value2;
+            xlWorkbook.Close();
+            Globals.ThisAddIn.SetARMPWorkplaces(tasks); 
+
+            xlWorkbook = xlApp.Workbooks.Open(txtARMPResourcesFile.Text,
+                xx, xx, xx, xx, xx, xx, xx,
+                xx, xx, xx, xx, xx, xx, xx);
+
+            //TODO: Hardcoded
+
+            xlWorksheet = (Excel.Worksheet)xlWorkbook.Worksheets["Codes"];
+            lastRowIgnoreFormulas = xlWorksheet.Cells.Find("*", System.Reflection.Missing.Value, Excel.XlFindLookIn.xlValues, Excel.XlLookAt.xlWhole, Excel.XlSearchOrder.xlByRows, Excel.XlSearchDirection.xlPrevious, false, System.Reflection.Missing.Value, System.Reflection.Missing.Value).Row;
+
+            Excel.Range exceptioncodesRange = xlWorksheet.Range[xlWorksheet.Cells[(int)ARMPExcelLayout.ARMPExceptionCodesRowsOrig.ClmnHead, (int)ARMPExcelLayout.ARMPExceptionCodesColsOrig.ExcdType],
+                                                                xlWorksheet.Cells[lastRowIgnoreFormulas, (int)ARMPExcelLayout.ARMPExceptionCodesColsOrig.ExcdDayp]];
+            Object[,] exceptioncodes = (Object[,])exceptioncodesRange.Cells.Value2;
+            Globals.ThisAddIn.CreateARMPExceptionCodes(exceptioncodes);
+
+            xlWorksheet = (Excel.Worksheet)xlWorkbook.Worksheets["Basisdata"];
+            lastRowIgnoreFormulas = xlWorksheet.Cells.Find("*", System.Reflection.Missing.Value, Excel.XlFindLookIn.xlValues, Excel.XlLookAt.xlWhole, Excel.XlSearchOrder.xlByRows, Excel.XlSearchDirection.xlPrevious, false, System.Reflection.Missing.Value, System.Reflection.Missing.Value).Row;
+
+            Excel.Range resourcesRange = xlWorksheet.Range[xlWorksheet.Cells[(int)ARMPExcelLayout.ARMPResourcesRowsOrig.RsrcYear, (int)ARMPExcelLayout.ARMPResourcesColsOrig.WorkPlce],
+                                                           xlWorksheet.Cells[lastRowIgnoreFormulas, (int)ARMPExcelLayout.ARMPResourcesColsOrig.RsrcAmei]];
+            Object[,] resources = (Object[,])resourcesRange.Cells.Value2;
+            Globals.ThisAddIn.CreateARMPResources(resources);
+
+            DateTime ARMPLastMnth = new DateTime(ARMPStrtDate.Year, ARMPStrtDate.Month, DateTime.DaysInMonth(ARMPStrtDate.Year, ARMPStrtDate.Month));
+            Object[,] exceptions_1 = null;
+            Object[,] exceptions_2 = null;
+            Object[,] exceptions_3 = null;
+
+            xlWorksheet = (Excel.Worksheet)xlWorkbook.Worksheets[ARMPStrtDate.ToString("MMMM")];
+            lastRowIgnoreFormulas = xlWorksheet.Cells.Find("*", System.Reflection.Missing.Value, Excel.XlFindLookIn.xlValues, Excel.XlLookAt.xlWhole, Excel.XlSearchOrder.xlByRows, Excel.XlSearchDirection.xlPrevious, false, System.Reflection.Missing.Value, System.Reflection.Missing.Value).Row;
+
+            Excel.Range exceptionsRange = xlWorksheet.Range[xlWorksheet.Cells[(int)ARMPExcelLayout.ARMPExceptionsRowsOrig.ExcpStrt, (int)ARMPExcelLayout.ARMPExceptionsColsOrig.WorkPlce],
+                                                            xlWorksheet.Cells[lastRowIgnoreFormulas, (int)ARMPExcelLayout.ARMPExceptionsColsOrig.RsrcName]];
+            exceptions_1 = (Object[,])exceptionsRange.Cells.Value2;
+
+            if (ARMPFnshDate.CompareTo(ARMPLastMnth) <= 0)
+            {
+                xlWorksheet = (Excel.Worksheet)xlWorkbook.Worksheets[ARMPStrtDate.ToString("MMMM")];
+                lastRowIgnoreFormulas = xlWorksheet.Cells.Find("*", System.Reflection.Missing.Value, Excel.XlFindLookIn.xlValues, Excel.XlLookAt.xlWhole, Excel.XlSearchOrder.xlByRows, Excel.XlSearchDirection.xlPrevious, false, System.Reflection.Missing.Value, System.Reflection.Missing.Value).Row;
+                exceptionsRange = xlWorksheet.Range[xlWorksheet.Cells[(int)ARMPExcelLayout.ARMPExceptionsRowsOrig.ExcpStrt, (int)ARMPExcelLayout.ARMPExceptionsColsOrig.ExcpStrt + ARMPStrtDate.Day],
+                                                    xlWorksheet.Cells[lastRowIgnoreFormulas, (int)ARMPExcelLayout.ARMPExceptionsColsOrig.ExcpStrt + ARMPFnshDate.Day]];
+                exceptions_2 = (Object[,])exceptionsRange.Cells.Value2;
+            }
+            else
+            {
+                /*
+                xlWorksheet = (Excel.Worksheet)xlWorkbook.Worksheets[ARMPStrtDate.ToString("MMMM")];
+                lastRowIgnoreFormulas = xlWorksheet.Cells.Find("*", System.Reflection.Missing.Value, Excel.XlFindLookIn.xlValues, Excel.XlLookAt.xlWhole, Excel.XlSearchOrder.xlByRows, Excel.XlSearchDirection.xlPrevious, false, System.Reflection.Missing.Value, System.Reflection.Missing.Value).Row;
+                exceptionsRange = xlWorksheet.Range[xlWorksheet.Cells[(int)ARMPExcelLayout.ARMPExceptionsRowsOrig.ExcpStrt, (int)ARMPExcelLayout.ARMPExceptionsColsOrig.ExcpStrt + ARMPStrtDate.Day - 1],
+                                                    xlWorksheet.Cells[lastRowIgnoreFormulas, (int)ARMPExcelLayout.ARMPExceptionsColsOrig.ExcpStrt + ARMPLastMnth.Day - 1]];
+                exceptions_2 = (Object[,])exceptionsRange.Cells.Value2;
+                xlWorksheet = (Excel.Worksheet)xlWorkbook.Worksheets[ARMPFnshDate.ToString("MMMM")];
+                lastRowIgnoreFormulas = xlWorksheet.Cells.Find("*", System.Reflection.Missing.Value, Excel.XlFindLookIn.xlValues, Excel.XlLookAt.xlWhole, Excel.XlSearchOrder.xlByRows, Excel.XlSearchDirection.xlPrevious, false, System.Reflection.Missing.Value, System.Reflection.Missing.Value).Row;
+                exceptionsRange = xlWorksheet.Range[xlWorksheet.Cells[(int)ARMPExcelLayout.ARMPExceptionsRowsOrig.ExcpStrt, (int)ARMPExcelLayout.ARMPExceptionsColsOrig.ExcpStrt],
+                                                    xlWorksheet.Cells[lastRowIgnoreFormulas, (int)ARMPExcelLayout.ARMPExceptionsColsOrig.ExcpStrt + ARMPFnshDate.Day - 1]];
+                exceptions_3 = (Object[,])exceptionsRange.Cells.Value2;
+                */
+            }
+            Object[,] exceptions = ResourcesMerge(exceptions_1, exceptions_2, exceptions_3);
+            Globals.ThisAddIn.CreateARMPExceptions(exceptions);
 
             Globals.ThisAddIn.CreateARMPTasks(tasks);
-            xlWorkbook.Close();
+
+            Globals.ThisAddIn.FormatARMPPlanning();
+            HideImportDialogBox();
         }
-
-        // Start Excel and open the worksheet with task data.
-        private void GetWorksheet(string xlFilePath)
-        {
-        }
-
-        // Get the range of Excel task data to import.
-        private Array ImportTasksFromExcel(string file)
-        {
-            //TODO: hardcoded 
-            // Set the worksheet range of cells to import.
-            Excel.Range taskRange = xlWorksheet.get_Range("A2", "Y500");
-
-            Array taskCells = (Array)taskRange.Cells.Value2;
-            return taskCells;
-        }
-
-
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
@@ -228,13 +242,96 @@ namespace AMGenkARMPPlan
             this.Hide();
         }
 
-        // Create the tasks in Project from the imported Excel task data.
-        private void btnCreateTasks_Click(object sender, EventArgs e)
+        private void mcARMPweek_DateChanged(object sender, DateRangeEventArgs e)
         {
+            ARMPStrtDate = mcARMPweek.SelectionStart;
+            SetARMPStrtFnshDate();
+        }
 
-            //Globals.ThisAddIn.CreateTasks(customFieldColumn, excelColumns, taskRows);
+        private void SetARMPStrtFnshDate()
+        {
+            DayOfWeek firstDayOfWeek = CultureInfo.CurrentCulture.DateTimeFormat.FirstDayOfWeek;
 
-            HideImportDialogBox();
+            // TODO: JvdP - last week/first week of a year
+            while (ARMPStrtDate.DayOfWeek != firstDayOfWeek)
+            {
+                ARMPStrtDate = ARMPStrtDate.AddDays(-1);
+            }
+            ARMPFnshDate = ARMPStrtDate.AddDays(4);
+        }
+
+        private Object[,] ResourcesMerge(Object[,] r1, Object[,] r2, Object[,] r3)
+        {
+            int r1Rows = (r1 == null) ? 0 : r1.GetLength(0);
+            int r1Cols = (r1 == null) ? 0 : r1.GetLength(1);
+            int r2Cols = (r2 == null) ? 0 : r2.GetLength(1);
+            int r3Cols = (r3 == null) ? 0 : r3.GetLength(1);
+
+            int rRows = 1;
+            int rCols = 1;
+
+            if (r1 == null)
+            {
+                return null;
+            }
+
+            Object[,] r = NewObjectArray(r1Rows, r1Cols + r2Cols + r3Cols);
+            for (int i = 1; i <= r1.GetLength(0); i++)
+            {
+                rCols = 1;
+                for (int j = 1; j <= r1.GetLength(1); j++)
+                {
+                    r[rRows, rCols] = r1[i, j];
+                    rCols++;
+                }
+                rRows++;
+            }
+            if (r2 == null)
+            {
+                return r;
+            }
+            rRows = 1;
+            for (int i = 1; i <= r2.GetLength(0); i++)
+            {
+                rCols = r1Cols + 1;
+                for (int j = 1; j <= r2.GetLength(1); j++)
+                {
+                    r[rRows, rCols] = r2[i, j];
+                    rCols++;
+                }
+                rRows++;
+            }
+            if (r3 == null)
+            {
+                return r;
+            }
+            rRows = 1;
+            for (int i = 1; i <= r3.GetLength(0); i++)
+            {
+                rCols = r1Cols + r2Cols + 1;
+                for (int j = 1; j <= r3.GetLength(1); j++)
+                {
+                    r[rRows, rCols] = r3[i, j];
+                    rCols++;
+                }
+                rRows++;
+            }
+            return r;
+        }
+
+        /// <summary>
+        /// Makes the equivalent of a local Excel range that can be populated 
+        ///  without leaving .net
+        /// </summary>
+        /// <param name="iRows">number of rows in the table</param>
+        /// <param name="iCols">number of columns in the table</param>
+        /// <returns>a 1's based, 2 dimensional object array which can put back to Excel in one DCOM call.</returns>
+        public static object[,] NewObjectArray(int iRows, int iCols)
+        {
+            int[] aiLowerBounds = new int[] { 1, 1 };
+            int[] aiLengths = new int[] { iRows, iCols };
+
+            return (object[,])Array.CreateInstance(typeof(object), aiLengths, aiLowerBounds);
         }
     }
 }
