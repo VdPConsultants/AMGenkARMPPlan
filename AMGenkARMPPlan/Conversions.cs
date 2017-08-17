@@ -16,6 +16,7 @@ namespace AMGenkARMPPlan
             if (Time == null || Unit == null)
                 return 0.0;
 
+
             switch (Unit)
             {
                 case "UUR":
