@@ -25,7 +25,7 @@ namespace AMGenkARMPPlan.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:\\")]
+        [global::System.Configuration.DefaultSettingValueAttribute("G:\\Onderhoud\\PLANNING\\AANWEZIGHEDEN")]
         public string ARMPResourcesDirectory {
             get {
                 return ((string)(this["ARMPResourcesDirectory"]));
@@ -49,7 +49,7 @@ namespace AMGenkARMPPlan.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:\\")]
+        [global::System.Configuration.DefaultSettingValueAttribute("G:\\Onderhoud\\PLANNING\\DOWNLOADSAP")]
         public string ARMPTasksDirectory {
             get {
                 return ((string)(this["ARMPTasksDirectory"]));

@@ -3,13 +3,13 @@
   <Profiles />
   <Settings>
     <Setting Name="ARMPResourcesDirectory" Type="System.String" Scope="User">
-      <Value Profile="(Default)">C:\</Value>
+      <Value Profile="(Default)">G:\Onderhoud\PLANNING\AANWEZIGHEDEN</Value>
     </Setting>
     <Setting Name="ARMPResourcesFile" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="ARMPTasksDirectory" Type="System.String" Scope="User">
-      <Value Profile="(Default)">C:\</Value>
+      <Value Profile="(Default)">G:\Onderhoud\PLANNING\DOWNLOADSAP</Value>
     </Setting>
     <Setting Name="ARMPTasksFile" Type="System.String" Scope="User">
       <Value Profile="(Default)" />

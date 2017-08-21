@@ -39,7 +39,7 @@ namespace AMGenkARMPPlan
             xlFile = Properties.Settings.Default.ARMPTasksFile;
             txtARMPTasksFile.Text = xlDirectory + xlFile;
 
-            ARMPStrtDate = DateTime.Now;
+            ARMPStrtDate = DateTime.Now.AddDays(7);
             SetARMPStrtFnshDate();
 
             btnImport.Enabled = false;
@@ -200,7 +200,6 @@ namespace AMGenkARMPPlan
             }
             else
             {
-                /*
                 xlWorksheet = (Excel.Worksheet)xlWorkbook.Worksheets[ARMPStrtDate.ToString("MMMM")];
                 lastRowIgnoreFormulas = xlWorksheet.Cells.Find("*", System.Reflection.Missing.Value, Excel.XlFindLookIn.xlValues, Excel.XlLookAt.xlWhole, Excel.XlSearchOrder.xlByRows, Excel.XlSearchDirection.xlPrevious, false, System.Reflection.Missing.Value, System.Reflection.Missing.Value).Row;
                 exceptionsRange = xlWorksheet.Range[xlWorksheet.Cells[(int)ARMPExcelLayout.ARMPExceptionsRowsOrig.ExcpStrt, (int)ARMPExcelLayout.ARMPExceptionsColsOrig.ExcpStrt + ARMPStrtDate.Day - 1],
@@ -211,7 +210,6 @@ namespace AMGenkARMPPlan
                 exceptionsRange = xlWorksheet.Range[xlWorksheet.Cells[(int)ARMPExcelLayout.ARMPExceptionsRowsOrig.ExcpStrt, (int)ARMPExcelLayout.ARMPExceptionsColsOrig.ExcpStrt],
                                                     xlWorksheet.Cells[lastRowIgnoreFormulas, (int)ARMPExcelLayout.ARMPExceptionsColsOrig.ExcpStrt + ARMPFnshDate.Day - 1]];
                 exceptions_3 = (Object[,])exceptionsRange.Cells.Value2;
-                */
             }
             Object[,] exceptions = ResourcesMerge(exceptions_1, exceptions_2, exceptions_3);
             Globals.ThisAddIn.CreateARMPExceptions(exceptions);
