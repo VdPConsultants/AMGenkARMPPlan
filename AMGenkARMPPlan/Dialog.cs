@@ -64,6 +64,11 @@ namespace AMGenkARMPPlan
         private void btnBrowseR_Click(object sender, EventArgs e)
         {
             string xlsFiles = "Excel files (*.xls;*.xlsx;*.xlsm)|*.xls;*.xlsx;*.xlsm";
+
+            xlDirectory = Properties.Settings.Default.ARMPResourcesDirectory;
+            xlFile = Properties.Settings.Default.ARMPResourcesFile;
+            txtARMPTasksFile.Text = xlDirectory + xlFile;
+
             this.openFileDialog1.Filter = xlsFiles;
             this.openFileDialog1.Multiselect = false;
             this.openFileDialog1.Title = "Select the resources import file";
@@ -100,6 +105,11 @@ namespace AMGenkARMPPlan
         private void btnBrowseT_Click(object sender, EventArgs e)
         {
             string xlsFiles = "Excel files (*.xls;*.xlsx)|*.xls;*.xlsx";
+
+            xlDirectory = Properties.Settings.Default.ARMPTasksDirectory;
+            xlFile = Properties.Settings.Default.ARMPTasksFile;
+            txtARMPTasksFile.Text = xlDirectory + xlFile;
+
             this.openFileDialog1.Filter = xlsFiles;
             this.openFileDialog1.Multiselect = false;
             this.openFileDialog1.Title = "Select an Excel File with Project Data";

@@ -206,9 +206,6 @@ namespace AMGenkARMPPlan
             ARMPWorksheetLayout.ARMPExceptionsRow = (int)ARMPExcelLayout.ARMPExceptionsRowsCnvt.RsrcExcd;
             ARMPWorksheetLayout.ARMPExceptionsCol = (int)ARMPExcelLayout.ARMPExceptionsColsCnvt.ExcpStrt;
 
-            //string ARMPRsrcPlanForm = "=SUM(r[0]c[1]:r[0]C[" + (ARMPWorksheetLayout.ARMPResourcesCol - 1).ToString() + "])";
-            //string ARMPRsrcTodoForm = "=R[0]C[-1] - R[0]C[1]";
-
             Excel.Worksheet ARMPWorksheet = ((Excel.Worksheet)Application.ActiveSheet);
 
             do
@@ -423,6 +420,7 @@ namespace AMGenkARMPPlan
                                                 ARMPWorksheet.Cells[(int)ARMPExcelLayout.ARMPResourcesRowsCnvt.ExcpDate, RsrcCols + ARMPResources.Count - 1]];
                 rngFormat.Merge();
                 rngFormat.Borders.Weight = Excel.XlBorderWeight.xlThick;
+                //rngFormat.DisplayFormat = 
 
                 rngFormat = ARMPWorksheet.Range[ARMPWorksheet.Cells[(int)ARMPExcelLayout.ARMPResourcesRowsCnvt.RsrcAbbr, RsrcCols],
                                                 ARMPWorksheet.Cells[(int)ARMPExcelLayout.ARMPExceptionsRowsCnvt.RsrcPlan, RsrcCols + ARMPResources.Count - 1]];
