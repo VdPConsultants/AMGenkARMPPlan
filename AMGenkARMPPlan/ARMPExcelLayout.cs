@@ -110,6 +110,27 @@ namespace AMGenkARMPPlan
         {
             TaskStrt = ARMPExcelLayout.ARMPExceptionsRowsCnvt.RsrcPlan + 1
         }
+        public enum ARMPTasksColsOrig
+        {
+            WorkPlce = 1,
+            MainWork = WorkPlce + 1,
+            OrdrPrio = MainWork + 1,
+            OrdrNmbr = OrdrPrio + 1,
+            OperNmbr = OrdrNmbr + 1,
+            OrdrStrt = OperNmbr + 1,
+            GateDate = OrdrStrt + 1,
+            OrdrDesc = GateDate + 1,
+            OperDesc = OrdrDesc + 1,
+            StatTech = OperDesc + 1,
+            OrdrType = StatTech + 1,
+            UserStat = OrdrType + 1,
+            RevsDesc = UserStat + 1,
+            DuraNmbr = RevsDesc + 1,
+            DuraNorm = DuraNmbr + 1,
+            DuraUnit = DuraNorm + 1,
+            WorkNorm = DuraUnit + 1,
+            WorkUnit = WorkNorm + 1
+        }
         public enum ARMPTasksColsImpr
         {
             WorkPlce = 1,

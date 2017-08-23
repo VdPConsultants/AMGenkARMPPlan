@@ -14,7 +14,7 @@ using System.Globalization;
 
 namespace AMGenkARMPPlan
 {
-    public partial class Dialog : Form
+    public partial class DialogResourcesTasks : Form
     {
         private System.Object xx = System.Type.Missing;
         private string xlDirectory;
@@ -32,7 +32,7 @@ namespace AMGenkARMPPlan
         private DateTime ARMPStrtDate;
         private DateTime ARMPFnshDate;
 
-        public Dialog()
+        public DialogResourcesTasks()
         {
             InitializeComponent();
             xlDirectory = Properties.Settings.Default.ARMPTasksDirectory;
