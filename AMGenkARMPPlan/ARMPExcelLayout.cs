@@ -177,13 +177,14 @@ namespace AMGenkARMPPlan
         public int ARMPExceptionsRow { get; set; }
         public int ARMPExceptionsCol { get; set; }
 
-        public int ARMPTasksRow { get; set; }
+        //public int ARMPTasksRow { get; set; }
         public int ARMPTasksRowA { get; set; }
         public int ARMPTasksRowB { get; set; }
         public int ARMPTasksRowC { get; set; }
         public int ARMPTasksRowO { get; set; }
+        public int ARMPTasksRows { get; set; }
 
-    public int ARMPTasksCol { get; set; }
+        public int ARMPTasksCol { get; set; }
 
         public DateTime ARMPStrtDate { get; set; }
         public DateTime ARMPFnshDate { get; set; }

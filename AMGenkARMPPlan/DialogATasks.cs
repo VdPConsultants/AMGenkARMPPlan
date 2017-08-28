@@ -114,7 +114,7 @@ namespace AMGenkARMPPlan
                                                        xlWorksheet.Cells[lastRowIgnoreFormulas, (int)ARMPExcelLayout.ARMPTasksColsOrig.WorkUnit]];
             Object[,] tasks = (Object[,])tasksRange.Cells.Value2;
             xlWorkbook.Close();
-            Globals.ThisAddIn.UpdateARMPATasks(tasks);
+            Globals.ThisAddIn.CreateUpdateARMPTasks(tasks);
 
             HideImportDialogBox();
         }

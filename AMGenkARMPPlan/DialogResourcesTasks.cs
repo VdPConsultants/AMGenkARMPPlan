@@ -224,7 +224,7 @@ namespace AMGenkARMPPlan
             Object[,] exceptions = ResourcesMerge(exceptions_1, exceptions_2, exceptions_3);
             Globals.ThisAddIn.CreateARMPExceptions(exceptions);
 
-            Globals.ThisAddIn.CreateARMPTasks(tasks);
+            Globals.ThisAddIn.CreateUpdateARMPTasks(tasks);
 
             Globals.ThisAddIn.FormatARMPPlanning();
             HideImportDialogBox();
