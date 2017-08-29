@@ -112,7 +112,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(927, 490);
+            this.ClientSize = new System.Drawing.Size(927, 186);
             this.Controls.Add(this.btnImport);
             this.Controls.Add(this.btnBrowseT);
             this.Controls.Add(this.txtARMPTasksFile);

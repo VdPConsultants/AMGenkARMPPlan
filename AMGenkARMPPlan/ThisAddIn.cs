@@ -384,6 +384,7 @@ namespace AMGenkARMPPlan
             iARMPNextDateCol = rngSearch.FindNext().Column;
             iARMPLastDateCol = rngSearch.FindPrevious().Column;
 
+            ARMPWorksheetLayout.ARMPResources.Clear();
             for (int i = iARMPStrtDateCol; i < iARMPNextDateCol; i++)
             {
                 ARMPWorksheetLayout.ARMPResources.Add(ARMPWorksheet.Cells[(int)ARMPExcelLayout.ARMPResourcesRowsCnvt.RsrcName, i].Value2);
