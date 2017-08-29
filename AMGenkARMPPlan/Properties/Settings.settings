@@ -14,5 +14,11 @@
     <Setting Name="ARMPTasksFile" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="ARMPConfirmationsDirectory" Type="System.String" Scope="User">
+      <Value Profile="(Default)">G:\Onderhoud\PLANNING\DOWNLOADSAP</Value>
+    </Setting>
+    <Setting Name="ARMPConfirmationsFile" Type="System.String" Scope="User">
+      <Value Profile="(Default)">*TM*</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

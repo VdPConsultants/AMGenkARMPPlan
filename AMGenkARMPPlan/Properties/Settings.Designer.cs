@@ -70,5 +70,29 @@ namespace AMGenkARMPPlan.Properties {
                 this["ARMPTasksFile"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("G:\\Onderhoud\\PLANNING\\DOWNLOADSAP")]
+        public string ARMPConfirmationsDirectory {
+            get {
+                return ((string)(this["ARMPConfirmationsDirectory"]));
+            }
+            set {
+                this["ARMPConfirmationsDirectory"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("*TM*")]
+        public string ARMPConfirmationsFile {
+            get {
+                return ((string)(this["ARMPConfirmationsFile"]));
+            }
+            set {
+                this["ARMPConfirmationsFile"] = value;
+            }
+        }
     }
 }

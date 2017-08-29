@@ -168,7 +168,6 @@ namespace AMGenkARMPPlan
 
 
 
-            ARMPWorksheetLayout.ARMPResourcesRow = (int)ARMPExcelLayout.ARMPResourcesRowsCnvt.RsrcName;
             ARMPWorksheetLayout.ARMPResourcesCol = (int)ARMPExcelLayout.ARMPResourcesColsCnvt.RsrcStrt;
 
             Excel.Worksheet ARMPWorksheet = ((Excel.Worksheet)Application.ActiveSheet);
@@ -179,20 +178,22 @@ namespace AMGenkARMPPlan
                 {
                     if (ARMPWorksheetLayout.ARMPWorkplaces.Contains(resources[i, (int)ARMPExcelLayout.ARMPResourcesColsImpr.WorkPlce].ToString()))
                     {
-                        if (!ARMPWorksheetLayout.ARMPResources.Contains(resources[i, (int)ARMPExcelLayout.ARMPResourcesColsImpr.RsrcName].ToString()))
-                            ARMPWorksheetLayout.ARMPResources.Add(resources[i, (int)ARMPExcelLayout.ARMPResourcesColsImpr.RsrcName].ToString());
+                        ARMPResource ARMPResource = new ARMPResource(resources[i, (int)ARMPExcelLayout.ARMPResourcesColsImpr.RsrcName].ToString(), resources[i, (int)ARMPExcelLayout.ARMPResourcesColsImpr.RsrcAmei].ToString()); 
+                        if (!ARMPWorksheetLayout.ARMPResources.Contains(ARMPResource))
+                            ARMPWorksheetLayout.ARMPResources.Add(ARMPResource);
                     }
                 }
             }
             // Add two general resources
-            ARMPWorksheetLayout.ARMPResources.Add("EXTERN");
-            ARMPWorksheetLayout.ARMPResources.Add("PRODUCTIE");
+            ARMPWorksheetLayout.ARMPResources.Add(new ARMPResource("EXTERN", ""));
+            ARMPWorksheetLayout.ARMPResources.Add(new ARMPResource("PRODUCTIE", ""));
             do
             {
                 ARMPWorksheet.Cells[(int)ARMPExcelLayout.ARMPResourcesRowsCnvt.ExcpDate, ARMPWorksheetLayout.ARMPResourcesCol].Value2 = ARMPStrtDate.ToOADate();
-                foreach (string resource in ARMPWorksheetLayout.ARMPResources)
+                foreach (ARMPResource resource in ARMPWorksheetLayout.ARMPResources)
                 {
-                    ARMPWorksheet.Cells[ARMPWorksheetLayout.ARMPResourcesRow, ARMPWorksheetLayout.ARMPResourcesCol].Value2 = resource;
+                    ARMPWorksheet.Cells[(int)ARMPExcelLayout.ARMPResourcesRowsCnvt.RsrcName, ARMPWorksheetLayout.ARMPResourcesCol].Value2 = resource.name;
+                    ARMPWorksheet.Cells[(int)ARMPExcelLayout.ARMPResourcesRowsCnvt.RsrcAmei, ARMPWorksheetLayout.ARMPResourcesCol].Value2 = resource.amei;
                     ARMPWorksheetLayout.ARMPResourcesCol++;
                 }
                 ARMPStrtDate = ARMPStrtDate.AddDays(1);
@@ -202,7 +203,6 @@ namespace AMGenkARMPPlan
         {
             DateTime ARMPStrtDate = ARMPWorksheetLayout.ARMPStrtDate;
 
-            ARMPWorksheetLayout.ARMPExceptionsRow = (int)ARMPExcelLayout.ARMPExceptionsRowsCnvt.RsrcExcd;
             ARMPWorksheetLayout.ARMPExceptionsCol = (int)ARMPExcelLayout.ARMPExceptionsColsCnvt.ExcpStrt;
 
             Excel.Worksheet ARMPWorksheet = ((Excel.Worksheet)Application.ActiveSheet);
@@ -211,7 +211,7 @@ namespace AMGenkARMPPlan
             {
                 for (int i = 1; i < exceptions.GetLength(0) + 1; i++)
                 {
-                    int ARMPResource = ARMPWorksheetLayout.ARMPResources.IndexOf(exceptions[i, (int)ARMPExcelLayout.ARMPExceptionsColsImpr.RsrcName].ToString());
+                    int ARMPResource = ARMPWorksheetLayout.ARMPResources.FindIndex(r => r.name.Equals(exceptions[i, (int)ARMPExcelLayout.ARMPExceptionsColsImpr.RsrcName].ToString()));
                     if (ARMPResource >= 0)
                     {
                         for (int j = (int)ARMPExcelLayout.ARMPExceptionsColsImpr.ExcpStrt; j <= exceptions.GetLength(1); j++)
@@ -456,7 +456,7 @@ namespace AMGenkARMPPlan
                         break;
                 }
 
-                // First order task - Order is Basic Start Date Ascending - OrderNmbrer Ascending
+                // First order task - Order is Basic Start Date - Order Number - Operation number - Ascending
                 ARMPTasksRow = ARMPTasksRowFnsh;
                 if (ARMPTasksRowStrt != ARMPTasksRowFnsh)
                 {

@@ -34,6 +34,10 @@ namespace AMGenkARMPPlan
             ExcdTime = ExcdAbbr + 1,
             ExcdDayp = ExcdTime + 1
         }
+        public enum ARMPExceptionsRowsOrig
+        {
+            ExcpStrt = 3
+        }
         public enum ARMPResourcesRowsOrig
         {
             RsrcYear = 1,
@@ -50,6 +54,7 @@ namespace AMGenkARMPPlan
         {
             ExcpDate = 1,
             RsrcName = ExcpDate + 1,
+            RsrcAmei = RsrcName + 1
         }
         public enum ARMPResourcesColsOrig
         {
@@ -69,17 +74,13 @@ namespace AMGenkARMPPlan
         {
             RsrcStrt = ARMPTasksColsCnvt.RsrcTime
         }
-        public enum ARMPExceptionsRowsOrig
-        {
-            ExcpStrt = 3
-        }
         public enum ARMPExceptionsRowsImpr
         {
             ExcpStrt = 1
         }
         public enum ARMPExceptionsRowsCnvt
         {
-            RsrcExcd = ARMPResourcesRowsCnvt.RsrcName + 1,
+            RsrcExcd = ARMPResourcesRowsCnvt.RsrcAmei + 1,
             RsrcWork = RsrcExcd + 1,
             RsrcTodo = RsrcWork + 1,
             RsrcPlan = RsrcTodo + 1
@@ -170,11 +171,42 @@ namespace AMGenkARMPPlan
             WorkPlan = WorkTodo + 1,
             RsrcTime = WorkPlan + 1
         }
+        public enum ARMPConfirmationsRowsOrig
+        {
+            ClmnHead = 1,
+            ConfStrt = ClmnHead + 1
+        }
+        public enum ARMPConfirmationsRowsImpr
+        {
+            ClmnHead = 1,
+            ConfStrt = ClmnHead + 1
+        }
+        public enum ARMPConfirmationsRowsCnvt
+        {
+        }
+        public enum ARMPConfirmationsColsOrig
+        {
+            ConfStrt = 1,
+            RsrcAmei = ConfStrt + 1,
+            OrdrNmbr = RsrcAmei + 1,
+            OperNmbr = OrdrNmbr + 1,
+            WorkDone = OperNmbr + 1,
+            WorkUnit = WorkDone + 1
+        }
+        public enum ARMPConfirmationsColsImpr
+        {
+            ConfStrt = 1,
+            RsrcAmei = ConfStrt + 1,
+            OrdrNmbr = RsrcAmei + 1,
+            OperNmbr = OrdrNmbr + 1,
+            WorkDone = OperNmbr + 1,
+            WorkUnit = WorkDone + 1
+        }
+        public enum ARMPConfirmationsColsCnvt
+        {
+        }
 
-        public int ARMPResourcesRow { get; set; }
         public int ARMPResourcesCol { get; set; }
-
-        public int ARMPExceptionsRow { get; set; }
         public int ARMPExceptionsCol { get; set; }
 
         //public int ARMPTasksRow { get; set; }
@@ -192,7 +224,7 @@ namespace AMGenkARMPPlan
         // Holds the workplaces which are in planned orders
         public List<string> ARMPWorkplaces = new List<string>();
         // Holds the resources which are in planned workplaces
-        public List<string> ARMPResources = new List<string>();
+        public List<ARMPResource> ARMPResources = new List<ARMPResource>();
 
     }
 }
