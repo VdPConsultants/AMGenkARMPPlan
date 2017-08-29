@@ -114,7 +114,9 @@ namespace AMGenkARMPPlan
                                                        xlWorksheet.Cells[lastRowIgnoreFormulas, (int)ARMPExcelLayout.ARMPTasksColsOrig.WorkUnit]];
             Object[,] tasks = (Object[,])tasksRange.Cells.Value2;
             xlWorkbook.Close();
+            Globals.ThisAddIn.InitialiseARMPWorksheetLayout();
             Globals.ThisAddIn.CreateUpdateARMPTasks(tasks);
+            Globals.ThisAddIn.FormatARMPPlanning();
 
             HideImportDialogBox();
         }
@@ -133,7 +135,7 @@ namespace AMGenkARMPPlan
             if (!(null == xlApp))
             {
                 bool saveChanges = false;
-                xlWorkbook.Close(saveChanges, xx, xx);
+                //xlWorkbook.Close(saveChanges, xx, xx);
                 xlApp.Quit();
             }
             this.Hide();

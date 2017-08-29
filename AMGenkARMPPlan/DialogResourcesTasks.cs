@@ -17,8 +17,10 @@ namespace AMGenkARMPPlan
     public partial class DialogResourcesTasks : Form
     {
         private System.Object xx = System.Type.Missing;
-        private string xlDirectory;
-        private string xlFile;
+        private string xlDirectoryR;
+        private string xlFileR;
+        private string xlDirectoryT;
+        private string xlFileT;
         //private string xlFilePath;
 
         private Excel.Application xlApp;
@@ -35,9 +37,13 @@ namespace AMGenkARMPPlan
         public DialogResourcesTasks()
         {
             InitializeComponent();
-            xlDirectory = Properties.Settings.Default.ARMPTasksDirectory;
-            xlFile = Properties.Settings.Default.ARMPTasksFile;
-            txtARMPTasksFile.Text = xlDirectory + xlFile;
+            xlDirectoryR = Properties.Settings.Default.ARMPResourcesDirectory;
+            xlFileR = Properties.Settings.Default.ARMPResourcesFile;
+            txtARMPResourcesFile.Text = xlDirectoryR + xlFileR;
+
+            xlDirectoryT = Properties.Settings.Default.ARMPTasksDirectory;
+            xlFileT = Properties.Settings.Default.ARMPTasksFile;
+            txtARMPTasksFile.Text = xlDirectoryT + xlFileT;
 
             ARMPStrtDate = DateTime.Now.AddDays(7);
             SetARMPStrtFnshDate();
@@ -65,28 +71,28 @@ namespace AMGenkARMPPlan
         {
             string xlsFiles = "Excel files (*.xls;*.xlsx;*.xlsm)|*.xls;*.xlsx;*.xlsm";
 
-            xlDirectory = Properties.Settings.Default.ARMPResourcesDirectory;
-            xlFile = Properties.Settings.Default.ARMPResourcesFile;
-            txtARMPTasksFile.Text = xlDirectory + xlFile;
+            xlDirectoryR = Properties.Settings.Default.ARMPResourcesDirectory;
+            xlFileR = Properties.Settings.Default.ARMPResourcesFile;
+            txtARMPResourcesFile.Text = xlDirectoryR + xlFileR;
 
             this.openFileDialog1.Filter = xlsFiles;
             this.openFileDialog1.Multiselect = false;
             this.openFileDialog1.Title = "Select the resources import file";
-            this.openFileDialog1.InitialDirectory = xlDirectory;
-            this.openFileDialog1.FileName = xlFile;
+            this.openFileDialog1.InitialDirectory = xlDirectoryR;
+            this.openFileDialog1.FileName = xlFileR;
 
             DialogResult dr = this.openFileDialog1.ShowDialog();
             if (dr == DialogResult.OK)
             {
                 try
                 {
-                    xlFile = this.openFileDialog1.FileName;
-                    int pastLastSlash = xlFile.LastIndexOf(@"\") + 1;
-                    int filenameLength = xlFile.Length - pastLastSlash;
-                    xlDirectory = xlFile.Substring(0, pastLastSlash);
-                    xlFile = xlFile.Substring(pastLastSlash, filenameLength);
+                    xlFileR = this.openFileDialog1.FileName;
+                    int pastLastSlash = xlFileR.LastIndexOf(@"\") + 1;
+                    int filenameLength = xlFileR.Length - pastLastSlash;
+                    xlDirectoryR = xlFileR.Substring(0, pastLastSlash);
+                    xlFileR = xlFileR.Substring(pastLastSlash, filenameLength);
 
-                    string xlFilePath = xlDirectory + xlFile;
+                    string xlFilePath = xlDirectoryR + xlFileR;
                     txtARMPResourcesFile.Text = xlFilePath;
                     btnImport.Enabled = true;
                 }
@@ -106,28 +112,28 @@ namespace AMGenkARMPPlan
         {
             string xlsFiles = "Excel files (*.xls;*.xlsx)|*.xls;*.xlsx";
 
-            xlDirectory = Properties.Settings.Default.ARMPTasksDirectory;
-            xlFile = Properties.Settings.Default.ARMPTasksFile;
-            txtARMPTasksFile.Text = xlDirectory + xlFile;
+            xlDirectoryT = Properties.Settings.Default.ARMPTasksDirectory;
+            xlFileT = Properties.Settings.Default.ARMPTasksFile;
+            txtARMPTasksFile.Text = xlDirectoryT + xlFileT;
 
             this.openFileDialog1.Filter = xlsFiles;
             this.openFileDialog1.Multiselect = false;
             this.openFileDialog1.Title = "Select an Excel File with Project Data";
-            this.openFileDialog1.InitialDirectory = xlDirectory;
-            this.openFileDialog1.FileName = xlFile;
+            this.openFileDialog1.InitialDirectory = xlDirectoryT;
+            this.openFileDialog1.FileName = xlFileT;
 
             DialogResult dr = this.openFileDialog1.ShowDialog();
             if (dr == DialogResult.OK)
             {
                 try
                 {
-                    xlFile = this.openFileDialog1.FileName;
-                    int pastLastSlash = xlFile.LastIndexOf(@"\") + 1;
-                    int filenameLength = xlFile.Length - pastLastSlash;
-                    xlDirectory = xlFile.Substring(0, pastLastSlash);
-                    xlFile = xlFile.Substring(pastLastSlash, filenameLength);
+                    xlFileT = this.openFileDialog1.FileName;
+                    int pastLastSlash = xlFileT.LastIndexOf(@"\") + 1;
+                    int filenameLength = xlFileT.Length - pastLastSlash;
+                    xlDirectoryT = xlFileT.Substring(0, pastLastSlash);
+                    xlFileT = xlFileT.Substring(pastLastSlash, filenameLength);
 
-                    string xlFilePath = xlDirectory + xlFile;
+                    string xlFilePath = xlDirectoryT + xlFileT;
                     txtARMPTasksFile.Text = xlFilePath;
                 }
                 catch (System.Security.SecurityException ex)
@@ -224,9 +230,10 @@ namespace AMGenkARMPPlan
             Object[,] exceptions = ResourcesMerge(exceptions_1, exceptions_2, exceptions_3);
             Globals.ThisAddIn.CreateARMPExceptions(exceptions);
 
+            Globals.ThisAddIn.PrepareARMPTasks();
             Globals.ThisAddIn.CreateUpdateARMPTasks(tasks);
-
             Globals.ThisAddIn.FormatARMPPlanning();
+
             HideImportDialogBox();
         }
 
@@ -238,8 +245,10 @@ namespace AMGenkARMPPlan
         // Store the user settings and close the Import Tasks dialog box.
         private void HideImportDialogBox()
         {
-            Properties.Settings.Default.ARMPTasksDirectory = xlDirectory;
-            Properties.Settings.Default.ARMPTasksFile = xlFile;
+            Properties.Settings.Default.ARMPResourcesDirectory = xlDirectoryR;
+            Properties.Settings.Default.ARMPResourcesFile = xlFileR;
+            Properties.Settings.Default.ARMPTasksDirectory = xlDirectoryT;
+            Properties.Settings.Default.ARMPTasksFile = xlFileT;
 
             if (!(null == xlApp))
             {

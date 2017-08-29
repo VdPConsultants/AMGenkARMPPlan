@@ -49,7 +49,7 @@ namespace AMGenkARMPPlan
         public enum ARMPResourcesRowsCnvt
         {
             ExcpDate = 1,
-            RsrcAbbr = ExcpDate + 1,
+            RsrcName = ExcpDate + 1,
         }
         public enum ARMPResourcesColsOrig
         {
@@ -79,7 +79,7 @@ namespace AMGenkARMPPlan
         }
         public enum ARMPExceptionsRowsCnvt
         {
-            RsrcExcd = ARMPResourcesRowsCnvt.RsrcAbbr + 1,
+            RsrcExcd = ARMPResourcesRowsCnvt.RsrcName + 1,
             RsrcWork = RsrcExcd + 1,
             RsrcTodo = RsrcWork + 1,
             RsrcPlan = RsrcTodo + 1
@@ -188,5 +188,11 @@ namespace AMGenkARMPPlan
 
         public DateTime ARMPStrtDate { get; set; }
         public DateTime ARMPFnshDate { get; set; }
+
+        // Holds the workplaces which are in planned orders
+        public List<string> ARMPWorkplaces = new List<string>();
+        // Holds the resources which are in planned workplaces
+        public List<string> ARMPResources = new List<string>();
+
     }
 }
