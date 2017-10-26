@@ -85,7 +85,7 @@ namespace AMGenkARMPPlan
                 // Add a button named ImportProject and an event handler.
                 atasksButton = (Office.CommandBarButton)commandBar.Controls.Add(
                     Office.MsoControlType.msoControlButton, missing, missing, missing, missing);
-                atasksButton.Style = Office.MsoButtonStyle.msoButtonAutomatic;
+                atasksButton.Style = Office.MsoButtonStyle.msoButtonCaption;
                 atasksButton.Caption = "Import A-tasks";
                 atasksButton.Tag = "B";
                 atasksButton.TooltipText = "Import A-tasks from Excel.";
