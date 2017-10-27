@@ -318,12 +318,12 @@ namespace AMGenkARMPPlan
             Excel.Range rngFormula;
             rngFormula = ARMPWorksheet.Range[ARMPWorksheet.Cells[ARMPExcelLayout.ARMPExceptionsRowsCnvt.RsrcTodo, ARMPExcelLayout.ARMPExceptionsColsCnvt.ExcpStrt],
                                              ARMPWorksheet.Cells[ARMPExcelLayout.ARMPExceptionsRowsCnvt.RsrcTodo, ARMPWorksheetLayout.ARMPExceptionsCol]];
-            rngFormula.Formula = "=r[-1]c[0] - r[+1]C[0]";
+            rngFormula.Formula = "=r[-1]c[0] - r[+1]c[0]";
             rngFormula.FormulaHidden = true;
             rngFormula.Calculate();
             rngFormula = ARMPWorksheet.Range[ARMPWorksheet.Cells[ARMPExcelLayout.ARMPExceptionsRowsCnvt.RsrcPlan, ARMPExcelLayout.ARMPExceptionsColsCnvt.ExcpStrt],
                                              ARMPWorksheet.Cells[ARMPExcelLayout.ARMPExceptionsRowsCnvt.RsrcPlan, ARMPWorksheetLayout.ARMPExceptionsCol]];
-            rngFormula.Formula = "=SUM(r[1]c[0]:r[9999]C[0])";
+            rngFormula.Formula = "=SUM(r[1]c[0]:r[9999]c[0])";
             rngFormula.FormulaHidden = true;
             rngFormula.Calculate();
         }
@@ -333,13 +333,30 @@ namespace AMGenkARMPPlan
             ARMPWorksheetLayout.ARMPTasksRowB = ARMPWorksheetLayout.ARMPTasksRowA + 1;
             ARMPWorksheetLayout.ARMPTasksRowC = ARMPWorksheetLayout.ARMPTasksRowB + 1;
             ARMPWorksheetLayout.ARMPTasksRowO = ARMPWorksheetLayout.ARMPTasksRowC + 1;
-            ARMPWorksheetLayout.ARMPTasksRows = ARMPWorksheetLayout.ARMPTasksRowO + 1;
+            ARMPWorksheetLayout.ARMPTasksRow = ARMPWorksheetLayout.ARMPTasksRowO + 1;
 
             Excel.Worksheet ARMPWorksheet = ((Excel.Worksheet)Application.ActiveSheet);
+            ARMPWorksheet.Cells[ARMPExcelLayout.ARMPTasksRowsCnvt.TaskTitl, ARMPExcelLayout.ARMPTasksColsCnvt.WorkPlce].Value2 = "Uitvoerende werkplek";
+            ARMPWorksheet.Cells[ARMPExcelLayout.ARMPTasksRowsCnvt.TaskTitl, ARMPExcelLayout.ARMPTasksColsCnvt.MainWork].Value2 = "Verantwoordelijke werkplek";
+            ARMPWorksheet.Cells[ARMPExcelLayout.ARMPTasksRowsCnvt.TaskTitl, ARMPExcelLayout.ARMPTasksColsCnvt.WorkPlce].Value2 = "Uitvoerende werkplek";
+            ARMPWorksheet.Cells[ARMPExcelLayout.ARMPTasksRowsCnvt.TaskTitl, ARMPExcelLayout.ARMPTasksColsCnvt.OrdrPrio].Value2 = "Prioriteit";
+            ARMPWorksheet.Cells[ARMPExcelLayout.ARMPTasksRowsCnvt.TaskTitl, ARMPExcelLayout.ARMPTasksColsCnvt.OrdrNmbr].Value2 = "Order nummer";
+            ARMPWorksheet.Cells[ARMPExcelLayout.ARMPTasksRowsCnvt.TaskTitl, ARMPExcelLayout.ARMPTasksColsCnvt.OperNmbr].Value2 = "Operatie nummer";
+            ARMPWorksheet.Cells[ARMPExcelLayout.ARMPTasksRowsCnvt.TaskTitl, ARMPExcelLayout.ARMPTasksColsCnvt.OrdrStrt].Value2 = "Start datum";
+            ARMPWorksheet.Cells[ARMPExcelLayout.ARMPTasksRowsCnvt.TaskTitl, ARMPExcelLayout.ARMPTasksColsCnvt.GateDate].Value2 = "GK datum";
+            ARMPWorksheet.Cells[ARMPExcelLayout.ARMPTasksRowsCnvt.TaskTitl, ARMPExcelLayout.ARMPTasksColsCnvt.OrdrDesc].Value2 = "Order beschrijving";
+            ARMPWorksheet.Cells[ARMPExcelLayout.ARMPTasksRowsCnvt.TaskTitl, ARMPExcelLayout.ARMPTasksColsCnvt.OperDesc].Value2 = "Operatie beschrijving";
+            ARMPWorksheet.Cells[ARMPExcelLayout.ARMPTasksRowsCnvt.TaskTitl, ARMPExcelLayout.ARMPTasksColsCnvt.WorkUnit].Value2 = "Werktijd eenheid";
+            ARMPWorksheet.Cells[ARMPExcelLayout.ARMPTasksRowsCnvt.TaskTitl, ARMPExcelLayout.ARMPTasksColsCnvt.WorkNorm].Value2 = "Werktijd";
+            ARMPWorksheet.Cells[ARMPExcelLayout.ARMPTasksRowsCnvt.TaskTitl, ARMPExcelLayout.ARMPTasksColsCnvt.WorkHour].Value2 = "Werktijd in uur";
+            ARMPWorksheet.Cells[ARMPExcelLayout.ARMPTasksRowsCnvt.TaskTitl, ARMPExcelLayout.ARMPTasksColsCnvt.WorkTodo].Value2 = "Werktijd todo";
+            ARMPWorksheet.Cells[ARMPExcelLayout.ARMPTasksRowsCnvt.TaskTitl, ARMPExcelLayout.ARMPTasksColsCnvt.WorkPlan].Value2 = "Werktijd gepland";
+
             ARMPWorksheet.Cells[ARMPWorksheetLayout.ARMPTasksRowA, 1].Value2 = "PRIORITEIT A";
             ARMPWorksheet.Cells[ARMPWorksheetLayout.ARMPTasksRowB, 1].Value2 = "PRIORITEIT B";
             ARMPWorksheet.Cells[ARMPWorksheetLayout.ARMPTasksRowC, 1].Value2 = "PRIORITEIT C";
             ARMPWorksheet.Cells[ARMPWorksheetLayout.ARMPTasksRowO, 1].Value2 = "PRIORITEIT O";
+            ARMPWorksheet.Cells[ARMPWorksheetLayout.ARMPTasksRow, 1].Value2 = "EINDE TAAKLIJST";
         }
 
         public void InitialiseARMPWorksheetLayout()
@@ -369,10 +386,14 @@ namespace AMGenkARMPPlan
                     case "PRIORITEIT O":
                         ARMPWorksheetLayout.ARMPTasksRowO = i;
                         break;
+                    case "EINDE TAAKLIJST":
+                        ARMPWorksheetLayout.ARMPTasksRow = i;
+                        goto label_einde;
                     default:
                         break;
                 }
             }
+            label_einde:
 
             ARMPWorksheetLayout.ARMPResourcesCol = ARMPWorksheet.Cells.Find("*", System.Reflection.Missing.Value, Excel.XlFindLookIn.xlValues, Excel.XlLookAt.xlWhole, Excel.XlSearchOrder.xlByColumns, Excel.XlSearchDirection.xlPrevious, false, System.Reflection.Missing.Value, System.Reflection.Missing.Value).Column;
             ARMPWorksheetLayout.ARMPExceptionsCol = ARMPWorksheetLayout.ARMPResourcesCol;
@@ -399,9 +420,6 @@ namespace AMGenkARMPPlan
             int ARMPTasksRowFnsh = ARMPTasksRowStrt;
             int ARMPTasksRow = ARMPTasksRowFnsh;
             
-            string ARMPWorkPlanForm = "";
-            string ARMPWorkTodoForm = "";
-
             Double dOrdrStrtTarg = 0.0;
             Double dOrdrStrtSrce = 0.0;
 
@@ -410,8 +428,8 @@ namespace AMGenkARMPPlan
             int iOperNmbrTarg = 0;
             int iOperNmbrSrce = 0;
 
-            ARMPWorkPlanForm = "=SUM(r[0]c[1]:r[0]C[" + (ARMPWorksheetLayout.ARMPResourcesCol - 1).ToString() + "])";
-            ARMPWorkTodoForm = "=R[0]C[-1] - R[0]C[1]";
+            string ARMPWorkPlanForm = "=SUM(r[0]c[1]:r[0]C[" + (ARMPWorksheetLayout.ARMPResourcesCol - 1).ToString() + "])";
+            string ARMPWorkTodoForm = "=R[0]C[-1] - R[0]C[1]";
 
             Excel.Worksheet ARMPWorksheet = ((Excel.Worksheet)Application.ActiveSheet);
             for (int i = (int)ARMPExcelLayout.ARMPTasksRowsOrig.TaskRows; i <= tasks.GetLength(0); i++)
@@ -425,7 +443,7 @@ namespace AMGenkARMPPlan
                         ARMPWorksheetLayout.ARMPTasksRowB++;
                         ARMPWorksheetLayout.ARMPTasksRowC++;
                         ARMPWorksheetLayout.ARMPTasksRowO++;
-                        ARMPWorksheetLayout.ARMPTasksRows++;
+                        ARMPWorksheetLayout.ARMPTasksRow++;
                         break;
 
                     case "B":
@@ -439,20 +457,20 @@ namespace AMGenkARMPPlan
                         ARMPTasksRowFnsh = ARMPWorksheetLayout.ARMPTasksRowC;
                         ARMPWorksheetLayout.ARMPTasksRowC++;
                         ARMPWorksheetLayout.ARMPTasksRowO++;
-                        ARMPWorksheetLayout.ARMPTasksRows++;
+                        ARMPWorksheetLayout.ARMPTasksRow++;
                         break;
 
                     case "C":
                         ARMPTasksRowStrt = ARMPWorksheetLayout.ARMPTasksRowC + 1;
                         ARMPTasksRowFnsh = ARMPWorksheetLayout.ARMPTasksRowO;
                         ARMPWorksheetLayout.ARMPTasksRowO++;
-                        ARMPWorksheetLayout.ARMPTasksRows++;
+                        ARMPWorksheetLayout.ARMPTasksRow++;
                         break;
 
                     default:
                         ARMPTasksRowStrt = ARMPWorksheetLayout.ARMPTasksRowO + 1;
-                        ARMPTasksRowFnsh = ARMPWorksheetLayout.ARMPTasksRows;
-                        ARMPWorksheetLayout.ARMPTasksRows++;
+                        ARMPTasksRowFnsh = ARMPWorksheetLayout.ARMPTasksRow;
+                        ARMPWorksheetLayout.ARMPTasksRow++;
                         break;
                 }
 
@@ -554,6 +572,18 @@ namespace AMGenkARMPPlan
                 ARMPWorksheet.Cells[ARMPTasksRow, (int)ARMPExcelLayout.ARMPTasksColsCnvt.WorkTodo].Formula = ARMPWorkTodoForm;
                 ARMPWorksheet.Cells[ARMPTasksRow, (int)ARMPExcelLayout.ARMPTasksColsCnvt.WorkPlan].Formula = ARMPWorkPlanForm;
             }
+            // Summary
+            ARMPWorksheet.Cells[(int)ARMPExcelLayout.ARMPSummRowsCnvt.SummRow1, (int)ARMPExcelLayout.ARMPSummColsCnvt.SummCol1].Formula = 
+                 "=SUM(r[" + (ARMPWorksheetLayout.ARMPTasksRowA - (int)ARMPExcelLayout.ARMPSummRowsCnvt.SummRow1).ToString() + "]c[0]:r[" + (ARMPWorksheetLayout.ARMPTasksRow - (int)ARMPExcelLayout.ARMPSummRowsCnvt.SummRow1 - 1).ToString() + "]C[0])";
+            ARMPWorksheet.Cells[(int)ARMPExcelLayout.ARMPSummRowsCnvt.SummRow1, (int)ARMPExcelLayout.ARMPSummColsCnvt.SummCol3].Formula =
+                "=SUM(r[0]c[1]:r[0]C[" + (ARMPWorksheetLayout.ARMPResourcesCol - (int)ARMPExcelLayout.ARMPSummColsCnvt.SummCol3 - 1).ToString() + "])";
+            ARMPWorksheet.Cells[(int)ARMPExcelLayout.ARMPSummRowsCnvt.SummRow2, (int)ARMPExcelLayout.ARMPSummColsCnvt.SummCol3].Formula =
+                "=SUM(r[0]c[1]:r[0]C[" + (ARMPWorksheetLayout.ARMPResourcesCol - (int)ARMPExcelLayout.ARMPSummColsCnvt.SummCol3 - 1).ToString() + "])";
+            ARMPWorksheet.Cells[(int)ARMPExcelLayout.ARMPSummRowsCnvt.SummRow3, (int)ARMPExcelLayout.ARMPSummColsCnvt.SummCol3].Formula = 
+                "=SUM(r[0]c[1]:r[0]C[" + (ARMPWorksheetLayout.ARMPResourcesCol - (int)ARMPExcelLayout.ARMPSummColsCnvt.SummCol3 - 1).ToString() + "])";
+
+
+
         }
         public void FormatARMPPlanning()
         {
@@ -563,6 +593,31 @@ namespace AMGenkARMPPlan
             Excel.FormatCondition rngfmcCondition;
 
             DateTime ARMPStrtDate = ARMPWorksheetLayout.ARMPStrtDate;
+
+            rngFormat = ARMPWorksheet.Range[ARMPWorksheet.Cells[(int)ARMPExcelLayout.ARMPResourcesRowsCnvt.ExcpDate, (int)ARMPExcelLayout.ARMPTasksColsCnvt.WorkPlce],
+                                            ARMPWorksheet.Cells[ARMPWorksheetLayout.ARMPTasksRow, ARMPWorksheetLayout.ARMPResourcesCol - 1]];
+            rngFormat.Borders[Excel.XlBordersIndex.xlInsideVertical].Weight = Excel.XlBorderWeight.xlThin;
+            rngFormat.Borders[Excel.XlBordersIndex.xlInsideHorizontal].Weight = Excel.XlBorderWeight.xlThin;
+
+            rngFormat = ARMPWorksheet.Range[ARMPWorksheet.Cells[(int)ARMPExcelLayout.ARMPResourcesRowsCnvt.ExcpDate, (int)ARMPExcelLayout.ARMPTasksColsCnvt.WorkPlce],
+                                            ARMPWorksheet.Cells[(int)ARMPExcelLayout.ARMPResourcesRowsCnvt.ExcpDate, (int)ARMPExcelLayout.ARMPTasksColsCnvt.WorkPlan]];
+            rngFormat.Merge();
+            rngFormat.Borders.Weight = Excel.XlBorderWeight.xlThick;
+
+            rngFormat = ARMPWorksheet.Range[ARMPWorksheet.Cells[(int)ARMPExcelLayout.ARMPResourcesRowsCnvt.ExcpDate, (int)ARMPExcelLayout.ARMPTasksColsCnvt.WorkPlce],
+                                            ARMPWorksheet.Cells[(int)ARMPExcelLayout.ARMPTasksRowsCnvt.TaskStrt, (int)ARMPExcelLayout.ARMPTasksColsCnvt.WorkPlan]];
+            rngFormat.Font.Bold = true;
+
+            rngFormat = ARMPWorksheet.Range[ARMPWorksheet.Cells[(int)ARMPExcelLayout.ARMPSummRowsCnvt.SummRow1, (int)ARMPExcelLayout.ARMPSummColsCnvt.SummCol1],
+                                            ARMPWorksheet.Cells[(int)ARMPExcelLayout.ARMPSummRowsCnvt.SummRow3, (int)ARMPExcelLayout.ARMPSummColsCnvt.SummCol3]];
+            rngFormat.NumberFormat = "0.00";
+            rngFormat.Borders[Excel.XlBordersIndex.xlEdgeTop].Weight = Excel.XlBorderWeight.xlThick;
+            rngFormat.Borders[Excel.XlBordersIndex.xlEdgeLeft].Weight = Excel.XlBorderWeight.xlThick;
+            rngFormat.Borders[Excel.XlBordersIndex.xlEdgeBottom].Weight = Excel.XlBorderWeight.xlThick;
+            rngFormat.Borders[Excel.XlBordersIndex.xlInsideVertical].Weight = Excel.XlBorderWeight.xlThin;
+            rngFormat.Borders[Excel.XlBordersIndex.xlInsideHorizontal].Weight = Excel.XlBorderWeight.xlThin;
+            rngFormat.Interior.Color = Color.LightCyan;
+
             int RsrcCols = (int)ARMPExcelLayout.ARMPExceptionsColsCnvt.ExcpStrt;
             do
             {
@@ -584,6 +639,11 @@ namespace AMGenkARMPPlan
                 ARMPStrtDate = ARMPStrtDate.AddDays(1);
             } while (ARMPStrtDate.CompareTo(ARMPWorksheetLayout.ARMPFnshDate) <= 0);
 
+            rngFormat = ARMPWorksheet.Range[ARMPWorksheet.Cells[(int)ARMPExcelLayout.ARMPTasksRowsCnvt.TaskTitl, (int)ARMPExcelLayout.ARMPTasksColsCnvt.WorkPlce],
+                                            ARMPWorksheet.Cells[(int)ARMPExcelLayout.ARMPTasksRowsCnvt.TaskTitl, (int)ARMPExcelLayout.ARMPTasksColsCnvt.WorkPlan]];
+            rngFormat.Orientation = 90;
+            rngFormat.HorizontalAlignment = Excel.Constants.xlCenter;
+
             rngFormat = ARMPWorksheet.Range[ARMPWorksheet.Cells[(int)ARMPExcelLayout.ARMPResourcesRowsCnvt.RsrcName, (int)ARMPExcelLayout.ARMPResourcesColsCnvt.RsrcStrt],
                                             ARMPWorksheet.Cells[(int)ARMPExcelLayout.ARMPExceptionsRowsCnvt.RsrcExcd, ARMPWorksheetLayout.ARMPExceptionsCol]];
             rngFormat.Orientation = 90;
@@ -593,9 +653,13 @@ namespace AMGenkARMPPlan
                                             ARMPWorksheet.Cells[(int)ARMPExcelLayout.ARMPExceptionsRowsCnvt.RsrcPlan, ARMPWorksheetLayout.ARMPExceptionsCol]];
             rngFormat.NumberFormat = "0.00";
             rngFormat = ARMPWorksheet.Range[ARMPWorksheet.Cells[(int)ARMPExcelLayout.ARMPExceptionsRowsCnvt.RsrcTodo, (int)ARMPExcelLayout.ARMPExceptionsColsCnvt.ExcpStrt],
-                                            ARMPWorksheet.Cells[(int)ARMPExcelLayout.ARMPExceptionsRowsCnvt.RsrcTodo, ARMPWorksheetLayout.ARMPExceptionsCol]]; 
+                                            ARMPWorksheet.Cells[(int)ARMPExcelLayout.ARMPExceptionsRowsCnvt.RsrcTodo, ARMPWorksheetLayout.ARMPExceptionsCol]];
+            rngfmcCondition = rngFormat.FormatConditions.Add(Excel.XlFormatConditionType.xlCellValue, Excel.XlFormatConditionOperator.xlGreater, "=0");
+            rngfmcCondition.Font.Color = Color.Red;
+            rngfmcCondition = rngFormat.FormatConditions.Add(Excel.XlFormatConditionType.xlCellValue, Excel.XlFormatConditionOperator.xlEqual, "=0");
+            rngfmcCondition.Font.Color = Color.Green;
             rngfmcCondition = rngFormat.FormatConditions.Add(Excel.XlFormatConditionType.xlCellValue, Excel.XlFormatConditionOperator.xlLess, "=0");
-            rngfmcCondition.Interior.Color = Color.Red;
+            rngfmcCondition.Font.Color = Color.Orange;
 
             rngFormat = ARMPWorksheet.Range[ARMPWorksheet.Cells[(int)ARMPExcelLayout.ARMPTasksRowsCnvt.TaskStrt, 1],
                                             ARMPWorksheet.Cells[ARMPWorksheetLayout.ARMPTasksRowO, ARMPExcelLayout.ARMPTasksColsCnvt.WorkPlan]];
@@ -628,11 +692,11 @@ namespace AMGenkARMPPlan
             rngFormat = ARMPWorksheet.Range[ARMPWorksheet.Cells[(int)ARMPExcelLayout.ARMPTasksRowsCnvt.TaskStrt, (int)ARMPExcelLayout.ARMPTasksColsCnvt.WorkTodo],
                                             ARMPWorksheet.Cells[ARMPWorksheetLayout.ARMPTasksRowO, (int)ARMPExcelLayout.ARMPTasksColsCnvt.WorkTodo]];
             rngfmcCondition = rngFormat.FormatConditions.Add(Excel.XlFormatConditionType.xlCellValue, Excel.XlFormatConditionOperator.xlGreater, "=0");
-            rngfmcCondition.Interior.Color = Color.Red;
+            rngfmcCondition.Font.Color = Color.Red;
             rngfmcCondition = rngFormat.FormatConditions.Add(Excel.XlFormatConditionType.xlCellValue, Excel.XlFormatConditionOperator.xlEqual, "=0");
-            rngfmcCondition.Interior.Color = Color.Green;
+            rngfmcCondition.Font.Color = Color.Green;
             rngfmcCondition = rngFormat.FormatConditions.Add(Excel.XlFormatConditionType.xlCellValue, Excel.XlFormatConditionOperator.xlLess, "=0");
-            rngfmcCondition.Interior.Color = Color.Orange;
+            rngfmcCondition.Font.Color = Color.Orange;
 
             rngFormat = ARMPWorksheet.Range[ARMPWorksheet.Cells[ARMPWorksheetLayout.ARMPTasksRowA, 1],
                                             ARMPWorksheet.Cells[ARMPWorksheetLayout.ARMPTasksRowA, ARMPWorksheetLayout.ARMPExceptionsCol]];
@@ -642,6 +706,7 @@ namespace AMGenkARMPPlan
             rngFormat.Borders[Excel.XlBordersIndex.xlEdgeRight].Weight = Excel.XlBorderWeight.xlThick;
             rngFormat.Borders[Excel.XlBordersIndex.xlEdgeBottom].Weight = Excel.XlBorderWeight.xlThick;
             rngFormat.Interior.Color = Color.Red;
+            rngFormat.Font.Color = Color.White;
             rngFormat = ARMPWorksheet.Range[ARMPWorksheet.Cells[ARMPWorksheetLayout.ARMPTasksRowB, 1],
                                             ARMPWorksheet.Cells[ARMPWorksheetLayout.ARMPTasksRowB, ARMPWorksheetLayout.ARMPExceptionsCol]];
             rngFormat.FormatConditions.Delete();
@@ -650,6 +715,7 @@ namespace AMGenkARMPPlan
             rngFormat.Borders[Excel.XlBordersIndex.xlEdgeRight].Weight = Excel.XlBorderWeight.xlThick;
             rngFormat.Borders[Excel.XlBordersIndex.xlEdgeBottom].Weight = Excel.XlBorderWeight.xlThick;
             rngFormat.Interior.Color = Color.Orange;
+            rngFormat.Font.Color = Color.White;
             rngFormat = ARMPWorksheet.Range[ARMPWorksheet.Cells[ARMPWorksheetLayout.ARMPTasksRowC, 1],
                                             ARMPWorksheet.Cells[ARMPWorksheetLayout.ARMPTasksRowC, ARMPWorksheetLayout.ARMPExceptionsCol]];
             rngFormat.FormatConditions.Delete();
@@ -658,6 +724,7 @@ namespace AMGenkARMPPlan
             rngFormat.Borders[Excel.XlBordersIndex.xlEdgeRight].Weight = Excel.XlBorderWeight.xlThick;
             rngFormat.Borders[Excel.XlBordersIndex.xlEdgeBottom].Weight = Excel.XlBorderWeight.xlThick;
             rngFormat.Interior.Color = Color.Green;
+            rngFormat.Font.Color = Color.White;
             rngFormat = ARMPWorksheet.Range[ARMPWorksheet.Cells[ARMPWorksheetLayout.ARMPTasksRowO, 1],
                                             ARMPWorksheet.Cells[ARMPWorksheetLayout.ARMPTasksRowO, ARMPWorksheetLayout.ARMPExceptionsCol]];
             rngFormat.FormatConditions.Delete();
@@ -666,6 +733,16 @@ namespace AMGenkARMPPlan
             rngFormat.Borders[Excel.XlBordersIndex.xlEdgeRight].Weight = Excel.XlBorderWeight.xlThick;
             rngFormat.Borders[Excel.XlBordersIndex.xlEdgeBottom].Weight = Excel.XlBorderWeight.xlThick;
             rngFormat.Interior.Color = Color.Yellow;
+            rngFormat.Font.Color = Color.White;
+            rngFormat = ARMPWorksheet.Range[ARMPWorksheet.Cells[ARMPWorksheetLayout.ARMPTasksRow, 1],
+                                            ARMPWorksheet.Cells[ARMPWorksheetLayout.ARMPTasksRow, ARMPWorksheetLayout.ARMPExceptionsCol]];
+            rngFormat.FormatConditions.Delete();
+            rngFormat.Borders[Excel.XlBordersIndex.xlEdgeTop].Weight = Excel.XlBorderWeight.xlThick;
+            rngFormat.Borders[Excel.XlBordersIndex.xlEdgeLeft].Weight = Excel.XlBorderWeight.xlThick;
+            rngFormat.Borders[Excel.XlBordersIndex.xlEdgeRight].Weight = Excel.XlBorderWeight.xlThick;
+            rngFormat.Borders[Excel.XlBordersIndex.xlEdgeBottom].Weight = Excel.XlBorderWeight.xlThick;
+            rngFormat.Font.Color = Color.White;
+            rngFormat.Interior.Color = Color.Blue;
 
 
             ARMPWorksheet.Cells[1, (int)ARMPExcelLayout.ARMPTasksColsCnvt.OrdrPrio].EntireColumn.HorizontalAlignment = Excel.Constants.xlLeft;

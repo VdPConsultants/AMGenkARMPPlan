@@ -89,7 +89,7 @@ namespace AMGenkARMPPlan
             WorkPlce = 1,
             RsrcName = WorkPlce + 1,
             StrtTime = RsrcName + 1,
-            ExcpStrt = RsrcName + 1
+            ExcpStrt = StrtTime + 1
         }
         public enum ARMPExceptionsColsImpr
         {
@@ -108,6 +108,7 @@ namespace AMGenkARMPPlan
         }
         public enum ARMPTasksRowsCnvt
         {
+            TaskTitl = 2,
             TaskStrt = ARMPExcelLayout.ARMPExceptionsRowsCnvt.RsrcPlan + 1
         }
         public enum ARMPTasksColsOrig
@@ -170,6 +171,19 @@ namespace AMGenkARMPPlan
             WorkPlan = WorkTodo + 1,
             RsrcTime = WorkPlan + 1
         }
+        public enum ARMPSummRowsCnvt
+        {
+            SummRow1 = ARMPExcelLayout.ARMPExceptionsRowsCnvt.RsrcWork,
+            SummRow2 = SummRow1 + 1,
+            SummRow3 = SummRow2 + 1
+        }
+
+        public enum ARMPSummColsCnvt
+        {
+            SummCol1 = ARMPExcelLayout.ARMPTasksColsCnvt.WorkHour,
+            SummCol2 = SummCol1 + 1,
+            SummCol3 = SummCol2 + 1
+        }
 
         public int ARMPResourcesRow { get; set; }
         public int ARMPResourcesCol { get; set; }
@@ -182,7 +196,7 @@ namespace AMGenkARMPPlan
         public int ARMPTasksRowB { get; set; }
         public int ARMPTasksRowC { get; set; }
         public int ARMPTasksRowO { get; set; }
-        public int ARMPTasksRows { get; set; }
+        public int ARMPTasksRow { get; set; }
 
         public int ARMPTasksCol { get; set; }
 
