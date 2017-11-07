@@ -41,7 +41,7 @@
     <InstallUrl />
     <TargetCulture>en</TargetCulture>
     <ApplicationVersion>1.1.1.5</ApplicationVersion>
-    <AutoIncrementApplicationRevision>true</AutoIncrementApplicationRevision>
+    <AutoIncrementApplicationRevision>false</AutoIncrementApplicationRevision>
     <UpdateEnabled>true</UpdateEnabled>
     <UpdateInterval>7</UpdateInterval>
     <UpdateIntervalUnits>days</UpdateIntervalUnits>
@@ -192,13 +192,20 @@
     can be found.
   -->
   <ItemGroup>
+    <Compile Include="AMGenkResources.cs" />
     <Compile Include="ARMPExcelLayout.cs" />
     <Compile Include="Conversions.cs" />
-    <Compile Include="DialogATasks.cs">
+    <Compile Include="DialogResources.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="DialogATasks.Designer.cs">
-      <DependentUpon>DialogATasks.cs</DependentUpon>
+    <Compile Include="DialogResources.Designer.cs">
+      <DependentUpon>DialogResources.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DialogTasks.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DialogTasks.Designer.cs">
+      <DependentUpon>DialogTasks.cs</DependentUpon>
     </Compile>
     <Compile Include="DialogResourcesTasks.cs">
       <SubType>Form</SubType>
@@ -209,8 +216,11 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <EmbeddedResource Include="DialogATasks.resx">
-      <DependentUpon>DialogATasks.cs</DependentUpon>
+    <EmbeddedResource Include="DialogResources.resx">
+      <DependentUpon>DialogResources.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DialogTasks.resx">
+      <DependentUpon>DialogTasks.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DialogResourcesTasks.resx">
       <DependentUpon>DialogResourcesTasks.cs</DependentUpon>
@@ -236,6 +246,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Resource.cs" />
     <Compile Include="ThisAddIn.cs">
       <SubType>Code</SubType>
     </Compile>

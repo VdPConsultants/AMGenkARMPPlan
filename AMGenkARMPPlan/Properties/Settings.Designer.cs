@@ -26,24 +26,24 @@ namespace AMGenkARMPPlan.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("G:\\Onderhoud\\PLANNING\\AANWEZIGHEDEN")]
-        public string ARMPResourcesDirectory {
+        public string AMGenkResourcesDirectory {
             get {
-                return ((string)(this["ARMPResourcesDirectory"]));
+                return ((string)(this["AMGenkResourcesDirectory"]));
             }
             set {
-                this["ARMPResourcesDirectory"] = value;
+                this["AMGenkResourcesDirectory"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string ARMPResourcesFile {
+        [global::System.Configuration.DefaultSettingValueAttribute("Aanwezigheden ")]
+        public string AMGenkResourcesFile {
             get {
-                return ((string)(this["ARMPResourcesFile"]));
+                return ((string)(this["AMGenkResourcesFile"]));
             }
             set {
-                this["ARMPResourcesFile"] = value;
+                this["AMGenkResourcesFile"] = value;
             }
         }
         

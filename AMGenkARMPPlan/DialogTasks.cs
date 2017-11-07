@@ -14,7 +14,7 @@ using System.Globalization;
 
 namespace AMGenkARMPPlan
 {
-    public partial class DialogATasks : Form
+    public partial class DialogTasks : Form
     {
         private System.Object xx = System.Type.Missing;
         private string xlDirectory;
@@ -25,7 +25,7 @@ namespace AMGenkARMPPlan
         private Excel.Workbook xlWorkbook;
         private Excel.Worksheet xlWorksheet;
 
-        public DialogATasks()
+        public DialogTasks()
         {
             InitializeComponent();
             xlDirectory = Properties.Settings.Default.ARMPTasksDirectory;
@@ -114,10 +114,9 @@ namespace AMGenkARMPPlan
                                                        xlWorksheet.Cells[lastRowIgnoreFormulas, (int)ARMPExcelLayout.ARMPTasksColsOrig.WorkUnit]];
             Object[,] tasks = (Object[,])tasksRange.Cells.Value2;
             xlWorkbook.Close();
-            Globals.ThisAddIn.InitialiseARMPWorksheetLayout();
             Globals.ThisAddIn.CreateUpdateARMPTasks(tasks);
             Globals.ThisAddIn.FormatARMPPlanning();
-
+            
             HideImportDialogBox();
         }
 
@@ -140,6 +139,7 @@ namespace AMGenkARMPPlan
             }
             this.Hide();
         }
+
     }
 }
 

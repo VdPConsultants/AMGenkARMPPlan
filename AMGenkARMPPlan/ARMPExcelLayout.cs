@@ -49,7 +49,8 @@ namespace AMGenkARMPPlan
         public enum ARMPResourcesRowsCnvt
         {
             ExcpDate = 1,
-            RsrcName = ExcpDate + 1,
+            RsrcAmei = ExcpDate + 1,
+            RsrcName = RsrcAmei + 1
         }
         public enum ARMPResourcesColsOrig
         {
@@ -206,7 +207,6 @@ namespace AMGenkARMPPlan
         // Holds the workplaces which are in planned orders
         public List<string> ARMPWorkplaces = new List<string>();
         // Holds the resources which are in planned workplaces
-        public List<string> ARMPResources = new List<string>();
-
+        public List<Resource> ARMPResources = new List<Resource>();
     }
 }
