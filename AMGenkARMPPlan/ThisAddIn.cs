@@ -253,7 +253,7 @@ namespace AMGenkARMPPlan
             {
                 for (int i = 1; i < exceptions.GetLength(0) + 1; i++)
                 {
-                    int ARMPResource = ARMPWorksheetLayout.ARMPResources.FindIndex(x => x.Name == exceptions[i, (int)ARMPExcelLayout.ARMPExceptionsColsImpr.RsrcName].ToString());
+                    int ARMPResource = ARMPWorksheetLayout.ARMPResources.FindIndex(x => x.Name == exceptions[i, (int)ARMPExcelLayout.ARMPExceptionsColsImpr.RsrcName]?.ToString());
                     if (ARMPResource >= 0)
                     {
                         for (int j = (int)ARMPExcelLayout.ARMPExceptionsColsImpr.ExcpStrt; j <= exceptions.GetLength(1); j++)
