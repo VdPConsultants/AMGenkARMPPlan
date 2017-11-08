@@ -17,6 +17,7 @@ namespace AMGenkARMPPlan
         private Office.CommandBar commandBar;
         private Office.CommandBarButton importButton;
         private Office.CommandBarButton atasksButton;
+        private Office.CommandBarButton resourcesButton;
 
         private DataTable ARMPExceptionCodes = new DataTable();
 
@@ -110,13 +111,13 @@ namespace AMGenkARMPPlan
             try
             {
                 // Add a button and an event handler.
-                atasksButton = (Office.CommandBarButton)commandBar.Controls.Add(
+                resourcesButton = (Office.CommandBarButton)commandBar.Controls.Add(
                     Office.MsoControlType.msoControlButton, missing, missing, missing, missing);
-                atasksButton.Style = Office.MsoButtonStyle.msoButtonCaption;
-                atasksButton.Caption = "Update aanwezigheden";
-                atasksButton.Tag = "C";
-                atasksButton.TooltipText = "Update aanwezigheden uit Excel.";
-                atasksButton.Click +=
+                resourcesButton.Style = Office.MsoButtonStyle.msoButtonCaption;
+                resourcesButton.Caption = "Update aanwezigheden";
+                resourcesButton.Tag = "C";
+                resourcesButton.TooltipText = "Update aanwezigheden uit Excel.";
+                resourcesButton.Click +=
                     new Office._CommandBarButtonEvents_ClickEventHandler(ButtonClick);
 
                 commandBar.Visible = true;

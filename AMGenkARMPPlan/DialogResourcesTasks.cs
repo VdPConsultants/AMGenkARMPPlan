@@ -104,10 +104,6 @@ namespace AMGenkARMPPlan
         // Import the specified Excel task data and show it in a DataGridView.
         private void btnImport_Click(object sender, EventArgs e)
         {
-            int lastRowIgnoreFormulas;
-            string strARMPResourcesFile;
-
-            btnCancel.Enabled = true;
             xlApp = new Excel.Application();
             // Don't interrupt with alert dialogs.
             xlApp.DisplayAlerts = false;
@@ -123,7 +119,8 @@ namespace AMGenkARMPPlan
 
             Excel.Range tasksRange = xlWorksheet.UsedRange;
             Object[,] tasks = (Object[,])tasksRange.Cells.Value2;
-            xlWorkbook.Close();
+            xlWorkbook.Close(0);
+            xlApp.Quit();
 
             Globals.ThisAddIn.SetARMPWorkplaces(tasks);
 

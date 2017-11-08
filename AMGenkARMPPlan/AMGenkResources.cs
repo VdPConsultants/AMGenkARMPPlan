@@ -79,7 +79,7 @@ namespace AMGenkARMPPlan
                 }
             }
             Object[,] exceptions = ObjectMerge(exceptions_1, exceptions_2, exceptions_3);
-            xlWorkbook.Close();
+            xlWorkbook.Close(0);
             xlApp.Quit();
             return exceptions;
         }
@@ -109,7 +109,7 @@ namespace AMGenkARMPPlan
             Excel.Range exceptioncodesRange = xlWorksheet.Range[xlWorksheet.Cells[(int)ARMPExcelLayout.ARMPExceptionCodesRowsOrig.ClmnHead, (int)ARMPExcelLayout.ARMPExceptionCodesColsOrig.ExcdType],
                                                                 xlWorksheet.Cells[ilastRowIgnoreFormulas, (int)ARMPExcelLayout.ARMPExceptionCodesColsOrig.ExcdDayp]];
             Object[,] exceptioncodes = (Object[,])exceptioncodesRange.Cells.Value2;
-            xlWorkbook.Close();
+            xlWorkbook.Close(0);
             xlApp.Quit();
             return exceptioncodes;
         }
@@ -141,7 +141,7 @@ namespace AMGenkARMPPlan
             Excel.Range resourcesRange = xlWorksheet.Range[xlWorksheet.Cells[(int)ARMPExcelLayout.ARMPResourcesRowsOrig.RsrcYear, (int)ARMPExcelLayout.ARMPResourcesColsOrig.WorkPlce],
                                                            xlWorksheet.Cells[ilastRowIgnoreFormulas, (int)ARMPExcelLayout.ARMPResourcesColsOrig.RsrcAmei]];
             Object[,] resources = (Object[,])resourcesRange.Cells.Value2;
-            xlWorkbook.Close();
+            xlWorkbook.Close(0);
             xlApp.Quit();
             return resources;
         }
