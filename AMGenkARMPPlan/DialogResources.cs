@@ -24,6 +24,7 @@ namespace AMGenkARMPPlan
          // Import the specified Excel task data and show it in a DataGridView.
         private void btnImport_Click(object sender, EventArgs e)
         {
+            Globals.ThisAddIn.CreateARMPExceptionCodes(AMGenkResources.GetAMGenkExceptionCodes(Properties.Settings.Default.AMGenkResourcesDirectory, Globals.ThisAddIn.ARMPStrtDate, Globals.ThisAddIn.ARMPFnshDate));
             Globals.ThisAddIn.CreateUpdateARMPExceptions(AMGenkResources.GetAMGenkExceptions(Properties.Settings.Default.AMGenkResourcesDirectory, Globals.ThisAddIn.ARMPStrtDate, Globals.ThisAddIn.ARMPFnshDate));
             HideImportDialogBox();
         }

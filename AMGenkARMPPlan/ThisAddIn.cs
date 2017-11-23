@@ -165,6 +165,8 @@ namespace AMGenkARMPPlan
 
         public void CreateARMPExceptionCodes(Object[,] exceptioncodes)
         {
+            ARMPExceptionCodes.Columns.Clear();
+            ARMPExceptionCodes.Rows.Clear();
             // Convert the 2 dimensional object array in a typed datatable
             ARMPExceptionCodes.Columns.Add(new DataColumn("ExcdCode", Type.GetType("System.String")));
             ARMPExceptionCodes.Columns.Add(new DataColumn("ExcdAbbr", Type.GetType("System.String")));
