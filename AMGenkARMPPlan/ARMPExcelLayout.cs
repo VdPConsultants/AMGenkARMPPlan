@@ -107,6 +107,10 @@ namespace AMGenkARMPPlan
             ClmnHead = 1,
             TaskRows = ClmnHead + 1
         }
+        public enum ARMPTasksRowsImpr
+        {
+            TaskRows = 1
+        }
         public enum ARMPTasksRowsCnvt
         {
             TaskTitl = 2,

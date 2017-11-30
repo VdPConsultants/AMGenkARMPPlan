@@ -497,7 +497,7 @@ namespace AMGenkARMPPlan
             string ARMPWorkTodoForm = "=R[0]C[-1] - R[0]C[1]";
 
             Excel.Worksheet ARMPWorksheet = ((Excel.Worksheet)Application.ActiveSheet);
-            for (int i = (int)ARMPExcelLayout.ARMPTasksRowsOrig.TaskRows; i <= tasks.GetLength(0); i++)
+            for (int i = (int)ARMPExcelLayout.ARMPTasksRowsImpr.TaskRows; i <= tasks.GetLength(0); i++)
             {
                 // Priority A tasks
                 switch (tasks[i, (int)ARMPExcelLayout.ARMPTasksColsCnvt.OrdrPrio].ToString())
@@ -518,6 +518,8 @@ namespace AMGenkARMPPlan
                     case "4":
                     case "5":
                     case "6":
+                    case "7":
+                    case "8":
                         ARMPTasksRowStrt = ARMPWorksheetLayout.ARMPTasksRowB + 1;
                         ARMPTasksRowFnsh = ARMPWorksheetLayout.ARMPTasksRowC;
                         ARMPWorksheetLayout.ARMPTasksRowC++;
