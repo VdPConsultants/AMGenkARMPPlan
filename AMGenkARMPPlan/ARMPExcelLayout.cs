@@ -123,7 +123,8 @@ namespace AMGenkARMPPlan
             OrdrPrio = MainWork + 1,
             OrdrNmbr = OrdrPrio + 1,
             OperNmbr = OrdrNmbr + 1,
-            OrdrStrt = OperNmbr + 1,
+            EarlStrt = OperNmbr + 1,
+            OrdrStrt = EarlStrt + 1,
             GateDate = OrdrStrt + 1,
             OrdrDesc = GateDate + 1,
             OperDesc = OrdrDesc + 1,
@@ -135,7 +136,8 @@ namespace AMGenkARMPPlan
             DuraNorm = DuraNmbr + 1,
             DuraUnit = DuraNorm + 1,
             WorkNorm = DuraUnit + 1,
-            WorkUnit = WorkNorm + 1
+            WorkUnit = WorkNorm + 1,
+            WorkReal = WorkUnit + 1
         }
         public enum ARMPTasksColsImpr
         {
@@ -143,8 +145,9 @@ namespace AMGenkARMPPlan
             MainWork = WorkPlce + 1,
             OrdrPrio = MainWork + 1,
             OrdrNmbr = OrdrPrio + 1,
-            OperNmbr = OrdrNmbr + 1, 
-            OrdrStrt = OperNmbr + 1,
+            OperNmbr = OrdrNmbr + 1,
+            EarlStrt = OperNmbr + 1,
+            OrdrStrt = EarlStrt + 1,
             GateDate = OrdrStrt + 1,
             OrdrDesc = GateDate + 1,
             OperDesc = OrdrDesc + 1,
@@ -156,7 +159,8 @@ namespace AMGenkARMPPlan
             DuraNorm = DuraNmbr + 1,
             DuraUnit = DuraNorm + 1,
             WorkNorm = DuraUnit + 1,
-            WorkUnit = WorkNorm + 1
+            WorkUnit = WorkNorm + 1,
+            WorkReal = WorkUnit + 1
         }
         public enum ARMPTasksColsCnvt
         {
@@ -172,7 +176,8 @@ namespace AMGenkARMPPlan
             WorkUnit = OperDesc + 1,
             WorkNorm = WorkUnit + 1,
             WorkHour = WorkNorm + 1,
-            WorkTodo = WorkHour + 1,
+            WorkReal = WorkHour + 1,
+            WorkTodo = WorkReal + 1,
             WorkPlan = WorkTodo + 1,
             RsrcTime = WorkPlan + 1
         }
@@ -187,7 +192,8 @@ namespace AMGenkARMPPlan
         {
             SummCol1 = ARMPExcelLayout.ARMPTasksColsCnvt.WorkHour,
             SummCol2 = SummCol1 + 1,
-            SummCol3 = SummCol2 + 1
+            SummCol3 = SummCol2 + 1,
+            SummCol4 = SummCol3 + 1
         }
 
         public int ARMPResourcesRow { get; set; }

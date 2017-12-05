@@ -38,10 +38,11 @@
             this.btnImport = new System.Windows.Forms.Button();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.lblVersionHeader = new System.Windows.Forms.Label();
-            this.lblAppVersion = new System.Windows.Forms.Label();
             this.lblPublishedVersion = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.mcARMPweek = new System.Windows.Forms.MonthCalendar();
+            this.label1 = new System.Windows.Forms.Label();
+            this.lblAppVersion = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -52,7 +53,7 @@
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(251, 32);
             this.btnCancel.TabIndex = 16;
-            this.btnCancel.Text = "Cancel";
+            this.btnCancel.Text = "Annuleer";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
@@ -116,29 +117,19 @@
             // lblVersionHeader
             // 
             this.lblVersionHeader.AutoSize = true;
-            this.lblVersionHeader.Location = new System.Drawing.Point(295, 283);
+            this.lblVersionHeader.Location = new System.Drawing.Point(535, 13);
             this.lblVersionHeader.Name = "lblVersionHeader";
-            this.lblVersionHeader.Size = new System.Drawing.Size(108, 13);
+            this.lblVersionHeader.Size = new System.Drawing.Size(43, 13);
             this.lblVersionHeader.TabIndex = 102;
-            this.lblVersionHeader.Text = "ImportProject Add-in: ";
-            // 
-            // lblAppVersion
-            // 
-            this.lblAppVersion.AutoSize = true;
-            this.lblAppVersion.Location = new System.Drawing.Point(305, 168);
-            this.lblAppVersion.Name = "lblAppVersion";
-            this.lblAppVersion.Size = new System.Drawing.Size(106, 13);
-            this.lblAppVersion.TabIndex = 103;
-            this.lblAppVersion.Text = "Application Version:  ";
+            this.lblVersionHeader.Text = "Add-in: ";
             // 
             // lblPublishedVersion
             // 
             this.lblPublishedVersion.AutoSize = true;
-            this.lblPublishedVersion.Location = new System.Drawing.Point(305, 184);
+            this.lblPublishedVersion.Location = new System.Drawing.Point(584, 38);
             this.lblPublishedVersion.Name = "lblPublishedVersion";
-            this.lblPublishedVersion.Size = new System.Drawing.Size(152, 13);
+            this.lblPublishedVersion.Size = new System.Drawing.Size(0, 13);
             this.lblPublishedVersion.TabIndex = 104;
-            this.lblPublishedVersion.Text = "ClickOnce Published Version:  ";
             // 
             // label2
             // 
@@ -152,21 +143,38 @@
             // 
             // mcARMPweek
             // 
-            this.mcARMPweek.Location = new System.Drawing.Point(301, 46);
+            this.mcARMPweek.Location = new System.Drawing.Point(300, 53);
             this.mcARMPweek.Name = "mcARMPweek";
             this.mcARMPweek.ShowWeekNumbers = true;
             this.mcARMPweek.TabIndex = 109;
             this.mcARMPweek.DateChanged += new System.Windows.Forms.DateRangeEventHandler(this.mcARMPweek_DateChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(584, 14);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(0, 13);
+            this.label1.TabIndex = 110;
+            // 
+            // lblAppVersion
+            // 
+            this.lblAppVersion.AutoSize = true;
+            this.lblAppVersion.Location = new System.Drawing.Point(584, 14);
+            this.lblAppVersion.Name = "lblAppVersion";
+            this.lblAppVersion.Size = new System.Drawing.Size(0, 13);
+            this.lblAppVersion.TabIndex = 111;
             // 
             // DialogResourcesTasks
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(927, 490);
+            this.Controls.Add(this.lblAppVersion);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.mcARMPweek);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.lblPublishedVersion);
-            this.Controls.Add(this.lblAppVersion);
             this.Controls.Add(this.lblVersionHeader);
             this.Controls.Add(this.btnImport);
             this.Controls.Add(this.btnBrowseT);
@@ -193,9 +201,10 @@
         private System.Windows.Forms.Button btnImport;
         private System.Windows.Forms.BindingSource bindingSource1;
         private System.Windows.Forms.Label lblVersionHeader;
-        private System.Windows.Forms.Label lblAppVersion;
         private System.Windows.Forms.Label lblPublishedVersion;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.MonthCalendar mcARMPweek;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblAppVersion;
     }
  }

@@ -41,6 +41,7 @@ namespace AMGenkARMPPlan
             SetARMPStrtFnshDate();
 
             btnImport.Enabled = false;
+
             // Show add-in and deployment versions.
             lblAppVersion.Text = lblAppVersion.Text + this.ProductVersion;
 
@@ -53,7 +54,7 @@ namespace AMGenkARMPPlan
             }
             else
             {
-                lblPublishedVersion.Text = string.Empty;
+                lblPublishedVersion.Text = "In debug mode";
             }
         }
 
@@ -104,6 +105,8 @@ namespace AMGenkARMPPlan
         // Import the specified Excel task data and show it in a DataGridView.
         private void btnImport_Click(object sender, EventArgs e)
         {
+            int lastRowIgnoreFormulas;
+
             xlApp = new Excel.Application();
             // Don't interrupt with alert dialogs.
             xlApp.DisplayAlerts = false;
@@ -117,7 +120,10 @@ namespace AMGenkARMPPlan
             //TODO: Hardcoded
             xlWorksheet = (Excel.Worksheet)xlWorkbook.Worksheets[1];
 
-            Excel.Range tasksRange = xlWorksheet.UsedRange;
+            lastRowIgnoreFormulas = xlWorksheet.Cells.Find("*", System.Reflection.Missing.Value, Excel.XlFindLookIn.xlValues, Excel.XlLookAt.xlWhole, Excel.XlSearchOrder.xlByRows, Excel.XlSearchDirection.xlPrevious, false, System.Reflection.Missing.Value, System.Reflection.Missing.Value).Row;
+
+            Excel.Range tasksRange = xlWorksheet.Range[xlWorksheet.Cells[(int)ARMPExcelLayout.ARMPTasksRowsOrig.TaskRows, (int)ARMPExcelLayout.ARMPTasksColsOrig.WorkPlce],
+                                                       xlWorksheet.Cells[lastRowIgnoreFormulas, (int)ARMPExcelLayout.ARMPTasksColsOrig.WorkReal]];
             Object[,] tasks = (Object[,])tasksRange.Cells.Value2;
             xlWorkbook.Close(0);
             xlApp.Quit();

@@ -96,14 +96,13 @@ namespace AMGenkARMPPlan
         private void btnImport_Click(object sender, EventArgs e)
         {
             int lastRowIgnoreFormulas;
+
             btnCancel.Enabled = true;
             xlApp = new Excel.Application();
             // Don't interrupt with alert dialogs.
             xlApp.DisplayAlerts = false;
 
-            xlWorkbook = xlApp.Workbooks.Open(txtARMPTasksFile.Text,
-                                              xx, xx, xx, xx, xx, xx, xx,
-                                              xx, xx, xx, xx, xx, xx, xx);
+            xlWorkbook = xlApp.Workbooks.Open(txtARMPTasksFile.Text, xx, xx, xx, xx, xx, xx, xx, xx, xx, xx, xx, xx, xx, xx);
 
             //TODO: Hardcoded
             xlWorksheet = (Excel.Worksheet)xlWorkbook.Worksheets[1];
@@ -111,7 +110,7 @@ namespace AMGenkARMPPlan
             lastRowIgnoreFormulas = xlWorksheet.Cells.Find("*", System.Reflection.Missing.Value, Excel.XlFindLookIn.xlValues, Excel.XlLookAt.xlWhole, Excel.XlSearchOrder.xlByRows, Excel.XlSearchDirection.xlPrevious, false, System.Reflection.Missing.Value, System.Reflection.Missing.Value).Row;
 
             Excel.Range tasksRange = xlWorksheet.Range[xlWorksheet.Cells[(int)ARMPExcelLayout.ARMPTasksRowsOrig.TaskRows, (int)ARMPExcelLayout.ARMPTasksColsOrig.WorkPlce],
-                                                       xlWorksheet.Cells[lastRowIgnoreFormulas, (int)ARMPExcelLayout.ARMPTasksColsOrig.WorkUnit]];
+                                                       xlWorksheet.Cells[lastRowIgnoreFormulas, (int)ARMPExcelLayout.ARMPTasksColsOrig.WorkReal]];
             Object[,] tasks = (Object[,])tasksRange.Cells.Value2;
             xlWorkbook.Close();
             Globals.ThisAddIn.CreateUpdateARMPTasks(tasks);
