@@ -40,10 +40,10 @@
     <PublishUrl>T:\Appli\SAP\ARMP\Planning Excel AddIn\</PublishUrl>
     <InstallUrl />
     <TargetCulture>en</TargetCulture>
-    <ApplicationVersion>1.1.2.1</ApplicationVersion>
+    <ApplicationVersion>1.1.2.2</ApplicationVersion>
     <AutoIncrementApplicationRevision>false</AutoIncrementApplicationRevision>
     <UpdateEnabled>true</UpdateEnabled>
-    <UpdateInterval>7</UpdateInterval>
+    <UpdateInterval>0</UpdateInterval>
     <UpdateIntervalUnits>days</UpdateIntervalUnits>
     <ProductName>AMGenkARMPPlan</ProductName>
     <PublisherName />

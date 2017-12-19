@@ -123,8 +123,9 @@ namespace AMGenkARMPPlan
             OrdrPrio = MainWork + 1,
             OrdrNmbr = OrdrPrio + 1,
             OperNmbr = OrdrNmbr + 1,
-            EarlStrt = OperNmbr + 1,
-            OrdrStrt = EarlStrt + 1,
+            RstrStrt = OperNmbr + 1,
+            RstrFnsh = RstrStrt + 1,
+            OrdrStrt = RstrFnsh + 1,
             GateDate = OrdrStrt + 1,
             OrdrDesc = GateDate + 1,
             OperDesc = OrdrDesc + 1,
@@ -146,8 +147,9 @@ namespace AMGenkARMPPlan
             OrdrPrio = MainWork + 1,
             OrdrNmbr = OrdrPrio + 1,
             OperNmbr = OrdrNmbr + 1,
-            EarlStrt = OperNmbr + 1,
-            OrdrStrt = EarlStrt + 1,
+            RstrStrt = OperNmbr + 1,
+            RstrFnsh = RstrStrt + 1,
+            OrdrStrt = RstrFnsh + 1,
             GateDate = OrdrStrt + 1,
             OrdrDesc = GateDate + 1,
             OperDesc = OrdrDesc + 1,
@@ -169,9 +171,9 @@ namespace AMGenkARMPPlan
             OrdrPrio = MainWork + 1,
             OrdrNmbr = OrdrPrio + 1,
             OperNmbr = OrdrNmbr + 1,
-            OrdrStrt = OperNmbr + 1,
-            GateDate = OrdrStrt + 1,
-            OrdrDesc = GateDate + 1,
+            RstrStrt = OperNmbr + 1,
+            RstrFnsh = RstrStrt + 1,
+            OrdrDesc = RstrFnsh + 1,
             OperDesc = OrdrDesc + 1,
             WorkUnit = OperDesc + 1,
             WorkNorm = WorkUnit + 1,
@@ -207,6 +209,8 @@ namespace AMGenkARMPPlan
         public int ARMPTasksRowB { get; set; }
         public int ARMPTasksRowC { get; set; }
         public int ARMPTasksRowO { get; set; }
+        public int ARMPTasksRowZ { get; set; }
+
         public int ARMPTasksRow { get; set; }
 
         public int ARMPTasksCol { get; set; }
