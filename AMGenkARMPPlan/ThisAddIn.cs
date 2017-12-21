@@ -196,11 +196,14 @@ namespace AMGenkARMPPlan
             DateTime resourceStartTime = DateTime.Parse("08:00:00");
             // DateTime resourceFinishTime = DateTime.Parse("17:00:00") - (DateTime.Parse("09:00:00") - resourceStartTime);
             DateTime resourceFinishTime = DateTime.Parse("16:00:00");
+            // V1.1.2.3 JvdP - Clear resources before start
+            ARMPWorksheetLayout.ARMPResources.Clear();
 
             ARMPWorksheetLayout.ARMPResourcesRow = (int)ARMPExcelLayout.ARMPResourcesRowsCnvt.RsrcName;
             ARMPWorksheetLayout.ARMPResourcesCol = (int)ARMPExcelLayout.ARMPResourcesColsCnvt.RsrcStrt;
 
             Excel.Worksheet ARMPWorksheet = ((Excel.Worksheet)Application.ActiveSheet);
+
 
             for (int i = (int)ARMPExcelLayout.ARMPResourcesRowsImpr.RsrcStrt; i < resources.GetLength(0) + 1; i++)
             {
