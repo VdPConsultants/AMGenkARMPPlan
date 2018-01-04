@@ -114,8 +114,10 @@ namespace AMGenkARMPPlan
             Object[,] tasks = (Object[,])tasksRange.Cells.Value2;
             xlWorkbook.Close();
             Globals.ThisAddIn.CreateUpdateARMPTasks(tasks);
-            Globals.ThisAddIn.FormatARMPPlanning();
-            
+            // V2.1.1.4 20180104 JVDP: do not reformat (original format must be kept)
+            // Globals.ThisAddIn.FormatARMPPlanning();
+            // V2.1.1.4 20180104 JVDP: END
+
             HideImportDialogBox();
         }
 

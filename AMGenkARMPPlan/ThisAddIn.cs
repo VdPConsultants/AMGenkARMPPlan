@@ -630,6 +630,12 @@ namespace AMGenkARMPPlan
 
                 ARMPWorksheet.Cells[ARMPTasksRow, 1].EntireRow.Insert(Excel.XlInsertShiftDirection.xlShiftDown);
 
+                // V2.1.1.4 20180104 JVDP: do not reformat (original format must be kept)
+                ARMPWorksheet.Cells[ARMPTasksRow, (int)ARMPExcelLayout.ARMPTasksColsCnvt.WorkPlce].EntireRow.Interior.Color = Color.White;
+                ARMPWorksheet.Cells[ARMPTasksRow, (int)ARMPExcelLayout.ARMPTasksColsCnvt.WorkPlce].EntireRow.Font.Color = Color.Black;
+                // V2.1.1.4 20180104 JVDP: END
+
+
                 ARMPWorksheet.Cells[ARMPTasksRow, (int)ARMPExcelLayout.ARMPTasksColsCnvt.WorkPlce].Value2 = (tasks[i, (int)ARMPExcelLayout.ARMPTasksColsImpr.WorkPlce] == null) ? "" : tasks[i, (int)ARMPExcelLayout.ARMPTasksColsImpr.WorkPlce].ToString();
                 ARMPWorksheet.Cells[ARMPTasksRow, (int)ARMPExcelLayout.ARMPTasksColsCnvt.MainWork].Value2 = (tasks[i, (int)ARMPExcelLayout.ARMPTasksColsImpr.MainWork] == null) ? "" : tasks[i, (int)ARMPExcelLayout.ARMPTasksColsImpr.MainWork].ToString();
                 ARMPWorksheet.Cells[ARMPTasksRow, (int)ARMPExcelLayout.ARMPTasksColsCnvt.OrdrPrio].Value2 = (tasks[i, (int)ARMPExcelLayout.ARMPTasksColsImpr.OrdrPrio] == null) ? "" : tasks[i, (int)ARMPExcelLayout.ARMPTasksColsImpr.OrdrPrio].ToString();
@@ -705,7 +711,6 @@ namespace AMGenkARMPPlan
                 rngFormat.Merge();
                 rngFormat.NumberFormat = "dd/mm/yyyy";
                 rngFormat.Borders.Weight = Excel.XlBorderWeight.xlThick;
-                //rngFormat.DisplayFormat = 
 
                 rngFormat = ARMPWorksheet.Range[ARMPWorksheet.Cells[(int)ARMPExcelLayout.ARMPResourcesRowsCnvt.RsrcAmei, RsrcCols],
                                                 ARMPWorksheet.Cells[(int)ARMPExcelLayout.ARMPExceptionsRowsCnvt.RsrcPlan, RsrcCols + ARMPWorksheetLayout.ARMPResources.Count - 1]];
