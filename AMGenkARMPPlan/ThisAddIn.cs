@@ -659,7 +659,7 @@ namespace AMGenkARMPPlan
             }
             // Summary
             ARMPWorksheet.Cells[(int)ARMPExcelLayout.ARMPSummRowsCnvt.SummRow1, (int)ARMPExcelLayout.ARMPSummColsCnvt.SummCol1].Formula = 
-                 "=SUM(r[" + (ARMPWorksheetLayout.ARMPTasksRowA - (int)ARMPExcelLayout.ARMPSummRowsCnvt.SummRow1).ToString() + "]c[0]:r[" + (ARMPWorksheetLayout.ARMPTasksRow - (int)ARMPExcelLayout.ARMPSummRowsCnvt.SummRow1 - 1).ToString() + "]C[0])";
+                 "=SUM(r[" + (ARMPWorksheetLayout.ARMPTasksRowA - (int)ARMPExcelLayout.ARMPSummRowsCnvt.SummRow1).ToString() + "]c[0]:r[" + (ARMPWorksheetLayout.ARMPTasksRowZ - (int)ARMPExcelLayout.ARMPSummRowsCnvt.SummRow1 - 1).ToString() + "]C[0])";
             ARMPWorksheet.Cells[(int)ARMPExcelLayout.ARMPSummRowsCnvt.SummRow1, (int)ARMPExcelLayout.ARMPSummColsCnvt.SummCol4].Formula =
                 "=SUM(r[0]c[1]:r[0]C[" + (ARMPWorksheetLayout.ARMPResourcesCol - (int)ARMPExcelLayout.ARMPSummColsCnvt.SummCol4 - 1).ToString() + "])";
             ARMPWorksheet.Cells[(int)ARMPExcelLayout.ARMPSummRowsCnvt.SummRow2, (int)ARMPExcelLayout.ARMPSummColsCnvt.SummCol4].Formula =
