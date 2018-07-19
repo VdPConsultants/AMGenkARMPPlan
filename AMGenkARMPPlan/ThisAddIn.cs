@@ -10,6 +10,7 @@ using Office = Microsoft.Office.Core;
 using Microsoft.Office.Tools.Excel;
 using System.Drawing;
 
+
 namespace AMGenkARMPPlan
 {
     public partial class ThisAddIn
@@ -22,7 +23,7 @@ namespace AMGenkARMPPlan
         private DataTable ARMPExceptionCodes = new DataTable();
 
 
-        private ARMPExcelLayout ARMPWorksheetLayout = new ARMPExcelLayout();
+        public ARMPExcelLayout ARMPWorksheetLayout = new ARMPExcelLayout();
 
         public DateTime GetARMPStrtDate()
         {
@@ -127,6 +128,27 @@ namespace AMGenkARMPPlan
                 MessageBox.Show(e.Message, "Error adding toolbar button",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            try
+            {
+                // Add a button and an event handler.
+                importButton = (Office.CommandBarButton)commandBar.Controls.Add(
+                    Office.MsoControlType.msoControlButton, missing, missing, missing, missing);
+                importButton.Style = Office.MsoButtonStyle.msoButtonCaption;
+                importButton.Caption = "Filteren van medewerkers";
+                // TODO: JvdP Image+text CommandbarButton
+                //importButton.Picture = 
+                importButton.Tag = "D";
+                importButton.TooltipText = "Filter medewerkers.";
+                importButton.Click +=
+                    new Office._CommandBarButtonEvents_ClickEventHandler(ButtonClick);
+
+                commandBar.Visible = true;
+            }
+            catch (ArgumentException e)
+            {
+                MessageBox.Show(e.Message, "Error adding toolbar button",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
         private void ButtonClick(Office.CommandBarButton ctrl, ref bool cancel)
         {
@@ -146,6 +168,10 @@ namespace AMGenkARMPPlan
                 case "C":
                     DialogResources dlgRDialog = new DialogResources();
                     dlgRDialog.Show();
+                    break;
+                case "D":
+                    DialogFilter dlgFDialog = new DialogFilter();
+                    dlgFDialog.ShowDialog();
                     break;
                 default:
                     break;
@@ -190,8 +216,8 @@ namespace AMGenkARMPPlan
         public void CreateARMPResources(Object[,] resources)
         {
             DateTime ARMPStrtDate = ARMPWorksheetLayout.ARMPStrtDate;
-            // TODO: Introducing break - JvdP 20170727
-            // TODO: Variable starting hours - JvdP 20170727
+            /// TODO: Introducing break - JvdP 20170727
+            /// TODO: Variable starting hours - JvdP 20170727
             // DateTime resourceStartTime = DateTime.FromOADate((double)resourcesCells[i, 2]);
             DateTime resourceStartTime = DateTime.Parse("08:00:00");
             // DateTime resourceFinishTime = DateTime.Parse("17:00:00") - (DateTime.Parse("09:00:00") - resourceStartTime);
@@ -209,29 +235,32 @@ namespace AMGenkARMPPlan
             {
                 if (resources[i, (int)ARMPExcelLayout.ARMPResourcesColsImpr.WorkPlce] != null)
                 {
-                    if (ARMPWorksheetLayout.ARMPWorkplaces.Contains(resources[i, (int)ARMPExcelLayout.ARMPResourcesColsImpr.WorkPlce].ToString()))
+                    if (ARMPWorksheetLayout.ARMPWorkplaces.Contains(resources[i, (int)ARMPExcelLayout.ARMPResourcesColsImpr.WorkPlce].ToString().Substring(0, 3)))
                     {
                         if (ARMPWorksheetLayout.ARMPResources.FindIndex(x => x.Amei == resources[i, (int)ARMPExcelLayout.ARMPResourcesColsImpr.RsrcAmei].ToString()) < 0)
                         {
-                            ARMPWorksheetLayout.ARMPResources.Add( new AMGenkARMPPlan.Resource()
+                            ARMPWorksheetLayout.ARMPResources.Add(new Resource()
                             {
                                 Name = resources[i, (int)ARMPExcelLayout.ARMPResourcesColsImpr.RsrcName].ToString(),
-                                Amei = resources[i, (int)ARMPExcelLayout.ARMPResourcesColsImpr.RsrcAmei].ToString()
+                                Amei = resources[i, (int)ARMPExcelLayout.ARMPResourcesColsImpr.RsrcAmei].ToString(),
+                                Show = true
                             });
                         }
                     }
                 }
             }
             // Add two general resources
-            ARMPWorksheetLayout.ARMPResources.Add(new AMGenkARMPPlan.Resource()
+            ARMPWorksheetLayout.ARMPResources.Add(new Resource()
             {
                 Name = "EXTERN",
-                Amei = "000000"
+                Amei = "000000",
+                Show = true
             });
             ARMPWorksheetLayout.ARMPResources.Add(new AMGenkARMPPlan.Resource()
             {
                 Name = "PRODUCTIE",
-                Amei = "000000"
+                Amei = "000000",
+                Show = true
             });
             do
             {
@@ -244,6 +273,18 @@ namespace AMGenkARMPPlan
                 }
                 ARMPStrtDate = ARMPStrtDate.AddDays(1);
             } while (ARMPStrtDate.CompareTo(ARMPWorksheetLayout.ARMPFnshDate) <= 0);
+        }
+        public void FilterARMPPlanning()
+        {
+            Excel.Worksheet ARMPWorksheet = ((Excel.Worksheet)Application.ActiveSheet);
+
+            for (int iResourceCol = (int)ARMPExcelLayout.ARMPResourcesColsCnvt.RsrcStrt; iResourceCol <= ARMPWorksheetLayout.ARMPResourcesCol; iResourceCol++)
+            {
+                if (Globals.ThisAddIn.ARMPWorksheetLayout.ARMPResourcesFiltered.Any(rs => rs.Amei == ARMPWorksheet.Cells[(int)ARMPExcelLayout.ARMPResourcesRowsCnvt.RsrcAmei,iResourceCol].Value2.ToString()))
+                    ARMPWorksheet.Cells[(int)ARMPExcelLayout.ARMPResourcesRowsCnvt.RsrcAmei, iResourceCol].EntireColumn.Hidden = false;
+                else
+                    ARMPWorksheet.Cells[(int)ARMPExcelLayout.ARMPResourcesRowsCnvt.RsrcAmei, iResourceCol].EntireColumn.Hidden = true;
+            }
         }
         public void CreateUpdateARMPExceptions(Object[,] exceptions)
         {
@@ -388,23 +429,12 @@ namespace AMGenkARMPPlan
             ARMPWorksheetLayout.ARMPTasksRow = ARMPWorksheetLayout.ARMPTasksRowZ;
 
             Excel.Worksheet ARMPWorksheet = ((Excel.Worksheet)Application.ActiveSheet);
-            ARMPWorksheet.Cells[ARMPExcelLayout.ARMPTasksRowsCnvt.TaskTitl, ARMPExcelLayout.ARMPTasksColsCnvt.WorkPlce].Value2 = "Uitvoerende werkplek";
-            ARMPWorksheet.Cells[ARMPExcelLayout.ARMPTasksRowsCnvt.TaskTitl, ARMPExcelLayout.ARMPTasksColsCnvt.MainWork].Value2 = "Verantwoordelijke werkplek";
-            ARMPWorksheet.Cells[ARMPExcelLayout.ARMPTasksRowsCnvt.TaskTitl, ARMPExcelLayout.ARMPTasksColsCnvt.WorkPlce].Value2 = "Uitvoerende werkplek";
-            ARMPWorksheet.Cells[ARMPExcelLayout.ARMPTasksRowsCnvt.TaskTitl, ARMPExcelLayout.ARMPTasksColsCnvt.OrdrPrio].Value2 = "Prioriteit";
-            ARMPWorksheet.Cells[ARMPExcelLayout.ARMPTasksRowsCnvt.TaskTitl, ARMPExcelLayout.ARMPTasksColsCnvt.OrdrNmbr].Value2 = "Order nummer";
-            ARMPWorksheet.Cells[ARMPExcelLayout.ARMPTasksRowsCnvt.TaskTitl, ARMPExcelLayout.ARMPTasksColsCnvt.OperNmbr].Value2 = "Operatie nummer";
-            ARMPWorksheet.Cells[ARMPExcelLayout.ARMPTasksRowsCnvt.TaskTitl, ARMPExcelLayout.ARMPTasksColsCnvt.RstrStrt].Value2 = "Start datum";
-            ARMPWorksheet.Cells[ARMPExcelLayout.ARMPTasksRowsCnvt.TaskTitl, ARMPExcelLayout.ARMPTasksColsCnvt.RstrFnsh].Value2 = "Eind datum";
-            ARMPWorksheet.Cells[ARMPExcelLayout.ARMPTasksRowsCnvt.TaskTitl, ARMPExcelLayout.ARMPTasksColsCnvt.OrdrDesc].Value2 = "Order beschrijving";
-            ARMPWorksheet.Cells[ARMPExcelLayout.ARMPTasksRowsCnvt.TaskTitl, ARMPExcelLayout.ARMPTasksColsCnvt.OperDesc].Value2 = "Operatie beschrijving";
-            ARMPWorksheet.Cells[ARMPExcelLayout.ARMPTasksRowsCnvt.TaskTitl, ARMPExcelLayout.ARMPTasksColsCnvt.WorkUnit].Value2 = "Werktijd eenheid";
-            ARMPWorksheet.Cells[ARMPExcelLayout.ARMPTasksRowsCnvt.TaskTitl, ARMPExcelLayout.ARMPTasksColsCnvt.WorkNorm].Value2 = "Werktijd";
-            ARMPWorksheet.Cells[ARMPExcelLayout.ARMPTasksRowsCnvt.TaskTitl, ARMPExcelLayout.ARMPTasksColsCnvt.WorkHour].Value2 = "Werktijd in uur";
-            ARMPWorksheet.Cells[ARMPExcelLayout.ARMPTasksRowsCnvt.TaskTitl, ARMPExcelLayout.ARMPTasksColsCnvt.WorkReal].Value2 = "Werktijd gewerkt";
-            ARMPWorksheet.Cells[ARMPExcelLayout.ARMPTasksRowsCnvt.TaskTitl, ARMPExcelLayout.ARMPTasksColsCnvt.WorkTodo].Value2 = "Werktijd todo";
-            ARMPWorksheet.Cells[ARMPExcelLayout.ARMPTasksRowsCnvt.TaskTitl, ARMPExcelLayout.ARMPTasksColsCnvt.WorkPlan].Value2 = "Werktijd gepland";
 
+            foreach (ARMPExcelLayout.ARMPTasksColsCnvt eCol in Enum.GetValues(typeof(ARMPExcelLayout.ARMPTasksColsCnvt)))
+            {
+                ARMPWorksheet.Cells[ARMPExcelLayout.ARMPTasksRowsCnvt.TaskTitl, eCol].Value2 = ARMPWorksheetLayout.ARMPTasksColsHead[(int)eCol - 1];
+            }
+            
             ARMPWorksheet.Cells[ARMPWorksheetLayout.ARMPTasksRowA, 1].Value2 = "PRIORITEIT A";
             ARMPWorksheet.Cells[ARMPWorksheetLayout.ARMPTasksRowB, 1].Value2 = "PRIORITEIT B";
             ARMPWorksheet.Cells[ARMPWorksheetLayout.ARMPTasksRowC, 1].Value2 = "PRIORITEIT C";
@@ -473,7 +503,8 @@ namespace AMGenkARMPPlan
                     ARMPWorksheetLayout.ARMPResources.Add(new AMGenkARMPPlan.Resource()
                     {
                         Name = ARMPWorksheet.Cells[(int)ARMPExcelLayout.ARMPResourcesRowsCnvt.RsrcName, i].Value2.ToString(),
-                        Amei = ARMPWorksheet.Cells[(int)ARMPExcelLayout.ARMPResourcesRowsCnvt.RsrcAmei, i].Value2.ToString()
+                        Amei = ARMPWorksheet.Cells[(int)ARMPExcelLayout.ARMPResourcesRowsCnvt.RsrcAmei, i].Value2.ToString(),
+                        Show = true
                     });
                 }
                 ARMPWorksheetLayout.ARMPStrtDate = DateTime.FromOADate((double)ARMPWorksheet.Cells[(int)ARMPExcelLayout.ARMPResourcesRowsCnvt.ExcpDate, iARMPStrtDateCol].Value2);
@@ -759,7 +790,7 @@ namespace AMGenkARMPPlan
             rngFormat.Borders[Excel.XlBordersIndex.xlInsideHorizontal].Weight = Excel.XlBorderWeight.xlThin;
 
             ARMPStrtDate = ARMPWorksheetLayout.ARMPStrtDate;
-            int TaskCols = (int)ARMPExcelLayout.ARMPTasksColsCnvt.RsrcTime;
+            int TaskCols = (int)ARMPExcelLayout.ARMPResourcesColsCnvt.RsrcStrt;
             do
             {
                 rngFormat = ARMPWorksheet.Range[ARMPWorksheet.Cells[(int)ARMPExcelLayout.ARMPTasksRowsCnvt.TaskStrt, TaskCols],

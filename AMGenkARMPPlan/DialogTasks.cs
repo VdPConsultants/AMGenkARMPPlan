@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Excel = Microsoft.Office.Interop.Excel;
 using System.Globalization;
+using System.IO;
 
 namespace AMGenkARMPPlan
 {
@@ -91,33 +92,68 @@ namespace AMGenkARMPPlan
             }
         }
 
+        private void cbClipboard_CheckedChanged(object sender, EventArgs e)
+        {
+            if (cbClipboard.Checked == true)
+            {
+                txtARMPTasksFile.Enabled = false;
+                btnBrowseT.Enabled = false;
+                btnImport.Enabled = true;
+            }
+            else
+            {
+                txtARMPTasksFile.Enabled = true;
+                btnBrowseT.Enabled = true;
+            }
+        }
 
         // Import the specified Excel task data and show it in a DataGridView.
         private void btnImport_Click(object sender, EventArgs e)
         {
             int lastRowIgnoreFormulas;
 
-            btnCancel.Enabled = true;
-            xlApp = new Excel.Application();
-            // Don't interrupt with alert dialogs.
-            xlApp.DisplayAlerts = false;
+            if (cbClipboard.Checked)
+            {
+                btnCancel.Enabled = true;
+                xlApp = new Excel.Application();
+                // Don't interrupt with alert dialogs.
+                xlApp.DisplayAlerts = false;
+                xlWorkbook = xlApp.Workbooks.Add();
+                xlWorksheet = (Excel.Worksheet)xlWorkbook.Worksheets.Add();
 
-            xlWorkbook = xlApp.Workbooks.Open(txtARMPTasksFile.Text, xx, xx, xx, xx, xx, xx, xx, xx, xx, xx, xx, xx, xx, xx);
+                char[] delimiters = new char[] { '\t' };
+                StringReader strReader = new StringReader(Clipboard.GetText());
+                while (true)
+                { 
+                    string strTask = strReader.ReadLine();
+                    if (strTask == null)
+                        break;
+                    string[] strTaskFields = strTask.Split(delimiters);
+                }
+            }
+            else
+            {
+                btnCancel.Enabled = true;
+                xlApp = new Excel.Application();
+                // Don't interrupt with alert dialogs.
+                xlApp.DisplayAlerts = false;
 
-            //TODO: Hardcoded
-            xlWorksheet = (Excel.Worksheet)xlWorkbook.Worksheets[1];
+                xlWorkbook = xlApp.Workbooks.Open(txtARMPTasksFile.Text, xx, xx, xx, xx, xx, xx, xx, xx, xx, xx, xx, xx, xx, xx);
 
-            lastRowIgnoreFormulas = xlWorksheet.Cells.Find("*", System.Reflection.Missing.Value, Excel.XlFindLookIn.xlValues, Excel.XlLookAt.xlWhole, Excel.XlSearchOrder.xlByRows, Excel.XlSearchDirection.xlPrevious, false, System.Reflection.Missing.Value, System.Reflection.Missing.Value).Row;
+                //TODO: Hardcoded
+                xlWorksheet = (Excel.Worksheet)xlWorkbook.Worksheets[1];
 
-            Excel.Range tasksRange = xlWorksheet.Range[xlWorksheet.Cells[(int)ARMPExcelLayout.ARMPTasksRowsOrig.TaskRows, (int)ARMPExcelLayout.ARMPTasksColsOrig.WorkPlce],
-                                                       xlWorksheet.Cells[lastRowIgnoreFormulas, (int)ARMPExcelLayout.ARMPTasksColsOrig.WorkReal]];
-            Object[,] tasks = (Object[,])tasksRange.Cells.Value2;
-            xlWorkbook.Close();
-            Globals.ThisAddIn.CreateUpdateARMPTasks(tasks);
-            // V2.1.1.4 20180104 JVDP: do not reformat (original format must be kept)
-            // Globals.ThisAddIn.FormatARMPPlanning();
-            // V2.1.1.4 20180104 JVDP: END
+                lastRowIgnoreFormulas = xlWorksheet.Cells.Find("*", System.Reflection.Missing.Value, Excel.XlFindLookIn.xlValues, Excel.XlLookAt.xlWhole, Excel.XlSearchOrder.xlByRows, Excel.XlSearchDirection.xlPrevious, false, System.Reflection.Missing.Value, System.Reflection.Missing.Value).Row;
 
+                Excel.Range tasksRange = xlWorksheet.Range[xlWorksheet.Cells[(int)ARMPExcelLayout.ARMPTasksRowsOrig.TaskRows, (int)ARMPExcelLayout.ARMPTasksColsOrig.WorkPlce],
+                                                           xlWorksheet.Cells[lastRowIgnoreFormulas, (int)ARMPExcelLayout.ARMPTasksColsOrig.WorkReal]];
+                Object[,] tasks = (Object[,])tasksRange.Cells.Value2;
+                xlWorkbook.Close();
+                Globals.ThisAddIn.CreateUpdateARMPTasks(tasks);
+                // V2.1.1.4 20180104 JVDP: do not reformat (original format must be kept)
+                // Globals.ThisAddIn.FormatARMPPlanning();
+                // V2.1.1.4 20180104 JVDP: END
+            }
             HideImportDialogBox();
         }
 
@@ -140,7 +176,5 @@ namespace AMGenkARMPPlan
             }
             this.Hide();
         }
-
     }
 }
-

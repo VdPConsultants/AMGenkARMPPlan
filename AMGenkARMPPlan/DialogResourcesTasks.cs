@@ -17,11 +17,8 @@ namespace AMGenkARMPPlan
     public partial class DialogResourcesTasks : Form
     {
         private System.Object xx = System.Type.Missing;
-        private string xlDirectoryR;
-        private string xlFileR;
         private string xlDirectoryT;
         private string xlFileT;
-        //private string xlFilePath;
 
         private Excel.Application xlApp;
         private Excel.Workbook xlWorkbook;

@@ -10,5 +10,6 @@ namespace AMGenkARMPPlan
     {
         public string Name;
         public string Amei;
+        public bool Show;
     }
 }

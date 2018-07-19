@@ -37,13 +37,15 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.btnImport = new System.Windows.Forms.Button();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.label1 = new System.Windows.Forms.Label();
+            this.cbClipboard = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
             // btnCancel
             // 
             this.btnCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCancel.Location = new System.Drawing.Point(6, 134);
+            this.btnCancel.Location = new System.Drawing.Point(6, 142);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(251, 32);
             this.btnCancel.TabIndex = 16;
@@ -65,7 +67,7 @@
             // lbExcelFile
             // 
             this.lbExcelFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbExcelFile.Location = new System.Drawing.Point(3, 51);
+            this.lbExcelFile.Location = new System.Drawing.Point(3, 59);
             this.lbExcelFile.Name = "lbExcelFile";
             this.lbExcelFile.Size = new System.Drawing.Size(291, 29);
             this.lbExcelFile.TabIndex = 99;
@@ -74,7 +76,7 @@
             // 
             // txtARMPTasksFile
             // 
-            this.txtARMPTasksFile.Location = new System.Drawing.Point(300, 56);
+            this.txtARMPTasksFile.Location = new System.Drawing.Point(300, 64);
             this.txtARMPTasksFile.Name = "txtARMPTasksFile";
             this.txtARMPTasksFile.Size = new System.Drawing.Size(588, 20);
             this.txtARMPTasksFile.TabIndex = 0;
@@ -100,7 +102,7 @@
             // 
             this.btnImport.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnImport.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnImport.Location = new System.Drawing.Point(6, 88);
+            this.btnImport.Location = new System.Drawing.Point(6, 96);
             this.btnImport.Name = "btnImport";
             this.btnImport.Size = new System.Drawing.Size(251, 32);
             this.btnImport.TabIndex = 13;
@@ -108,18 +110,40 @@
             this.btnImport.UseVisualStyleBackColor = true;
             this.btnImport.Click += new System.EventHandler(this.btnImport_Click);
             // 
-            // DialogATasks
+            // label1
+            // 
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(3, 30);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(291, 29);
+            this.label1.TabIndex = 100;
+            this.label1.Text = "Importeer rechtstreeks van het clipboard: ";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // cbClipboard
+            // 
+            this.cbClipboard.AutoSize = true;
+            this.cbClipboard.Location = new System.Drawing.Point(300, 37);
+            this.cbClipboard.Name = "cbClipboard";
+            this.cbClipboard.Size = new System.Drawing.Size(15, 14);
+            this.cbClipboard.TabIndex = 101;
+            this.cbClipboard.UseVisualStyleBackColor = true;
+            this.cbClipboard.CheckedChanged += new System.EventHandler(this.cbClipboard_CheckedChanged);
+            // 
+            // DialogTasks
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(927, 186);
+            this.Controls.Add(this.cbClipboard);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.btnImport);
             this.Controls.Add(this.btnBrowseT);
             this.Controls.Add(this.txtARMPTasksFile);
             this.Controls.Add(this.lbExcelFile);
             this.Controls.Add(this.lblTitle);
             this.Controls.Add(this.btnCancel);
-            this.Name = "DialogATasks";
+            this.Name = "DialogTasks";
             this.Text = "Importeren ARMP naar Planning";
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
             this.ResumeLayout(false);
@@ -137,5 +161,7 @@
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.Button btnImport;
         private System.Windows.Forms.BindingSource bindingSource1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.CheckBox cbClipboard;
     }
  }

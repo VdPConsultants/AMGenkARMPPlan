@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AMGenkARMPPlan
 {
-    class ARMPExcelLayout
+    public class ARMPExcelLayout
     {
         public enum ARMPExceptionCodesRowsOrig
         {
@@ -68,7 +68,7 @@ namespace AMGenkARMPPlan
         }
         public enum ARMPResourcesColsCnvt
         {
-            RsrcStrt = ARMPTasksColsCnvt.RsrcTime
+            RsrcStrt = ARMPTasksColsCnvt.WorkPlan + 1
         }
         public enum ARMPExceptionsRowsOrig
         {
@@ -100,7 +100,7 @@ namespace AMGenkARMPPlan
         }
         public enum ARMPExceptionsColsCnvt
         {
-            ExcpStrt = ARMPTasksColsCnvt.RsrcTime
+            ExcpStrt = ARMPTasksColsCnvt.WorkPlan + 1
         }
         public enum ARMPTasksRowsOrig
         {
@@ -180,9 +180,28 @@ namespace AMGenkARMPPlan
             WorkHour = WorkNorm + 1,
             WorkReal = WorkHour + 1,
             WorkTodo = WorkReal + 1,
-            WorkPlan = WorkTodo + 1,
-            RsrcTime = WorkPlan + 1
-        }
+            WorkPlan = WorkTodo + 1
+        };
+
+        public string[] ARMPTasksColsHead =
+        {
+            "Uitvoerende werkplek",
+            "Verantwoordelijke werkplek",
+            "Prioriteit",
+            "Order nummer",
+            "Operatie nummer",
+            "Start datum",
+            "Eind datum",
+            "Order beschrijving",
+            "Operatie beschrijving",
+            "Werktijd eenheid",
+            "Werktijd",
+            "Werktijd in uur",
+            "Werktijd gewerkt",
+            "Werktijd todo",
+            "Werktijd gepland"
+        };
+
         public enum ARMPSummRowsCnvt
         {
             SummRow1 = ARMPExcelLayout.ARMPExceptionsRowsCnvt.RsrcWork,
@@ -222,5 +241,6 @@ namespace AMGenkARMPPlan
         public List<string> ARMPWorkplaces = new List<string>();
         // Holds the resources which are in planned workplaces
         public List<Resource> ARMPResources = new List<Resource>();
+        public List<Resource> ARMPResourcesFiltered = new List<Resource>();
     }
 }
