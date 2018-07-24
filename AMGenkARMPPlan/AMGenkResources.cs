@@ -38,32 +38,32 @@ namespace AMGenkARMPPlan
             xlWorksheet = (Excel.Worksheet)xlWorkbook.Worksheets[Globals.ThisAddIn.ARMPStrtDate.ToString("MMMM")];
             ilastRowIgnoreFormulas = xlWorksheet.Cells.Find("*", System.Reflection.Missing.Value, Excel.XlFindLookIn.xlValues, Excel.XlLookAt.xlWhole, Excel.XlSearchOrder.xlByRows, Excel.XlSearchDirection.xlPrevious, false, System.Reflection.Missing.Value, System.Reflection.Missing.Value).Row;
 
-            Excel.Range exceptionsRange = xlWorksheet.Range[xlWorksheet.Cells[(int)ARMPExcelLayout.ARMPExceptionsRowsOrig.ExcpStrt, (int)ARMPExcelLayout.ARMPExceptionsColsOrig.WorkPlce],
-                                                            xlWorksheet.Cells[ilastRowIgnoreFormulas, (int)ARMPExcelLayout.ARMPExceptionsColsOrig.RsrcName]];
+            Excel.Range exceptionsRange = xlWorksheet.Range[xlWorksheet.Cells[(int)ARMPPlanExcelLayout.ARMPExceptionsRowsOrig.ExcpStrt, (int)ARMPPlanExcelLayout.ARMPExceptionsColsOrig.WorkPlce],
+                                                            xlWorksheet.Cells[ilastRowIgnoreFormulas, (int)ARMPPlanExcelLayout.ARMPExceptionsColsOrig.RsrcName]];
             exceptions_1 = (Object[,])exceptionsRange.Cells.Value2;
 
             if (Globals.ThisAddIn.ARMPStrtDate.Month == Globals.ThisAddIn.ARMPFnshDate.Month)
             {
                 xlWorksheet = (Excel.Worksheet)xlWorkbook.Worksheets[Globals.ThisAddIn.ARMPStrtDate.ToString("MMMM")];
                 ilastRowIgnoreFormulas = xlWorksheet.Cells.Find("*", System.Reflection.Missing.Value, Excel.XlFindLookIn.xlValues, Excel.XlLookAt.xlWhole, Excel.XlSearchOrder.xlByRows, Excel.XlSearchDirection.xlPrevious, false, System.Reflection.Missing.Value, System.Reflection.Missing.Value).Row;
-                exceptionsRange = xlWorksheet.Range[xlWorksheet.Cells[(int)ARMPExcelLayout.ARMPExceptionsRowsOrig.ExcpStrt, (int)ARMPExcelLayout.ARMPExceptionsColsOrig.ExcpStrt + Globals.ThisAddIn.ARMPStrtDate.Day - 1],
-                                                    xlWorksheet.Cells[ilastRowIgnoreFormulas, (int)ARMPExcelLayout.ARMPExceptionsColsOrig.ExcpStrt + Globals.ThisAddIn.ARMPFnshDate.Day - 1]];
+                exceptionsRange = xlWorksheet.Range[xlWorksheet.Cells[(int)ARMPPlanExcelLayout.ARMPExceptionsRowsOrig.ExcpStrt, (int)ARMPPlanExcelLayout.ARMPExceptionsColsOrig.ExcpStrt + Globals.ThisAddIn.ARMPStrtDate.Day - 1],
+                                                    xlWorksheet.Cells[ilastRowIgnoreFormulas, (int)ARMPPlanExcelLayout.ARMPExceptionsColsOrig.ExcpStrt + Globals.ThisAddIn.ARMPFnshDate.Day - 1]];
                 exceptions_2 = (Object[,])exceptionsRange.Cells.Value2;
             }
             else
             {
                 xlWorksheet = (Excel.Worksheet)xlWorkbook.Worksheets[Globals.ThisAddIn.ARMPStrtDate.ToString("MMMM")];
                 ilastRowIgnoreFormulas = xlWorksheet.Cells.Find("*", System.Reflection.Missing.Value, Excel.XlFindLookIn.xlValues, Excel.XlLookAt.xlWhole, Excel.XlSearchOrder.xlByRows, Excel.XlSearchDirection.xlPrevious, false, System.Reflection.Missing.Value, System.Reflection.Missing.Value).Row;
-                exceptionsRange = xlWorksheet.Range[xlWorksheet.Cells[(int)ARMPExcelLayout.ARMPExceptionsRowsOrig.ExcpStrt, (int)ARMPExcelLayout.ARMPExceptionsColsOrig.ExcpStrt + Globals.ThisAddIn.ARMPStrtDate.Day - 1],
-                                                    xlWorksheet.Cells[ilastRowIgnoreFormulas, (int)ARMPExcelLayout.ARMPExceptionsColsOrig.ExcpStrt + ARMPLastMnth.Day - 1]];
+                exceptionsRange = xlWorksheet.Range[xlWorksheet.Cells[(int)ARMPPlanExcelLayout.ARMPExceptionsRowsOrig.ExcpStrt, (int)ARMPPlanExcelLayout.ARMPExceptionsColsOrig.ExcpStrt + Globals.ThisAddIn.ARMPStrtDate.Day - 1],
+                                                    xlWorksheet.Cells[ilastRowIgnoreFormulas, (int)ARMPPlanExcelLayout.ARMPExceptionsColsOrig.ExcpStrt + ARMPLastMnth.Day - 1]];
                 exceptions_2 = (Object[,])exceptionsRange.Cells.Value2;
 
                 if (Globals.ThisAddIn.ARMPStrtDate.Year == Globals.ThisAddIn.ARMPFnshDate.Year)
                 {
                     xlWorksheet = (Excel.Worksheet)xlWorkbook.Worksheets[Globals.ThisAddIn.ARMPFnshDate.ToString("MMMM")];
                     ilastRowIgnoreFormulas = xlWorksheet.Cells.Find("*", System.Reflection.Missing.Value, Excel.XlFindLookIn.xlValues, Excel.XlLookAt.xlWhole, Excel.XlSearchOrder.xlByRows, Excel.XlSearchDirection.xlPrevious, false, System.Reflection.Missing.Value, System.Reflection.Missing.Value).Row;
-                    exceptionsRange = xlWorksheet.Range[xlWorksheet.Cells[(int)ARMPExcelLayout.ARMPExceptionsRowsOrig.ExcpStrt, (int)ARMPExcelLayout.ARMPExceptionsColsOrig.ExcpStrt],
-                                                        xlWorksheet.Cells[ilastRowIgnoreFormulas, (int)ARMPExcelLayout.ARMPExceptionsColsOrig.ExcpStrt + Globals.ThisAddIn.ARMPFnshDate.Day - 1]];
+                    exceptionsRange = xlWorksheet.Range[xlWorksheet.Cells[(int)ARMPPlanExcelLayout.ARMPExceptionsRowsOrig.ExcpStrt, (int)ARMPPlanExcelLayout.ARMPExceptionsColsOrig.ExcpStrt],
+                                                        xlWorksheet.Cells[ilastRowIgnoreFormulas, (int)ARMPPlanExcelLayout.ARMPExceptionsColsOrig.ExcpStrt + Globals.ThisAddIn.ARMPFnshDate.Day - 1]];
                     exceptions_3 = (Object[,])exceptionsRange.Cells.Value2;
                 }
                 else
@@ -73,8 +73,8 @@ namespace AMGenkARMPPlan
                     xlWorkbook = xlApp.Workbooks.Open(strAMGenkResourcesFile, xx, xx, xx, xx, xx, xx, xx, xx, xx, xx, xx, xx, xx, xx);
                     xlWorksheet = (Excel.Worksheet)xlWorkbook.Worksheets[FnshDate.ToString("MMMM")];
                     ilastRowIgnoreFormulas = xlWorksheet.Cells.Find("*", System.Reflection.Missing.Value, Excel.XlFindLookIn.xlValues, Excel.XlLookAt.xlWhole, Excel.XlSearchOrder.xlByRows, Excel.XlSearchDirection.xlPrevious, false, System.Reflection.Missing.Value, System.Reflection.Missing.Value).Row;
-                    exceptionsRange = xlWorksheet.Range[xlWorksheet.Cells[(int)ARMPExcelLayout.ARMPExceptionsRowsOrig.ExcpStrt, (int)ARMPExcelLayout.ARMPExceptionsColsOrig.ExcpStrt],
-                                                        xlWorksheet.Cells[ilastRowIgnoreFormulas, (int)ARMPExcelLayout.ARMPExceptionsColsOrig.ExcpStrt + FnshDate.Day - 1]];
+                    exceptionsRange = xlWorksheet.Range[xlWorksheet.Cells[(int)ARMPPlanExcelLayout.ARMPExceptionsRowsOrig.ExcpStrt, (int)ARMPPlanExcelLayout.ARMPExceptionsColsOrig.ExcpStrt],
+                                                        xlWorksheet.Cells[ilastRowIgnoreFormulas, (int)ARMPPlanExcelLayout.ARMPExceptionsColsOrig.ExcpStrt + FnshDate.Day - 1]];
                     exceptions_3 = (Object[,])exceptionsRange.Cells.Value2;
                 }
             }
@@ -106,8 +106,8 @@ namespace AMGenkARMPPlan
             xlWorksheet = (Excel.Worksheet)xlWorkbook.Worksheets["Codes"];
             ilastRowIgnoreFormulas = xlWorksheet.Cells.Find("*", System.Reflection.Missing.Value, Excel.XlFindLookIn.xlValues, Excel.XlLookAt.xlWhole, Excel.XlSearchOrder.xlByRows, Excel.XlSearchDirection.xlPrevious, false, System.Reflection.Missing.Value, System.Reflection.Missing.Value).Row;
 
-            Excel.Range exceptioncodesRange = xlWorksheet.Range[xlWorksheet.Cells[(int)ARMPExcelLayout.ARMPExceptionCodesRowsOrig.ClmnHead, (int)ARMPExcelLayout.ARMPExceptionCodesColsOrig.ExcdType],
-                                                                xlWorksheet.Cells[ilastRowIgnoreFormulas, (int)ARMPExcelLayout.ARMPExceptionCodesColsOrig.ExcdDayp]];
+            Excel.Range exceptioncodesRange = xlWorksheet.Range[xlWorksheet.Cells[(int)ARMPPlanExcelLayout.ARMPExceptionCodesRowsOrig.ClmnHead, (int)ARMPPlanExcelLayout.ARMPExceptionCodesColsOrig.ExcdType],
+                                                                xlWorksheet.Cells[ilastRowIgnoreFormulas, (int)ARMPPlanExcelLayout.ARMPExceptionCodesColsOrig.ExcdDayp]];
             Object[,] exceptioncodes = (Object[,])exceptioncodesRange.Cells.Value2;
             xlWorkbook.Close(0);
             xlApp.Quit();
@@ -138,8 +138,8 @@ namespace AMGenkARMPPlan
 
             ilastRowIgnoreFormulas = xlWorksheet.Cells.Find("*", System.Reflection.Missing.Value, Excel.XlFindLookIn.xlValues, Excel.XlLookAt.xlWhole, Excel.XlSearchOrder.xlByRows, Excel.XlSearchDirection.xlPrevious, false, System.Reflection.Missing.Value, System.Reflection.Missing.Value).Row;
 
-            Excel.Range resourcesRange = xlWorksheet.Range[xlWorksheet.Cells[(int)ARMPExcelLayout.ARMPResourcesRowsOrig.RsrcYear, (int)ARMPExcelLayout.ARMPResourcesColsOrig.WorkPlce],
-                                                           xlWorksheet.Cells[ilastRowIgnoreFormulas, (int)ARMPExcelLayout.ARMPResourcesColsOrig.RsrcAmei]];
+            Excel.Range resourcesRange = xlWorksheet.Range[xlWorksheet.Cells[(int)ARMPPlanExcelLayout.ARMPResourcesRowsOrig.RsrcYear, (int)ARMPPlanExcelLayout.ARMPResourcesColsOrig.WorkPlce],
+                                                           xlWorksheet.Cells[ilastRowIgnoreFormulas, (int)ARMPPlanExcelLayout.ARMPResourcesColsOrig.RsrcAmei]];
             Object[,] resources = (Object[,])resourcesRange.Cells.Value2;
             xlWorkbook.Close(0);
             xlApp.Quit();

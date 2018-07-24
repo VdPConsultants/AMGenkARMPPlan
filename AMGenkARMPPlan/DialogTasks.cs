@@ -1,17 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections;
 using System.Deployment.Application;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Excel = Microsoft.Office.Interop.Excel;
-using System.Globalization;
-using System.IO;
 
 namespace AMGenkARMPPlan
 {
@@ -33,7 +23,7 @@ namespace AMGenkARMPPlan
             xlFile = Properties.Settings.Default.ARMPTasksFile;
             txtARMPTasksFile.Text = xlDirectory + xlFile;
 
-            btnImport.Enabled = false;
+            //btnImport.Enabled = false;
             // Show add-in and deployment versions.
             // lblAppVersion.Text = lblAppVersion.Text + this.ProductVersion;
 
@@ -112,24 +102,12 @@ namespace AMGenkARMPPlan
         {
             int lastRowIgnoreFormulas;
 
+            Object[,] tasks;
+
             if (cbClipboard.Checked)
             {
                 btnCancel.Enabled = true;
-                xlApp = new Excel.Application();
-                // Don't interrupt with alert dialogs.
-                xlApp.DisplayAlerts = false;
-                xlWorkbook = xlApp.Workbooks.Add();
-                xlWorksheet = (Excel.Worksheet)xlWorkbook.Worksheets.Add();
-
-                char[] delimiters = new char[] { '\t' };
-                StringReader strReader = new StringReader(Clipboard.GetText());
-                while (true)
-                { 
-                    string strTask = strReader.ReadLine();
-                    if (strTask == null)
-                        break;
-                    string[] strTaskFields = strTask.Split(delimiters);
-                }
+                tasks = Globals.ThisAddIn.ImportTasksFromClipboard();
             }
             else
             {
@@ -145,15 +123,12 @@ namespace AMGenkARMPPlan
 
                 lastRowIgnoreFormulas = xlWorksheet.Cells.Find("*", System.Reflection.Missing.Value, Excel.XlFindLookIn.xlValues, Excel.XlLookAt.xlWhole, Excel.XlSearchOrder.xlByRows, Excel.XlSearchDirection.xlPrevious, false, System.Reflection.Missing.Value, System.Reflection.Missing.Value).Row;
 
-                Excel.Range tasksRange = xlWorksheet.Range[xlWorksheet.Cells[(int)ARMPExcelLayout.ARMPTasksRowsOrig.TaskRows, (int)ARMPExcelLayout.ARMPTasksColsOrig.WorkPlce],
-                                                           xlWorksheet.Cells[lastRowIgnoreFormulas, (int)ARMPExcelLayout.ARMPTasksColsOrig.WorkReal]];
-                Object[,] tasks = (Object[,])tasksRange.Cells.Value2;
+                Excel.Range tasksRange = xlWorksheet.Range[xlWorksheet.Cells[(int)ARMPPlanExcelLayout.ARMPTasksRowsOrig.TaskRows, (int)ARMPPlanExcelLayout.ARMPTasksColsOrig.WorkPlce],
+                                                           xlWorksheet.Cells[lastRowIgnoreFormulas, (int)ARMPPlanExcelLayout.ARMPTasksColsOrig.WorkReal]];
+                tasks = (Object[,])tasksRange.Cells.Value2;
                 xlWorkbook.Close();
-                Globals.ThisAddIn.CreateUpdateARMPTasks(tasks);
-                // V2.1.1.4 20180104 JVDP: do not reformat (original format must be kept)
-                // Globals.ThisAddIn.FormatARMPPlanning();
-                // V2.1.1.4 20180104 JVDP: END
             }
+            Globals.ThisAddIn.CreateUpdateARMPTasks(tasks);
             HideImportDialogBox();
         }
 

@@ -1,16 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections;
 using System.Deployment.Application;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Globalization;
 using System.Windows.Forms;
 using Excel = Microsoft.Office.Interop.Excel;
-using System.Globalization;
 
 namespace AMGenkARMPPlan
 {
@@ -37,7 +29,7 @@ namespace AMGenkARMPPlan
             ARMPStrtDate = DateTime.Now;
             SetARMPStrtFnshDate();
 
-            btnImport.Enabled = false;
+            //btnImport.Enabled = false;
 
             // Show add-in and deployment versions.
             lblAppVersion.Text = lblAppVersion.Text + this.ProductVersion;
@@ -104,26 +96,39 @@ namespace AMGenkARMPPlan
         {
             int lastRowIgnoreFormulas;
 
-            xlApp = new Excel.Application();
-            // Don't interrupt with alert dialogs.
-            xlApp.DisplayAlerts = false;
+            Object[,] tasks;
 
-            //Globals.ThisAddIn.SetARMPStrtFnshDate(ARMPStrtDate, ARMPFnshDate);
             Globals.ThisAddIn.ARMPStrtDate = ARMPStrtDate;
             Globals.ThisAddIn.ARMPFnshDate = ARMPFnshDate;
 
-            xlWorkbook = xlApp.Workbooks.Open(txtARMPTasksFile.Text, xx, xx, xx, xx, xx, xx, xx, xx, xx, xx, xx, xx, xx, xx);
+            if (cbClipboard.Checked)
+            {
+                btnCancel.Enabled = true;
+                tasks = Globals.ThisAddIn.ImportTasksFromClipboard();
+            }
+            else
+            {
+                btnCancel.Enabled = true;
+                xlApp = new Excel.Application();
+                // Don't interrupt with alert dialogs.
+                xlApp.DisplayAlerts = false;
 
-            //TODO: Hardcoded
-            xlWorksheet = (Excel.Worksheet)xlWorkbook.Worksheets[1];
+                xlWorkbook = xlApp.Workbooks.Open(txtARMPTasksFile.Text, xx, xx, xx, xx, xx, xx, xx, xx, xx, xx, xx, xx, xx, xx);
 
-            lastRowIgnoreFormulas = xlWorksheet.Cells.Find("*", System.Reflection.Missing.Value, Excel.XlFindLookIn.xlValues, Excel.XlLookAt.xlWhole, Excel.XlSearchOrder.xlByRows, Excel.XlSearchDirection.xlPrevious, false, System.Reflection.Missing.Value, System.Reflection.Missing.Value).Row;
+                //TODO: Hardcoded
+                xlWorksheet = (Excel.Worksheet)xlWorkbook.Worksheets[1];
 
-            Excel.Range tasksRange = xlWorksheet.Range[xlWorksheet.Cells[(int)ARMPExcelLayout.ARMPTasksRowsOrig.TaskRows, (int)ARMPExcelLayout.ARMPTasksColsOrig.WorkPlce],
-                                                       xlWorksheet.Cells[lastRowIgnoreFormulas, (int)ARMPExcelLayout.ARMPTasksColsOrig.WorkReal]];
-            Object[,] tasks = (Object[,])tasksRange.Cells.Value2;
-            xlWorkbook.Close(0);
-            xlApp.Quit();
+                lastRowIgnoreFormulas = xlWorksheet.Cells.Find("*", System.Reflection.Missing.Value, Excel.XlFindLookIn.xlValues, Excel.XlLookAt.xlWhole, Excel.XlSearchOrder.xlByRows, Excel.XlSearchDirection.xlPrevious, false, System.Reflection.Missing.Value, System.Reflection.Missing.Value).Row;
+
+                Excel.Range tasksRange = xlWorksheet.Range[xlWorksheet.Cells[(int)ARMPPlanExcelLayout.ARMPTasksRowsOrig.TaskRows, (int)ARMPPlanExcelLayout.ARMPTasksColsOrig.WorkPlce],
+                                                           xlWorksheet.Cells[lastRowIgnoreFormulas, (int)ARMPPlanExcelLayout.ARMPTasksColsOrig.WorkReal]];
+                tasks = (Object[,])tasksRange.Cells.Value2;
+                xlWorkbook.Close();
+
+                xlApp.Quit();
+            }
+
+            Globals.ThisAddIn.CreateARMPPlanWorksheet();
 
             Globals.ThisAddIn.SetARMPWorkplaces(tasks);
 
@@ -166,6 +171,25 @@ namespace AMGenkARMPPlan
             }
             ARMPFnshDate = ARMPStrtDate.AddDays(4);
         }
+
+        private void cbClipboard_CheckedChanged(object sender, EventArgs e)
+        {
+            if (cbClipboard.Checked == true)
+            {
+                txtARMPTasksFile.Enabled = false;
+                btnBrowseT.Enabled = false;
+                btnImport.Enabled = true;
+            }
+            else
+            {
+                txtARMPTasksFile.Enabled = true;
+                btnBrowseT.Enabled = true;
+                btnImport.Enabled = false;
+            }
+        }
+
+
     }
 }
+
 

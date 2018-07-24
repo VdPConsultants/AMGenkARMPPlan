@@ -76,6 +76,7 @@
             // 
             // txtARMPTasksFile
             // 
+            this.txtARMPTasksFile.Enabled = false;
             this.txtARMPTasksFile.Location = new System.Drawing.Point(300, 64);
             this.txtARMPTasksFile.Name = "txtARMPTasksFile";
             this.txtARMPTasksFile.Size = new System.Drawing.Size(588, 20);
@@ -123,6 +124,8 @@
             // cbClipboard
             // 
             this.cbClipboard.AutoSize = true;
+            this.cbClipboard.Checked = true;
+            this.cbClipboard.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbClipboard.Location = new System.Drawing.Point(300, 37);
             this.cbClipboard.Name = "cbClipboard";
             this.cbClipboard.Size = new System.Drawing.Size(15, 14);

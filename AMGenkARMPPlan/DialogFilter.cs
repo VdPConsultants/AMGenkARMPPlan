@@ -23,7 +23,7 @@ namespace AMGenkARMPPlan
 
             int iLoc_H = 10;
             int iLoc_V = 60;
-            foreach (Resource ARMPResource in Globals.ThisAddIn.ARMPWorksheetLayout.ARMPResources)
+            foreach (Resource ARMPResource in Globals.ThisAddIn.ARMPPlanWorksheetLayout.ARMPResources)
             {
                 cbox = new CheckBox();
                 cbox.Name = "Resource_" + iLoc_V.ToString();
@@ -39,13 +39,13 @@ namespace AMGenkARMPPlan
 
         public void btnFilteren_Click(object sender, EventArgs e)
         {
-            Globals.ThisAddIn.ARMPWorksheetLayout.ARMPResourcesFiltered.Clear();
+            Globals.ThisAddIn.ARMPPlanWorksheetLayout.ARMPResourcesFiltered.Clear();
             foreach (Control Ctrl in this.Controls)
             {
                 if ((Ctrl.GetType() == typeof(CheckBox)) && (Ctrl.Name.Substring(0, 8) == "Resource"))
                     if (((CheckBox)Ctrl).Checked)
-                        Globals.ThisAddIn.ARMPWorksheetLayout.ARMPResourcesFiltered.Add(
-                            Globals.ThisAddIn.ARMPWorksheetLayout.ARMPResources.Find(x => x.Name == ((CheckBox)Ctrl).Text));
+                        Globals.ThisAddIn.ARMPPlanWorksheetLayout.ARMPResourcesFiltered.Add(
+                            Globals.ThisAddIn.ARMPPlanWorksheetLayout.ARMPResources.Find(x => x.Name == ((CheckBox)Ctrl).Text));
             }
 
             Globals.ThisAddIn.FilterARMPPlanning();

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AMGenkARMPPlan
 {
-    public class ARMPExcelLayout
+    public class ARMPPlanExcelLayout
     {
         public enum ARMPExceptionCodesRowsOrig
         {
@@ -114,7 +114,7 @@ namespace AMGenkARMPPlan
         public enum ARMPTasksRowsCnvt
         {
             TaskTitl = 2,
-            TaskStrt = ARMPExcelLayout.ARMPExceptionsRowsCnvt.RsrcPlan + 1
+            TaskStrt = ARMPPlanExcelLayout.ARMPExceptionsRowsCnvt.RsrcPlan + 1
         }
         public enum ARMPTasksColsOrig
         {
@@ -204,14 +204,14 @@ namespace AMGenkARMPPlan
 
         public enum ARMPSummRowsCnvt
         {
-            SummRow1 = ARMPExcelLayout.ARMPExceptionsRowsCnvt.RsrcWork,
+            SummRow1 = ARMPPlanExcelLayout.ARMPExceptionsRowsCnvt.RsrcWork,
             SummRow2 = SummRow1 + 1,
             SummRow3 = SummRow2 + 1
         }
 
         public enum ARMPSummColsCnvt
         {
-            SummCol1 = ARMPExcelLayout.ARMPTasksColsCnvt.WorkHour,
+            SummCol1 = ARMPPlanExcelLayout.ARMPTasksColsCnvt.WorkHour,
             SummCol2 = SummCol1 + 1,
             SummCol3 = SummCol2 + 1,
             SummCol4 = SummCol3 + 1

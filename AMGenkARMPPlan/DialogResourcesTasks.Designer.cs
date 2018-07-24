@@ -43,6 +43,8 @@
             this.mcARMPweek = new System.Windows.Forms.MonthCalendar();
             this.label1 = new System.Windows.Forms.Label();
             this.lblAppVersion = new System.Windows.Forms.Label();
+            this.cbClipboard = new System.Windows.Forms.CheckBox();
+            this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -71,16 +73,17 @@
             // lbExcelFile
             // 
             this.lbExcelFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbExcelFile.Location = new System.Drawing.Point(3, 237);
+            this.lbExcelFile.Location = new System.Drawing.Point(3, 241);
             this.lbExcelFile.Name = "lbExcelFile";
             this.lbExcelFile.Size = new System.Drawing.Size(291, 29);
             this.lbExcelFile.TabIndex = 99;
-            this.lbExcelFile.Text = "2. Selecteer de ARMP taken importeer file:";
+            this.lbExcelFile.Text = "Selecteer de ARMP taken importeer file:";
             this.lbExcelFile.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // txtARMPTasksFile
             // 
-            this.txtARMPTasksFile.Location = new System.Drawing.Point(300, 242);
+            this.txtARMPTasksFile.Enabled = false;
+            this.txtARMPTasksFile.Location = new System.Drawing.Point(300, 246);
             this.txtARMPTasksFile.Name = "txtARMPTasksFile";
             this.txtARMPTasksFile.Size = new System.Drawing.Size(588, 20);
             this.txtARMPTasksFile.TabIndex = 0;
@@ -138,7 +141,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(275, 29);
             this.label2.TabIndex = 108;
-            this.label2.Text = "1. Selecteer week:";
+            this.label2.Text = "Selecteer week:";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // mcARMPweek
@@ -165,11 +168,35 @@
             this.lblAppVersion.Size = new System.Drawing.Size(0, 13);
             this.lblAppVersion.TabIndex = 111;
             // 
+            // cbClipboard
+            // 
+            this.cbClipboard.AutoSize = true;
+            this.cbClipboard.Checked = true;
+            this.cbClipboard.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbClipboard.Location = new System.Drawing.Point(300, 224);
+            this.cbClipboard.Name = "cbClipboard";
+            this.cbClipboard.Size = new System.Drawing.Size(15, 14);
+            this.cbClipboard.TabIndex = 113;
+            this.cbClipboard.UseVisualStyleBackColor = true;
+            this.cbClipboard.CheckedChanged += new System.EventHandler(this.cbClipboard_CheckedChanged);
+            // 
+            // label3
+            // 
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(3, 217);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(291, 29);
+            this.label3.TabIndex = 112;
+            this.label3.Text = "Importeer rechtstreeks van het clipboard: ";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // DialogResourcesTasks
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(927, 490);
+            this.Controls.Add(this.cbClipboard);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.lblAppVersion);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.mcARMPweek);
@@ -206,5 +233,7 @@
         private System.Windows.Forms.MonthCalendar mcARMPweek;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lblAppVersion;
+        private System.Windows.Forms.CheckBox cbClipboard;
+        private System.Windows.Forms.Label label3;
     }
  }
