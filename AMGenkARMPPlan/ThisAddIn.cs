@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using Excel = Microsoft.Office.Interop.Excel;
 using Office = Microsoft.Office.Core;
@@ -276,20 +277,21 @@ namespace AMGenkARMPPlan
             ARMPPlanWorksheetLayout.ARMPResources.Add(new Resource()
             {
                 Name = "EXTERN",
-                Amei = "000000",
+                Amei = "999998",
                 Show = true
             });
             ARMPPlanWorksheetLayout.ARMPResources.Add(new AMGenkARMPPlan.Resource()
             {
                 Name = "PRODUCTIE",
-                Amei = "000000",
+                Amei = "999999",
                 Show = true
             });
             do
             {
-                ARMPPlanWorksheet.Cells[(int)ARMPPlanExcelLayout.ARMPResourcesRowsCnvt.ExcpDate, ARMPPlanWorksheetLayout.ARMPResourcesCol].Value2 = ARMPStrtDate.ToOADate();
+                //ARMPPlanWorksheet.Cells[(int)ARMPPlanExcelLayout.ARMPResourcesRowsCnvt.ExcpDate, ARMPPlanWorksheetLayout.ARMPResourcesCol].Value2 = ARMPStrtDate.ToOADate();
                 foreach (Resource resource in ARMPPlanWorksheetLayout.ARMPResources)
                 {
+                    ARMPPlanWorksheet.Cells[(int)ARMPPlanExcelLayout.ARMPResourcesRowsCnvt.ExcpDate, ARMPPlanWorksheetLayout.ARMPResourcesCol].Value2 = ARMPStrtDate.ToOADate();
                     ARMPPlanWorksheet.Cells[(int)ARMPPlanExcelLayout.ARMPResourcesRowsCnvt.RsrcAmei, ARMPPlanWorksheetLayout.ARMPResourcesCol].Value2 = resource.Amei;
                     ARMPPlanWorksheet.Cells[(int)ARMPPlanExcelLayout.ARMPResourcesRowsCnvt.RsrcName, ARMPPlanWorksheetLayout.ARMPResourcesCol].Value2 = resource.Name;
                     ARMPPlanWorksheetLayout.ARMPResourcesCol++;
@@ -552,7 +554,7 @@ namespace AMGenkARMPPlan
 
                 for (int i = (int)ARMPPlanExcelLayout.ARMPTasksRowsCnvt.TaskStrt; i <= iLastRowIgnoreFormulas; i++)
                 {
-                    switch ((string)ARMPPlanWorksheet.Cells[i, 1].Value2)
+                    switch ((string)ARMPPlanWorksheet.Cells[i, (int)ARMPPlanExcelLayout.ARMPTasksColsCnvt.WorkPlce].Value2)
                     {
                         case "PRIORITEIT A":
                             ARMPPlanWorksheetLayout.ARMPTasksRowA = i;
@@ -582,6 +584,7 @@ namespace AMGenkARMPPlan
                 iARMPStrtDateCol = (int)ARMPPlanExcelLayout.ARMPResourcesColsCnvt.RsrcStrt;
                 rngSearch = ARMPPlanWorksheet.Range[ARMPPlanWorksheet.Cells[(int)ARMPPlanExcelLayout.ARMPResourcesRowsCnvt.ExcpDate, (int)ARMPPlanExcelLayout.ARMPResourcesColsCnvt.RsrcStrt],
                                                 ARMPPlanWorksheet.Cells[(int)ARMPPlanExcelLayout.ARMPResourcesRowsCnvt.ExcpDate, ARMPPlanWorksheetLayout.ARMPResourcesCol]];
+                /*
                 iARMPNextDateCol = rngSearch.FindNext().Column;
                 iARMPLastDateCol = rngSearch.FindPrevious().Column;
 
@@ -595,6 +598,23 @@ namespace AMGenkARMPPlan
                         Show = true
                     });
                 }
+                */
+                iARMPLastDateCol = rngSearch.FindPrevious().Column;
+
+                ARMPPlanWorksheetLayout.ARMPResources.Clear();
+                int iARMPRsrcCol = iARMPStrtDateCol;
+                string strDate = DateTime.FromOADate((double)ARMPPlanWorksheet.Cells[(int)ARMPPlanExcelLayout.ARMPResourcesRowsCnvt.ExcpDate, iARMPStrtDateCol].Value2).ToString("dd/MM/yyyy");
+
+                do
+                {
+                    ARMPPlanWorksheetLayout.ARMPResources.Add(new AMGenkARMPPlan.Resource()
+                    {
+                        Name = ARMPPlanWorksheet.Cells[(int)ARMPPlanExcelLayout.ARMPResourcesRowsCnvt.RsrcName, iARMPRsrcCol].Value2.ToString(),
+                        Amei = ARMPPlanWorksheet.Cells[(int)ARMPPlanExcelLayout.ARMPResourcesRowsCnvt.RsrcAmei, iARMPRsrcCol].Value2.ToString(),
+                        Show = true
+                    });
+                    iARMPRsrcCol++;
+                } while (strDate == DateTime.FromOADate((double)ARMPPlanWorksheet.Cells[(int)ARMPPlanExcelLayout.ARMPResourcesRowsCnvt.ExcpDate, iARMPRsrcCol].Value2).ToString("dd/MM/yyyy"));
                 ARMPPlanWorksheetLayout.ARMPStrtDate = DateTime.FromOADate((double)ARMPPlanWorksheet.Cells[(int)ARMPPlanExcelLayout.ARMPResourcesRowsCnvt.ExcpDate, iARMPStrtDateCol].Value2);
                 ARMPPlanWorksheetLayout.ARMPFnshDate = DateTime.FromOADate((double)ARMPPlanWorksheet.Cells[(int)ARMPPlanExcelLayout.ARMPResourcesRowsCnvt.ExcpDate, iARMPLastDateCol].Value2);
             }
@@ -836,8 +856,9 @@ namespace AMGenkARMPPlan
             {
                 rngFormat = ARMPPlanWorksheet.Range[ARMPPlanWorksheet.Cells[(int)ARMPPlanExcelLayout.ARMPResourcesRowsCnvt.ExcpDate, RsrcCols],
                                                 ARMPPlanWorksheet.Cells[(int)ARMPPlanExcelLayout.ARMPResourcesRowsCnvt.ExcpDate, RsrcCols + ARMPPlanWorksheetLayout.ARMPResources.Count - 1]];
-                rngFormat.Merge();
+                //rngFormat.Merge();
                 rngFormat.NumberFormat = "dd/mm/yyyy";
+                rngFormat.Orientation = 90;
                 rngFormat.Borders.Weight = Excel.XlBorderWeight.xlThick;
 
                 rngFormat = ARMPPlanWorksheet.Range[ARMPPlanWorksheet.Cells[(int)ARMPPlanExcelLayout.ARMPResourcesRowsCnvt.RsrcAmei, RsrcCols],
@@ -987,7 +1008,7 @@ namespace AMGenkARMPPlan
             ARMPPlanWorksheet.Cells[1, (int)ARMPPlanExcelLayout.ARMPTasksColsCnvt.WorkPlan].EntireColumn.ColumnWidth = 6;
 
             rngFormat = ARMPPlanWorksheet.Range[ARMPPlanWorksheet.Cells[1, (int)ARMPPlanExcelLayout.ARMPExceptionsColsCnvt.ExcpStrt], ARMPPlanWorksheet.Cells[1, ARMPPlanWorksheetLayout.ARMPExceptionsCol]];
-            rngFormat.Columns.ColumnWidth = 5;
+           rngFormat.Columns.ColumnWidth = 5;
         }
 
         public void CreatePersonalPlannings()
@@ -996,23 +1017,24 @@ namespace AMGenkARMPPlan
             ARMPRsrcExcelLayout ARMPRsrcWorksheetLayout = new ARMPRsrcExcelLayout();
 
             Excel.Range rngARMPPlan;
-            Excel.Range rngARMPRsrc;
 
             Excel.Range rngARMPPlanRsrc;
+            Excel.Range rngARMPPlanOrdr;
 
             foreach (Resource resource in ARMPPlanWorksheetLayout.ARMPResources)
             {
                 Excel.Worksheet ARMPRsrcWorksheet = (Excel.Worksheet)Application.Sheets.Add();
                 ARMPRsrcWorksheet.Name = resource.Name;
                 ARMPRsrcWorksheetLayout.CopyFromPlanLayout(ARMPPlanWorksheetLayout);
-                //DateTime ARMPDate = ARMPRsrcWorksheetLayout.ARMPStrtDate;
 
                 rngARMPPlan = ARMPPlanWorksheet.Range[ARMPPlanWorksheet.Cells[(int)ARMPPlanExcelLayout.ARMPResourcesRowsCnvt.ExcpDate, (int)ARMPPlanExcelLayout.ARMPTasksColsCnvt.WorkPlce],
                                                       ARMPPlanWorksheet.Cells[ARMPPlanWorksheetLayout.ARMPTasksRowZ, (int)ARMPPlanExcelLayout.ARMPResourcesColsCnvt.RsrcStrt - 1]];
+                // Work around to avoid run time error: commented out lines do not work !
                 //rngARMPRsrc = ARMPRsrcWorksheet.Range[ARMPPlanWorksheet.Cells[(int)ARMPPlanExcelLayout.ARMPResourcesRowsCnvt.ExcpDate, (int)ARMPPlanExcelLayout.ARMPTasksColsCnvt.WorkPlce],
                 //                                      ARMPPlanWorksheet.Cells[ARMPPlanWorksheetLayout.ARMPTasksRowZ, (int)ARMPPlanExcelLayout.ARMPResourcesColsCnvt.RsrcStrt - 1]];
                 //rngARMPPlan.Copy(rngARMPRsrc);
-                rngARMPPlan.Copy(ARMPRsrcWorksheet.Range["A1"]);
+                string strARMPRsrc = ((Excel.Range)ARMPRsrcWorksheet.Cells[(int)ARMPPlanExcelLayout.ARMPResourcesRowsCnvt.ExcpDate, ARMPPlanExcelLayout.ARMPTasksColsCnvt.WorkPlce]).Address;
+                rngARMPPlan.Copy(ARMPRsrcWorksheet.Range[strARMPRsrc]);
 
                 rngARMPPlanRsrc = ARMPPlanWorksheet.Range[ARMPPlanWorksheet.Cells[(int)ARMPPlanExcelLayout.ARMPResourcesRowsCnvt.RsrcAmei, (int)ARMPPlanExcelLayout.ARMPResourcesColsCnvt.RsrcStrt],
                                                           ARMPPlanWorksheet.Cells[(int)ARMPPlanExcelLayout.ARMPResourcesRowsCnvt.RsrcAmei, ARMPPlanWorksheetLayout.ARMPResourcesCol]];
@@ -1023,19 +1045,68 @@ namespace AMGenkARMPPlan
                 {
                     if (rngARMPPlanRsrcCell.Value2?.ToString() == resource.Amei)
                     {
-                        rngARMPPlan = ARMPPlanWorksheet.Range[ARMPPlanWorksheet.Cells[(int)ARMPPlanExcelLayout.ARMPTasksRowsCnvt.TaskStrt, rngARMPPlanRsrcCell.Column],
+                        rngARMPPlan = ARMPPlanWorksheet.Range[ARMPPlanWorksheet.Cells[(int)ARMPPlanExcelLayout.ARMPResourcesRowsCnvt.ExcpDate, rngARMPPlanRsrcCell.Column],
                                                               ARMPPlanWorksheet.Cells[ARMPPlanWorksheetLayout.ARMPTasksRowZ, rngARMPPlanRsrcCell.Column]];
-                        rngARMPRsrc = ARMPRsrcWorksheet.Range[ARMPPlanWorksheet.Cells[(int)ARMPPlanExcelLayout.ARMPResourcesRowsCnvt.ExcpDate, ARMPPlanWorksheetLayout.ARMPResourcesCol]];
-                        rngARMPPlan.Copy(rngARMPRsrc);
-                        ARMPPlanWorksheetLayout.ARMPResourcesCol++;
+                        // Work around to avoid run time error: commented out lines do not work !
+                        strARMPRsrc = ((Excel.Range)ARMPPlanWorksheet.Cells[(int)ARMPPlanExcelLayout.ARMPResourcesRowsCnvt.ExcpDate, ARMPRsrcWorksheetLayout.ARMPResourcesCol]).Address;
+                        rngARMPPlan.Copy(ARMPRsrcWorksheet.Range[strARMPRsrc]);
+
+                        ARMPRsrcWorksheetLayout.ARMPResourcesCol++;
                     }
                 }
-                /*
-                QRCodeGenerator qrGenerator = new QRCodeGenerator();
-                QRCodeData qrCodeData = qrGenerator.CreateQrCode("The text which should be encoded.", QRCodeGenerator.ECCLevel.Q);
-                QRCode qrCode = new QRCode(qrCodeData);
-                Bitmap qrCodeImage = qrCode.GetGraphic(20);
-                */
+
+            }
+        }
+
+        public void CreateUpdateQRCodesSheet()
+        {
+            Excel.Worksheet ARMPPlanWorksheet = ((Excel.Worksheet)Application.Sheets["PLAN"]);
+
+            Excel.Range rngARMPPlanOrdr;
+                Excel.Worksheet ARMPCodeWorksheet = (Excel.Worksheet)Application.Sheets.Add();
+                ARMPCodeWorksheet.Name = "QRCODE";
+
+            rngARMPPlanOrdr = ARMPPlanWorksheet.Range[ARMPPlanWorksheet.Cells[(int)ARMPPlanExcelLayout.ARMPTasksRowsCnvt.TaskStrt, (int)ARMPPlanExcelLayout.ARMPTasksColsCnvt.WorkPlce],
+                                                      ARMPPlanWorksheet.Cells[ARMPPlanWorksheetLayout.ARMPTasksRowZ, (int)ARMPPlanExcelLayout.ARMPTasksColsCnvt.WorkPlce]];
+            rngARMPPlanOrdr.Copy(Type.Missing);
+            ARMPCodeWorksheet.Range["A1"].PasteSpecial();
+
+            rngARMPPlanOrdr = ARMPPlanWorksheet.Range[ARMPPlanWorksheet.Cells[(int)ARMPPlanExcelLayout.ARMPTasksRowsCnvt.TaskStrt, (int)ARMPPlanExcelLayout.ARMPTasksColsCnvt.OrdrNmbr],
+                                                          ARMPPlanWorksheet.Cells[ARMPPlanWorksheetLayout.ARMPTasksRowZ, (int)ARMPPlanExcelLayout.ARMPTasksColsCnvt.OperNmbr]];
+
+            rngARMPPlanOrdr.Copy(Type.Missing);
+            ARMPCodeWorksheet.Range["B1"].PasteSpecial();
+
+            rngARMPPlanOrdr = ARMPPlanWorksheet.Range[ARMPPlanWorksheet.Cells[(int)ARMPPlanExcelLayout.ARMPTasksRowsCnvt.TaskStrt, (int)ARMPPlanExcelLayout.ARMPTasksColsCnvt.OrdrDesc],
+                                                          ARMPPlanWorksheet.Cells[ARMPPlanWorksheetLayout.ARMPTasksRowZ, (int)ARMPPlanExcelLayout.ARMPTasksColsCnvt.OperDesc]];
+            rngARMPPlanOrdr.Copy(Type.Missing);
+            ARMPCodeWorksheet.Range["C1"].PasteSpecial();
+
+            //ARMPCodeWorksheet.Activate();
+            //ARMPCodeWorksheet = ((Excel.Worksheet)Application.ActiveSheet);
+
+            ARMPCodeWorksheet.Rows.RowHeight = 60;
+
+            for (int iTask = 1; iTask <= (ARMPPlanWorksheetLayout.ARMPTasksRowZ - (int)ARMPPlanExcelLayout.ARMPTasksRowsCnvt.TaskStrt); iTask++)
+            {
+                string strOrdrNmbr = ARMPCodeWorksheet.Cells[iTask, 2].Value2?.ToString();
+                if (!string.IsNullOrEmpty(strOrdrNmbr))
+                {
+                    QRCodeGenerator qrGenerator = new QRCodeGenerator();
+                    QRCodeData qrCodeData = qrGenerator.CreateQrCode(strOrdrNmbr, QRCodeGenerator.ECCLevel.Q);
+                    QRCode qrCode = new QRCode(qrCodeData);
+                    Bitmap qrCodeImage = qrCode.GetGraphic(2);
+
+                    Clipboard.SetImage(qrCodeImage);
+
+                    try
+                    {
+                        ARMPCodeWorksheet.Range["A"+iTask.ToString()].Select();
+                        ARMPCodeWorksheet.Paste();
+                    }
+                    catch (COMException ex)
+                    { }
+                }
             }
         }
     }
