@@ -167,8 +167,13 @@ namespace AMGenkARMPPlan
         }
         private void ButtonClick(Office.CommandBarButton ctrl, ref bool cancel)
         {
-            Excel.Worksheet ARMPPlanWorksheet = ((Excel.Worksheet)Application.ActiveSheet);
-            InitialiseARMPPlanWorksheetLayout();
+            try
+            {
+                Excel.Worksheet ARMPPlanWorksheet = ((Excel.Worksheet)Application.Sheets["PLAN"]);
+                InitialiseARMPPlanWorksheetLayout();
+            }
+            catch
+            { }
 
             switch (ctrl.Tag)
             {
@@ -197,8 +202,9 @@ namespace AMGenkARMPPlan
         }
         public void CreateARMPPlanWorksheet()
         {
-            Excel.Worksheet ARMPPlanWorksheet = ((Excel.Worksheet)Application.Sheets.Add());
+            Excel.Worksheet ARMPPlanWorksheet = ((Excel.Worksheet)Application.Sheets["Blad1"]);
             ARMPPlanWorksheet.Name = "PLAN";
+            ARMPPlanWorksheet.Tab.Color = Color.Green;
         }
 
         public void SetARMPWorkplaces(Object[,] tasks)
@@ -252,7 +258,7 @@ namespace AMGenkARMPPlan
             ARMPPlanWorksheetLayout.ARMPResourcesRow = (int)ARMPPlanExcelLayout.ARMPResourcesRowsCnvt.RsrcName;
             ARMPPlanWorksheetLayout.ARMPResourcesCol = (int)ARMPPlanExcelLayout.ARMPResourcesColsCnvt.RsrcStrt;
 
-            Excel.Worksheet ARMPPlanWorksheet = ((Excel.Worksheet)Application.ActiveSheet);
+            Excel.Worksheet ARMPPlanWorksheet = ((Excel.Worksheet)Application.Sheets["PLAN"]);
 
 
             for (int i = (int)ARMPPlanExcelLayout.ARMPResourcesRowsImpr.RsrcStrt; i < resources.GetLength(0) + 1; i++)
@@ -306,7 +312,7 @@ namespace AMGenkARMPPlan
             ARMPPlanWorksheetLayout.ARMPExceptionsRow = (int)ARMPPlanExcelLayout.ARMPExceptionsRowsCnvt.RsrcExcd;
             ARMPPlanWorksheetLayout.ARMPExceptionsCol = (int)ARMPPlanExcelLayout.ARMPExceptionsColsCnvt.ExcpStrt;
 
-            Excel.Worksheet ARMPPlanWorksheet = ((Excel.Worksheet)Application.ActiveSheet);
+            Excel.Worksheet ARMPPlanWorksheet = (Excel.Worksheet)Application.Sheets["PLAN"];
 
             do
             {
@@ -441,7 +447,7 @@ namespace AMGenkARMPPlan
             ARMPPlanWorksheetLayout.ARMPTasksRowZ = ARMPPlanWorksheetLayout.ARMPTasksRowO + 1;
             ARMPPlanWorksheetLayout.ARMPTasksRow = ARMPPlanWorksheetLayout.ARMPTasksRowZ;
 
-            Excel.Worksheet ARMPPlanWorksheet = ((Excel.Worksheet)Application.ActiveSheet);
+            Excel.Worksheet ARMPPlanWorksheet = ((Excel.Worksheet)Application.Sheets["PLAN"]);
 
             foreach (ARMPPlanExcelLayout.ARMPTasksColsCnvt eCol in Enum.GetValues(typeof(ARMPPlanExcelLayout.ARMPTasksColsCnvt)))
             {
@@ -458,6 +464,8 @@ namespace AMGenkARMPPlan
         public object[,] ImportTasksFromClipboard()
         {
             int lastRowIgnoreFormulas;
+            Excel.Worksheet ARMPPlanWorksheet;
+            Excel.Worksheet ARMPImportWorksheet;
 
             string strDateForm = "dd/mm/jjjj";
             // Change the column definitions if your LayOut variant is changing
@@ -484,10 +492,18 @@ namespace AMGenkARMPPlan
             lstSAPColumnHeaders.Add(new Tuple<string, string>("Eenheid werk", "0.00"));
             lstSAPColumnHeaders.Add(new Tuple<string, string>("Werkelijk werk", "0.00"));
 
-            Excel.Worksheet ARMPImportWorksheet = ((Excel.Worksheet)Application.Sheets.Add());
+            try
+            {
+                ARMPPlanWorksheet = (Excel.Worksheet)Application.Sheets["PLAN"];
+                ARMPImportWorksheet = ((Excel.Worksheet)Application.Sheets.Add(Before: ARMPPlanWorksheet));
+            }
+            catch 
+            {
+                ARMPImportWorksheet = ((Excel.Worksheet)Application.Sheets.Add());
+            }
             DateTime DateName = DateTime.Now;
             ARMPImportWorksheet.Name = "IN" + DateName.ToString("yyMMddhhmmss");
-
+            ARMPImportWorksheet.Tab.Color = Color.Yellow;
 
             char[] delimiters = new char[] { '\t' };
             StringReader strReader = new StringReader(Clipboard.GetText());
@@ -808,7 +824,7 @@ namespace AMGenkARMPPlan
         }
         public void FilterARMPPlanning()
         {
-            Excel.Worksheet ARMPPlanWorksheet = ((Excel.Worksheet)Application.ActiveSheet);
+            Excel.Worksheet ARMPPlanWorksheet = (Excel.Worksheet)Application.Sheets["PLAN"];
 
             for (int iResourceCol = (int)ARMPPlanExcelLayout.ARMPResourcesColsCnvt.RsrcStrt; iResourceCol <= ARMPPlanWorksheetLayout.ARMPResourcesCol; iResourceCol++)
             {
@@ -821,7 +837,7 @@ namespace AMGenkARMPPlan
         public void FormatARMPPlanning()
         {
             Application.DisplayAlerts = false;
-            Excel.Worksheet ARMPPlanWorksheet = ((Excel.Worksheet)Application.ActiveSheet);
+            Excel.Worksheet ARMPPlanWorksheet = (Excel.Worksheet)Application.Sheets["PLAN"];
             Excel.Range rngFormat;
             Excel.FormatCondition rngfmcCondition;
 
@@ -1014,6 +1030,7 @@ namespace AMGenkARMPPlan
         public void CreatePersonalPlannings()
         {
             Excel.Worksheet ARMPPlanWorksheet = ((Excel.Worksheet)Application.Sheets["PLAN"]);
+            Excel.Worksheet ARMPRsrcWorksheet;
             ARMPRsrcExcelLayout ARMPRsrcWorksheetLayout = new ARMPRsrcExcelLayout();
 
             Excel.Range rngARMPPlan;
@@ -1023,8 +1040,17 @@ namespace AMGenkARMPPlan
 
             foreach (Resource resource in ARMPPlanWorksheetLayout.ARMPResources)
             {
-                Excel.Worksheet ARMPRsrcWorksheet = (Excel.Worksheet)Application.Sheets.Add();
-                ARMPRsrcWorksheet.Name = resource.Name;
+                try
+                {
+                    ARMPRsrcWorksheet = ((Excel.Worksheet)Application.Sheets[resource.Name]);
+                    ARMPRsrcWorksheet.Cells.Clear();
+                }
+                catch
+                {
+                    ARMPRsrcWorksheet = (Excel.Worksheet)Application.Sheets.Add(After: Application.Sheets[Application.Sheets.Count]);
+                    ARMPRsrcWorksheet.Name = resource.Name;
+                    ARMPRsrcWorksheet.Tab.Color = Color.Aqua;
+                }
                 ARMPRsrcWorksheetLayout.CopyFromPlanLayout(ARMPPlanWorksheetLayout);
 
                 rngARMPPlan = ARMPPlanWorksheet.Range[ARMPPlanWorksheet.Cells[(int)ARMPPlanExcelLayout.ARMPResourcesRowsCnvt.ExcpDate, (int)ARMPPlanExcelLayout.ARMPTasksColsCnvt.WorkPlce],
@@ -1063,8 +1089,9 @@ namespace AMGenkARMPPlan
             Excel.Worksheet ARMPPlanWorksheet = ((Excel.Worksheet)Application.Sheets["PLAN"]);
 
             Excel.Range rngARMPPlanOrdr;
-                Excel.Worksheet ARMPCodeWorksheet = (Excel.Worksheet)Application.Sheets.Add();
-                ARMPCodeWorksheet.Name = "QRCODE";
+            Excel.Worksheet ARMPCodeWorksheet = (Excel.Worksheet)Application.Sheets.Add(After: ARMPPlanWorksheet);
+            ARMPCodeWorksheet.Name = "QRCODE";
+            ARMPCodeWorksheet.Tab.Color = Color.LightGreen;
 
             rngARMPPlanOrdr = ARMPPlanWorksheet.Range[ARMPPlanWorksheet.Cells[(int)ARMPPlanExcelLayout.ARMPTasksRowsCnvt.TaskStrt, (int)ARMPPlanExcelLayout.ARMPTasksColsCnvt.WorkPlce],
                                                       ARMPPlanWorksheet.Cells[ARMPPlanWorksheetLayout.ARMPTasksRowZ, (int)ARMPPlanExcelLayout.ARMPTasksColsCnvt.WorkPlce]];
@@ -1101,8 +1128,20 @@ namespace AMGenkARMPPlan
 
                     try
                     {
-                        ARMPCodeWorksheet.Range["A"+iTask.ToString()].Select();
+                        Excel.Range rngCode = ARMPCodeWorksheet.Range["A"+iTask.ToString()];
+                        rngCode.Clear();
+                        rngCode.Select();
+                        rngCode.Clear();
                         ARMPCodeWorksheet.Paste();
+                        foreach (Excel.Shape shp in ARMPCodeWorksheet.Shapes)
+                        {
+                            if (shp.TopLeftCell.Address != rngCode.Address)
+                                continue;
+                            shp.Left = (int)(shp.TopLeftCell.Left + (shp.TopLeftCell.Width - (int)shp.Width) / 2);
+                            shp.Top = (int)(shp.TopLeftCell.Top + (shp.TopLeftCell.Height - (int)shp.Height) / 2);
+                            break;
+                        }
+
                     }
                     catch (COMException ex)
                     { }
