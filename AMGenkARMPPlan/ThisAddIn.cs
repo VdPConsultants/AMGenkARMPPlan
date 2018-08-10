@@ -1302,6 +1302,7 @@ namespace AMGenkARMPPlan
             try
             {
                 ARMPCodeWorksheet = ((Excel.Worksheet)Application.Sheets["QRCODE"]);
+                ARMPCodeWorksheet.Unprotect();
                 ARMPCodeWorksheet.Cells.Clear();
             }
             catch
