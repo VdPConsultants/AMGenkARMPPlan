@@ -1375,7 +1375,7 @@ namespace AMGenkARMPPlan
             ARMPCodeWorksheet.Cells[1, (int)ARMPCodeExcelLayout.ARMPTasksColsCnvt.OrdrDesc].EntireColumn.ColumnWidth = 40;
             ARMPCodeWorksheet.Cells[1, (int)ARMPCodeExcelLayout.ARMPTasksColsCnvt.OperDesc].EntireColumn.ColumnWidth = 40;
 
-            ARMPCodeWorksheet.Protect("SIK", true);
+            ARMPCodeWorksheet.Protect();
 
             ARMPPlanWorksheet.Activate();
         }
