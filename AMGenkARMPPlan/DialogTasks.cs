@@ -129,6 +129,8 @@ namespace AMGenkARMPPlan
                 xlWorkbook.Close();
             }
             Globals.ThisAddIn.CreateUpdateARMPTasks(tasks);
+            Globals.ThisAddIn.FormatARMPPlanning();
+            Globals.ThisAddIn.CreateUpdateQRCodesSheet();
             HideImportDialogBox();
         }
 

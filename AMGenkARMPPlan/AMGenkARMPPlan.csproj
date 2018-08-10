@@ -201,7 +201,8 @@
   -->
   <ItemGroup>
     <Compile Include="AMGenkResources.cs" />
-    <Compile Include="ARMPRsrcExcelLayout.cs" />
+    <Compile Include="ARMPCodeExcelLayout.cs" />
+    <Compile Include="ARMPPersExcelLayout.cs" />
     <Compile Include="ARMPPlanExcelLayout.cs" />
     <Compile Include="Conversions.cs" />
     <Compile Include="DialogFilter.cs">
@@ -253,6 +254,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="AMGenkARMPPlan_1_TemporaryKey.pfx" />
     <None Include="AMGenkARMPPlan_TemporaryKey.pfx" />
     <None Include="app.config" />
     <None Include="packages.config" />
@@ -285,10 +287,10 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>AMGenkARMPPlan_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>AMGenkARMPPlan_1_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>CD9194D77B350B204B22A988A9D96CC0FC416FA0</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>034B8B022803673843086B321200251B36C50AC6</ManifestCertificateThumbprint>
   </PropertyGroup>
   <!-- Include the build rules for a C# project. -->
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

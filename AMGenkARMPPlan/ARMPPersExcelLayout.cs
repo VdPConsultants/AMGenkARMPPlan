@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AMGenkARMPPlan
 {
-    public class ARMPRsrcExcelLayout
+    public class ARMPPersExcelLayout
     {
         public int ARMPResourcesRow { get; set; }
         public int ARMPResourcesCol { get; set; }
