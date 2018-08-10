@@ -1303,14 +1303,14 @@ namespace AMGenkARMPPlan
             {
                 ARMPCodeWorksheet = ((Excel.Worksheet)Application.Sheets["QRCODE"]);
                 ARMPCodeWorksheet.Unprotect();
-                ARMPCodeWorksheet.Cells.Clear();
+                ARMPCodeWorksheet.Delete();
             }
             catch
             {
-                ARMPCodeWorksheet = (Excel.Worksheet)Application.Sheets.Add(After: ARMPPlanWorksheet);
-                ARMPCodeWorksheet.Name = "QRCODE";
-                ARMPCodeWorksheet.Tab.Color = Color.LightGreen;
             }
+            ARMPCodeWorksheet = (Excel.Worksheet)Application.Sheets.Add(After: ARMPPlanWorksheet);
+            ARMPCodeWorksheet.Name = "QRCODE";
+            ARMPCodeWorksheet.Tab.Color = Color.LightGreen;
 
             rngARMPPlanOrdr = ARMPPlanWorksheet.Range[ARMPPlanWorksheet.Cells[(int)ARMPPlanExcelLayout.ARMPTasksRowsCnvt.TaskStrt, (int)ARMPPlanExcelLayout.ARMPTasksColsCnvt.WorkPlce],
                                                       ARMPPlanWorksheet.Cells[ARMPPlanWorksheetLayout.ARMPTasksRowZ, (int)ARMPPlanExcelLayout.ARMPTasksColsCnvt.WorkPlce]];
@@ -1330,7 +1330,6 @@ namespace AMGenkARMPPlan
 
             ARMPCodeExcelLayout ARMPCodeWorksheetLayout = new ARMPCodeExcelLayout();
             ARMPCodeWorksheetLayout.CopyFromPlanLayout(ARMPPlanWorksheetLayout);
-
 
             for (int iTask = 1; iTask <= (ARMPCodeWorksheetLayout.ARMPTasksRowZ); iTask++)
             {
@@ -1352,7 +1351,6 @@ namespace AMGenkARMPPlan
                     try
                     {
                         Excel.Range rngCode = ARMPCodeWorksheet.Range["A"+iTask.ToString()];
-                        rngCode.Clear();
                         rngCode.Select();
                         rngCode.Clear();
                         ARMPCodeWorksheet.Paste();
