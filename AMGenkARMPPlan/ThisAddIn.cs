@@ -599,8 +599,8 @@ namespace AMGenkARMPPlan
                     }
                 }
             label_einde:
-
-                ARMPPlanWorksheetLayout.ARMPResourcesCol = ARMPPlanWorksheet.Cells.Find("*", System.Reflection.Missing.Value, Excel.XlFindLookIn.xlValues, Excel.XlLookAt.xlWhole, Excel.XlSearchOrder.xlByColumns, Excel.XlSearchDirection.xlPrevious, false, System.Reflection.Missing.Value, System.Reflection.Missing.Value).Column;
+                ARMPPlanWorksheetLayout.ARMPResourcesCol = ARMPPlanWorksheet.Cells[1, 1].EntireRow.Columns.Count;
+                ARMPPlanWorksheetLayout.ARMPResourcesCol = ARMPPlanWorksheet.Cells.Find("*", System.Reflection.Missing.Value, Excel.XlFindLookIn.xlFormulas, Excel.XlLookAt.xlWhole, Excel.XlSearchOrder.xlByColumns, Excel.XlSearchDirection.xlPrevious, false, System.Reflection.Missing.Value, System.Reflection.Missing.Value).Column;
                 ARMPPlanWorksheetLayout.ARMPExceptionsCol = ARMPPlanWorksheetLayout.ARMPResourcesCol;
                 ARMPPlanWorksheetLayout.ARMPTasksCol = ARMPPlanWorksheetLayout.ARMPResourcesCol;
 
@@ -954,10 +954,10 @@ namespace AMGenkARMPPlan
             rngfmcCondition = rngFormat.FormatConditions.Add(Excel.XlFormatConditionType.xlCellValue, Excel.XlFormatConditionOperator.xlLess, "=0");
             rngfmcCondition.Font.Color = Color.Red;
 
-            rngFormat = ARMPPlanWorksheet.Range[ARMPPlanWorksheet.Cells[ARMPPlanWorksheetLayout.ARMPTasksRowA, 1],
-                                            ARMPPlanWorksheet.Cells[ARMPPlanWorksheetLayout.ARMPTasksRowZ, ARMPPlanWorksheetLayout.ARMPExceptionsCol]];
-            rngFormat.Interior.Color = Color.White;
-            rngFormat.Font.Color = Color.Black;
+            //rngFormat = ARMPPlanWorksheet.Range[ARMPPlanWorksheet.Cells[ARMPPlanWorksheetLayout.ARMPTasksRowA, 1],
+            //                                ARMPPlanWorksheet.Cells[ARMPPlanWorksheetLayout.ARMPTasksRowZ, ARMPPlanWorksheetLayout.ARMPExceptionsCol]];
+            //rngFormat.Interior.Color = Color.White;
+            //rngFormat.Font.Color = Color.Black;
             rngFormat = ARMPPlanWorksheet.Range[ARMPPlanWorksheet.Cells[ARMPPlanWorksheetLayout.ARMPTasksRowA, 1],
                                             ARMPPlanWorksheet.Cells[ARMPPlanWorksheetLayout.ARMPTasksRowA, ARMPPlanWorksheetLayout.ARMPExceptionsCol]];
             rngFormat.FormatConditions.Delete();
