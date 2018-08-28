@@ -511,6 +511,7 @@ namespace AMGenkARMPPlan
             DateTime DateName = DateTime.Now;
             ARMPImportWorksheet.Name = "IN" + DateName.ToString("yyMMddhhmmss");
             ARMPImportWorksheet.Tab.Color = Color.Yellow;
+            ARMPImportWorksheet.Visible = Microsoft.Office.Interop.Excel.XlSheetVisibility.xlSheetHidden;
 
             char[] delimiters = new char[] { '\t' };
             StringReader strReader = new StringReader(Clipboard.GetText());
