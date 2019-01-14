@@ -267,7 +267,7 @@ namespace AMGenkARMPPlan
             {
                 if (resources[i, (int)ARMPPlanExcelLayout.ARMPResourcesColsImpr.WorkPlce] != null)
                 {
-                    if (ARMPPlanWorksheetLayout.ARMPWorkplaces.Contains(resources[i, (int)ARMPPlanExcelLayout.ARMPResourcesColsImpr.WorkPlce].ToString().Substring(0, 3)))
+                    if (ARMPPlanWorksheetLayout.ARMPWorkplaces.Contains(resources[i, (int)ARMPPlanExcelLayout.ARMPResourcesColsImpr.WorkPlce].ToString()))
                     {
                         if (ARMPPlanWorksheetLayout.ARMPResources.FindIndex(x => x.Amei == resources[i, (int)ARMPPlanExcelLayout.ARMPResourcesColsImpr.RsrcAmei].ToString()) < 0)
                         {

@@ -40,7 +40,7 @@
     <PublishUrl>T:\Appli\SAP\ARMP\Planning Excel AddIn\</PublishUrl>
     <InstallUrl />
     <TargetCulture>en</TargetCulture>
-    <ApplicationVersion>1.2.1.6</ApplicationVersion>
+    <ApplicationVersion>1.2.1.7</ApplicationVersion>
     <AutoIncrementApplicationRevision>false</AutoIncrementApplicationRevision>
     <UpdateEnabled>true</UpdateEnabled>
     <UpdateInterval>0</UpdateInterval>
@@ -255,6 +255,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="AMGenkARMPPlan_1_TemporaryKey.pfx" />
+    <None Include="AMGenkARMPPlan_2_TemporaryKey.pfx" />
     <None Include="AMGenkARMPPlan_TemporaryKey.pfx" />
     <None Include="app.config" />
     <None Include="packages.config" />
@@ -287,10 +288,10 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>AMGenkARMPPlan_1_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>AMGenkARMPPlan_2_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>034B8B022803673843086B321200251B36C50AC6</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>8292AB264E59DA121F3C65C8D62AF5FCAFDD1EBF</ManifestCertificateThumbprint>
   </PropertyGroup>
   <!-- Include the build rules for a C# project. -->
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
