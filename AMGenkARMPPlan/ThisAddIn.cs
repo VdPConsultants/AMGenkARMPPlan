@@ -651,6 +651,8 @@ namespace AMGenkARMPPlan
             Excel.Worksheet ARMPPlanWorksheet = ((Excel.Worksheet)Application.Sheets["PLAN"]);
             for (int i = (int)ARMPPlanExcelLayout.ARMPTasksRowsImpr.TaskRows; i <= tasks.GetLength(0); i++)
             {
+                if (tasks[i, (int)ARMPPlanExcelLayout.ARMPTasksColsCnvt.OrdrPrio] == null)
+                    tasks[i, (int)ARMPPlanExcelLayout.ARMPTasksColsCnvt.OrdrPrio] = 'O';
                 // Priority A tasks
                 switch (tasks[i, (int)ARMPPlanExcelLayout.ARMPTasksColsCnvt.OrdrPrio].ToString())
                 {
@@ -798,10 +800,10 @@ namespace AMGenkARMPPlan
                 ARMPPlanWorksheet.Cells[ARMPTasksRow, (int)ARMPPlanExcelLayout.ARMPTasksColsCnvt.WorkUnit].Value2 = (tasks[i, (int)ARMPPlanExcelLayout.ARMPTasksColsImpr.WorkUnit] == null) ? "" : tasks[i, (int)ARMPPlanExcelLayout.ARMPTasksColsImpr.WorkUnit].ToString();
                 ARMPPlanWorksheet.Cells[ARMPTasksRow, (int)ARMPPlanExcelLayout.ARMPTasksColsCnvt.WorkNorm].Value2 = (tasks[i, (int)ARMPPlanExcelLayout.ARMPTasksColsImpr.WorkNorm] == null) ? 0.0 : Convert.ToDouble((tasks[i, (int)ARMPPlanExcelLayout.ARMPTasksColsImpr.WorkNorm].ToString()));
 
-                ARMPPlanWorksheet.Cells[ARMPTasksRow, (int)ARMPPlanExcelLayout.ARMPTasksColsCnvt.WorkHour].Value2 = Conversions.TimeUnit2Todo(tasks[i, (int)ARMPPlanExcelLayout.ARMPTasksColsImpr.WorkNorm].ToString(),
-                                                                                                                                      tasks[i, (int)ARMPPlanExcelLayout.ARMPTasksColsImpr.WorkUnit].ToString());
-                ARMPPlanWorksheet.Cells[ARMPTasksRow, (int)ARMPPlanExcelLayout.ARMPTasksColsCnvt.WorkReal].Value2 = Conversions.TimeUnit2Todo(tasks[i, (int)ARMPPlanExcelLayout.ARMPTasksColsImpr.WorkReal].ToString(),
-                                                                                                                                      tasks[i, (int)ARMPPlanExcelLayout.ARMPTasksColsImpr.WorkUnit].ToString());
+                ARMPPlanWorksheet.Cells[ARMPTasksRow, (int)ARMPPlanExcelLayout.ARMPTasksColsCnvt.WorkHour].Value2 = Conversions.TimeUnit2Todo(tasks[i, (int)ARMPPlanExcelLayout.ARMPTasksColsImpr.WorkNorm]?.ToString(),
+                                                                                                                                      tasks[i, (int)ARMPPlanExcelLayout.ARMPTasksColsImpr.WorkUnit]?.ToString());
+                ARMPPlanWorksheet.Cells[ARMPTasksRow, (int)ARMPPlanExcelLayout.ARMPTasksColsCnvt.WorkReal].Value2 = Conversions.TimeUnit2Todo(tasks[i, (int)ARMPPlanExcelLayout.ARMPTasksColsImpr.WorkReal]?.ToString(),
+                                                                                                                                      tasks[i, (int)ARMPPlanExcelLayout.ARMPTasksColsImpr.WorkUnit]?.ToString());
                 ARMPPlanWorksheet.Cells[ARMPTasksRow, (int)ARMPPlanExcelLayout.ARMPTasksColsCnvt.WorkTodo].Formula = ARMPWorkTodoForm;
                 ARMPPlanWorksheet.Cells[ARMPTasksRow, (int)ARMPPlanExcelLayout.ARMPTasksColsCnvt.WorkPlan].Formula = ARMPWorkPlanForm;
             }
@@ -915,7 +917,7 @@ namespace AMGenkARMPPlan
             rngfmcCondition.Font.Color = Color.Red;
 
             rngFormat = ARMPPlanWorksheet.Range[ARMPPlanWorksheet.Cells[(int)ARMPPlanExcelLayout.ARMPTasksRowsCnvt.TaskStrt, 1],
-                                            ARMPPlanWorksheet.Cells[ARMPPlanWorksheetLayout.ARMPTasksRowO, ARMPPlanExcelLayout.ARMPTasksColsCnvt.WorkPlan]];
+                                            ARMPPlanWorksheet.Cells[ARMPPlanWorksheetLayout.ARMPTasksRowZ, ARMPPlanExcelLayout.ARMPTasksColsCnvt.WorkPlan]];
             rngFormat.Borders[Excel.XlBordersIndex.xlEdgeTop].Weight = Excel.XlBorderWeight.xlThick;
             rngFormat.Borders[Excel.XlBordersIndex.xlEdgeLeft].Weight = Excel.XlBorderWeight.xlThick;
             rngFormat.Borders[Excel.XlBordersIndex.xlEdgeRight].Weight = Excel.XlBorderWeight.xlThick;
@@ -928,7 +930,7 @@ namespace AMGenkARMPPlan
             do
             {
                 rngFormat = ARMPPlanWorksheet.Range[ARMPPlanWorksheet.Cells[(int)ARMPPlanExcelLayout.ARMPTasksRowsCnvt.TaskStrt, TaskCols],
-                                                ARMPPlanWorksheet.Cells[(int)ARMPPlanWorksheetLayout.ARMPTasksRowO, TaskCols + ARMPPlanWorksheetLayout.ARMPResources.Count - 1]];
+                                                ARMPPlanWorksheet.Cells[(int)ARMPPlanWorksheetLayout.ARMPTasksRowZ, TaskCols + ARMPPlanWorksheetLayout.ARMPResources.Count - 1]];
                 rngFormat.Borders[Excel.XlBordersIndex.xlEdgeLeft].Weight = Excel.XlBorderWeight.xlThick;
                 rngFormat.Borders[Excel.XlBordersIndex.xlEdgeRight].Weight = Excel.XlBorderWeight.xlThick;
                 rngFormat.Borders[Excel.XlBordersIndex.xlEdgeBottom].Weight = Excel.XlBorderWeight.xlThick;
@@ -939,15 +941,15 @@ namespace AMGenkARMPPlan
             } while (ARMPStrtDate.CompareTo(ARMPPlanWorksheetLayout.ARMPFnshDate) <= 0);
 
             rngFormat = ARMPPlanWorksheet.Range[ARMPPlanWorksheet.Cells[(int)ARMPPlanExcelLayout.ARMPTasksRowsCnvt.TaskStrt, (int)ARMPPlanExcelLayout.ARMPTasksColsCnvt.OperNmbr],
-                                            ARMPPlanWorksheet.Cells[ARMPPlanWorksheetLayout.ARMPTasksRowO, (int)ARMPPlanExcelLayout.ARMPTasksColsCnvt.OperNmbr]];
+                                            ARMPPlanWorksheet.Cells[ARMPPlanWorksheetLayout.ARMPTasksRowZ, (int)ARMPPlanExcelLayout.ARMPTasksColsCnvt.OperNmbr]];
             rngFormat.NumberFormat = "0000";
 
             rngFormat = ARMPPlanWorksheet.Range[ARMPPlanWorksheet.Cells[(int)ARMPPlanExcelLayout.ARMPTasksRowsCnvt.TaskStrt, (int)ARMPPlanExcelLayout.ARMPTasksColsCnvt.WorkNorm],
-                                            ARMPPlanWorksheet.Cells[ARMPPlanWorksheetLayout.ARMPTasksRowO, ARMPPlanWorksheetLayout.ARMPExceptionsCol]];
+                                            ARMPPlanWorksheet.Cells[ARMPPlanWorksheetLayout.ARMPTasksRowZ, ARMPPlanWorksheetLayout.ARMPExceptionsCol]];
             rngFormat.NumberFormat = "0.00";
 
             rngFormat = ARMPPlanWorksheet.Range[ARMPPlanWorksheet.Cells[(int)ARMPPlanExcelLayout.ARMPTasksRowsCnvt.TaskStrt, (int)ARMPPlanExcelLayout.ARMPTasksColsCnvt.WorkTodo],
-                                            ARMPPlanWorksheet.Cells[ARMPPlanWorksheetLayout.ARMPTasksRowO, (int)ARMPPlanExcelLayout.ARMPTasksColsCnvt.WorkTodo]];
+                                            ARMPPlanWorksheet.Cells[ARMPPlanWorksheetLayout.ARMPTasksRowZ, (int)ARMPPlanExcelLayout.ARMPTasksColsCnvt.WorkTodo]];
             rngfmcCondition = rngFormat.FormatConditions.Add(Excel.XlFormatConditionType.xlCellValue, Excel.XlFormatConditionOperator.xlGreater, "=0");
             rngfmcCondition.Font.Color = Color.Orange;
             rngfmcCondition = rngFormat.FormatConditions.Add(Excel.XlFormatConditionType.xlCellValue, Excel.XlFormatConditionOperator.xlEqual, "=0");

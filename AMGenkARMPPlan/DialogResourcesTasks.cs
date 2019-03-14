@@ -139,7 +139,7 @@ namespace AMGenkARMPPlan
             Globals.ThisAddIn.PrepareARMPTasks();
             Globals.ThisAddIn.CreateUpdateARMPTasks(tasks);
             Globals.ThisAddIn.FormatARMPPlanning();
-            Globals.ThisAddIn.CreateUpdateQRCodesSheet();
+            //Globals.ThisAddIn.CreateUpdateQRCodesSheet();
 
             HideImportDialogBox();
         }
