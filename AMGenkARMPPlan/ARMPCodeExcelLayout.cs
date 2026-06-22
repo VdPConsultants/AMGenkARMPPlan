@@ -21,22 +21,22 @@ namespace AMGenkARMPPlan
             OperDesc = OrdrDesc + 1,
         };
         //public int ARMPTasksRow { get; set; }
-        public int ARMPTasksRowA { get; set; }
-        public int ARMPTasksRowB { get; set; }
-        public int ARMPTasksRowC { get; set; }
-        public int ARMPTasksRowO { get; set; }
-        public int ARMPTasksRowZ { get; set; }
+        public int ARMPTasksRow1 { get; set; }
+        public int ARMPTasksRow2 { get; set; }
+        public int ARMPTasksRow3 { get; set; }
+        public int ARMPTasksRow4 { get; set; }
+        public int ARMPTasksRow5 { get; set; }
 
         public int ARMPTasksRow { get; set; }
 
         public void CopyFromPlanLayout(ARMPPlanExcelLayout InPlanLayout)
         {
-            ARMPTasksRowA = InPlanLayout.ARMPTasksRowA - InPlanLayout.ARMPTasksRowA + 1;
-            ARMPTasksRowB = InPlanLayout.ARMPTasksRowB - InPlanLayout.ARMPTasksRowA + 1;
-            ARMPTasksRowC = InPlanLayout.ARMPTasksRowC - InPlanLayout.ARMPTasksRowA + 1;
-            ARMPTasksRowO = InPlanLayout.ARMPTasksRowO - InPlanLayout.ARMPTasksRowA + 1;
-            ARMPTasksRowZ = InPlanLayout.ARMPTasksRowZ - InPlanLayout.ARMPTasksRowA + 1;
-            ARMPTasksRow = InPlanLayout.ARMPTasksRow - InPlanLayout.ARMPTasksRowA + 1;
+            ARMPTasksRow1 = InPlanLayout.ARMPTasksRow1 - InPlanLayout.ARMPTasksRow1 + 1;
+            ARMPTasksRow2 = InPlanLayout.ARMPTasksRow2 - InPlanLayout.ARMPTasksRow1 + 1;
+            ARMPTasksRow3 = InPlanLayout.ARMPTasksRow3 - InPlanLayout.ARMPTasksRow1 + 1;
+            ARMPTasksRow4 = InPlanLayout.ARMPTasksRow4 - InPlanLayout.ARMPTasksRow1 + 1;
+            ARMPTasksRow5 = InPlanLayout.ARMPTasksRow5 - InPlanLayout.ARMPTasksRow1 + 1;
+            ARMPTasksRow = InPlanLayout.ARMPTasksRow - InPlanLayout.ARMPTasksRow1 + 1;
         }
     }
 }

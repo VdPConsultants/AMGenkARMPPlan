@@ -15,11 +15,15 @@ namespace AMGenkARMPPlan
         public int ARMPExceptionsCol { get; set; }
 
         //public int ARMPTasksRow { get; set; }
-        public int ARMPTasksRowA { get; set; }
-        public int ARMPTasksRowB { get; set; }
-        public int ARMPTasksRowC { get; set; }
-        public int ARMPTasksRowO { get; set; }
-        public int ARMPTasksRowZ { get; set; }
+        public int ARMPTasksRow1 { get; set; }
+        public int ARMPTasksRow2 { get; set; }
+        public int ARMPTasksRow3 { get; set; }
+        public int ARMPTasksRow4 { get; set; }
+        public int ARMPTasksRow5 { get; set; }
+        public int ARMPTasksRow6 { get; set; }
+        public int ARMPTasksRow7 { get; set; }
+        public int ARMPTasksRow8 { get; set; }
+        public int ARMPTasksRow9 { get; set; }
 
         public int ARMPTasksRow { get; set; }
 
@@ -36,11 +40,11 @@ namespace AMGenkARMPPlan
             ARMPExceptionsRow = InPlanLayout.ARMPExceptionsRow;
             ARMPExceptionsCol = InPlanLayout.ARMPExceptionsCol;
 
-            ARMPTasksRowA = InPlanLayout.ARMPTasksRowA;
-            ARMPTasksRowB = InPlanLayout.ARMPTasksRowB;
-            ARMPTasksRowC = InPlanLayout.ARMPTasksRowC;
-            ARMPTasksRowO = InPlanLayout.ARMPTasksRowO;
-            ARMPTasksRowZ = InPlanLayout.ARMPTasksRowZ;
+            ARMPTasksRow1 = InPlanLayout.ARMPTasksRow1;
+            ARMPTasksRow2 = InPlanLayout.ARMPTasksRow2;
+            ARMPTasksRow3 = InPlanLayout.ARMPTasksRow3;
+            ARMPTasksRow4 = InPlanLayout.ARMPTasksRow4;
+            ARMPTasksRow5 = InPlanLayout.ARMPTasksRow5;
             ARMPTasksRow = InPlanLayout.ARMPTasksRow;
 
             ARMPTasksCol = InPlanLayout.ARMPTasksCol;

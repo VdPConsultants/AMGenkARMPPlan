@@ -224,11 +224,16 @@ namespace AMGenkARMPPlan
         public int ARMPExceptionsCol { get; set; }
 
         //public int ARMPTasksRow { get; set; }
-        public int ARMPTasksRowA { get; set; }
-        public int ARMPTasksRowB { get; set; }
-        public int ARMPTasksRowC { get; set; }
-        public int ARMPTasksRowO { get; set; }
-        public int ARMPTasksRowZ { get; set; }
+        public int ARMPTasksRow1 { get; set; }
+        public int ARMPTasksRow2 { get; set; }
+        public int ARMPTasksRow3 { get; set; }
+        public int ARMPTasksRow4 { get; set; }
+        public int ARMPTasksRow5 { get; set; }
+        public int ARMPTasksRow6 { get; set; }
+        public int ARMPTasksRow7 { get; set; }
+        public int ARMPTasksRow8 { get; set; }
+        public int ARMPTasksRow9 { get; set; }
+        public int ARMPTasksRow10 { get; set; }         // Einde taaklijst
 
         public int ARMPTasksRow { get; set; }
 
