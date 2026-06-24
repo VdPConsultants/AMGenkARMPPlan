@@ -252,7 +252,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="AMGenkARMPPlan_TemporaryKey.pfx" />
+    <None Include="AMGenkARMPPlan.pfx" />
     <None Include="app.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -283,10 +283,10 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>AMGenkARMPPlan_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>AMGenkARMPPlan.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>426B5952D4389FA61986C43EDE4E2FF28D10BC00</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>177968380778B24714F70078A5034C91D759939E</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>false</SignAssembly>
