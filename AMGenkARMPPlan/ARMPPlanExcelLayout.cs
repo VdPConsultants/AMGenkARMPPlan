@@ -224,6 +224,8 @@ namespace AMGenkARMPPlan
         public int ARMPExceptionsCol { get; set; }
 
         //public int ARMPTasksRow { get; set; }
+        // V1.1.2.13 JvdP - New prioroties including prio 0
+        public int ARMPTasksRow0 { get; set; }
         public int ARMPTasksRow1 { get; set; }
         public int ARMPTasksRow2 { get; set; }
         public int ARMPTasksRow3 { get; set; }
