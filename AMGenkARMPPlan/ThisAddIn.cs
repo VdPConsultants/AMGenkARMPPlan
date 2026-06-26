@@ -463,7 +463,7 @@ namespace AMGenkARMPPlan
                 ARMPPlanWorksheet.Cells[ARMPPlanExcelLayout.ARMPTasksRowsCnvt.TaskTitl, eCol].Value2 = ARMPPlanWorksheetLayout.ARMPTasksColsHead[(int)eCol - 1];
             }
 
-            ARMPPlanWorksheet.Cells[ARMPPlanWorksheetLayout.ARMPTasksRow,   1].Value2 = "PRIORITEIT 0";
+            ARMPPlanWorksheet.Cells[ARMPPlanWorksheetLayout.ARMPTasksRow0,  1].Value2 = "PRIORITEIT 0";
             ARMPPlanWorksheet.Cells[ARMPPlanWorksheetLayout.ARMPTasksRow1,  1].Value2 = "PRIORITEIT 1";
             ARMPPlanWorksheet.Cells[ARMPPlanWorksheetLayout.ARMPTasksRow2,  1].Value2 = "PRIORITEIT 2";
             ARMPPlanWorksheet.Cells[ARMPPlanWorksheetLayout.ARMPTasksRow3,  1].Value2 = "PRIORITEIT 3";
@@ -597,36 +597,37 @@ namespace AMGenkARMPPlan
 
                 for (int i = (int)ARMPPlanExcelLayout.ARMPTasksRowsCnvt.TaskStrt; i <= iLastRowIgnoreFormulas; i++)
                 {
+                    string test = (string)ARMPPlanWorksheet.Cells[i, (int)ARMPPlanExcelLayout.ARMPTasksColsCnvt.WorkPlce].Value2;
                     switch ((string)ARMPPlanWorksheet.Cells[i, (int)ARMPPlanExcelLayout.ARMPTasksColsCnvt.WorkPlce].Value2)
                     {
-                        case "0":
+                        case "PRIORITEIT 0":
                             ARMPPlanWorksheetLayout.ARMPTasksRow0 = i;
                             break;
-                        case "1":
+                        case "PRIORITEIT 1":
                             ARMPPlanWorksheetLayout.ARMPTasksRow1 = i;
                             break;
-                        case "2":
+                        case "PRIORITEIT 2":
                             ARMPPlanWorksheetLayout.ARMPTasksRow2 = i;
                             break;
-                        case "3":
+                        case "PRIORITEIT 3":
                             ARMPPlanWorksheetLayout.ARMPTasksRow3 = i;
                             break;
-                        case "4":
+                        case "PRIORITEIT 4":
                             ARMPPlanWorksheetLayout.ARMPTasksRow4 = i;
                             break;
-                        case "5":
+                        case "PRIORITEIT 5":
                             ARMPPlanWorksheetLayout.ARMPTasksRow5 = i;
                             break;
-                        case "6":
+                        case "PRIORITEIT 6":
                             ARMPPlanWorksheetLayout.ARMPTasksRow6 = i;
                             break;
-                        case "7":
+                        case "PRIORITEIT 7":
                             ARMPPlanWorksheetLayout.ARMPTasksRow7 = i;
                             break;
-                        case "8":
+                        case "PRIORITEIT 8":
                             ARMPPlanWorksheetLayout.ARMPTasksRow8 = i;
                             break;
-                        case "9":
+                        case "PRIORITEIT 9":
                             ARMPPlanWorksheetLayout.ARMPTasksRow9 = i;
                             break;
                         case "EINDE TAAKLIJST":
